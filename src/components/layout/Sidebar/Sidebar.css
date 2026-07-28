@@ -1,0 +1,62 @@
+.app-sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 50;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.app-sidebar-content {
+  width: 280px;
+  max-width: 80vw;
+  height: 100%;
+  background: var(--color-bg-panel);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: -4px 0 16px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.app-sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app-sidebar-title {
+  font-family: var(--font-family-display);
+  font-size: clamp(20px, 3vw, 24px);
+  color: var(--color-text-dark);
+}
+
+.app-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  gap: 6px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.app-sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-dark);
+  transition: background 0.2s ease;
+  cursor: pointer;
+}
+
+.app-sidebar-item:hover {
+  background: rgba(242, 147, 13, 0.1);
+  color: var(--color-primary-orange-end);
+}

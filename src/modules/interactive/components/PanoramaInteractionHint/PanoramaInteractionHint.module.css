@@ -1,0 +1,72 @@
+.hint {
+  position: absolute;
+  z-index: 4;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  color: #1a212b;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+.hint[data-visible='true'] {
+  animation: panorama-hint 2.5s ease-out forwards;
+}
+
+.icon {
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@keyframes panorama-hint {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%);
+  }
+  16%,
+  62% {
+    opacity: 1;
+  }
+  42% {
+    transform: translate(calc(-50% + 12px), -50%);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hint[data-visible='true'] {
+    animation: panorama-hint-reduced 2.5s linear forwards;
+  }
+}
+
+@keyframes panorama-hint-reduced {
+  0%,
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

@@ -1,0 +1,54 @@
+.shutterButton {
+  position: absolute;
+  z-index: 7;
+  right: max(24px, env(safe-area-inset-right));
+  top: 50%;
+  display: grid;
+  width: 72px;
+  height: 72px;
+  padding: 5px;
+  transform: translateY(-50%);
+  place-items: center;
+  border: 3px solid #fff;
+  border-radius: 9999px;
+  background: rgba(26, 33, 43, 0.16);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.24);
+  cursor: pointer;
+}
+
+.shutterButton::after {
+  width: 56px;
+  height: 56px;
+  border-radius: 9999px;
+  background: #f6f8fb;
+  box-shadow: inset 0 0 0 1px rgba(26, 33, 43, 0.2);
+  content: '';
+  transition: transform 120ms ease;
+}
+
+.shutterButton:active:not(:disabled)::after {
+  transform: scale(0.92);
+}
+
+.shutterButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.shutterButton:focus-visible {
+  outline: 3px solid #f59e0b;
+  outline-offset: 4px;
+}
+
+@media (max-width: 700px) {
+  .shutterButton {
+    right: max(16px, env(safe-area-inset-right));
+    width: 64px;
+    height: 64px;
+  }
+
+  .shutterButton::after {
+    width: 48px;
+    height: 48px;
+  }
+}

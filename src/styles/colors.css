@@ -1,0 +1,68 @@
+/* Centralized Color Variables for Villa de Leyva App */
+:root {
+  /* Brand Colors */
+  --color-primary-orange-start: #F2930D;
+  --color-primary-orange-end: #BA5900;
+  --color-orange-glow: rgba(242, 147, 13, 0.24);
+  
+  /* Semantic Variables */
+  --color-background-primary: #0B1017;
+  --color-background-secondary: #1A212B;
+  --color-background-panel: #F6F8FB;
+  --color-background-overlay: rgba(0, 0, 0, 0.4);
+  --color-background-card: #0B1017;
+  --color-background-card-light: #FFFFFF;
+
+  --color-text-primary: #1A212B;
+  --color-text-secondary: #64748B;
+  --color-text-inverse: #FFFFFF;
+  --color-text-muted: #9AA8BC;
+
+  --color-action-primary: #F2930D;
+  --color-action-primary-pressed: #BA5900;
+  --color-action-secondary: rgba(255, 255, 255, 0.2);
+
+  --color-status-success: #10B981;
+  --color-status-warning: #F59E0B;
+  --color-status-error: #EF4444;
+  --color-status-info: #3B82F6;
+
+  --color-map-route: #3B82F6;
+  --color-map-marker-active: #F2930D;
+  --color-narration-active-background: rgba(242, 147, 13, 0.24);
+  --color-narration-active-border: #BA5900;
+  --color-narration-completed-text: rgba(26, 33, 43, 0.76);
+
+  /* Neutrals */
+  --color-bg-dark-night: #0B1017;
+  --color-bg-panel: #F6F8FB;
+  --color-white: #FFFFFF;
+  --color-text-dark: #1A212B;
+  --color-border-light: rgba(255, 255, 255, 0.2);
+  --color-border-card: #E2E8F0;
+  
+  /* Highlights & Accents */
+  --color-highlight-cream: #FFF2D2;
+  --color-overlay-dark: rgba(0, 0, 0, 0.4);
+  
+  /* Elevations & Shadows */
+  --shadow-elevation-small: 0px 4px 8px rgba(0, 0, 0, 0.16);
+  --shadow-elevation-medium: 0px 8px 16px rgba(0, 0, 0, 0.16);
+  --shadow-orange-glow: 0px 4px 8px rgba(242, 147, 13, 0.24);
+  --shadow-inset-button: inset 0px -1px 1px 2px rgba(0, 0, 0, 0.5), inset 0px 1px 5px rgba(0, 0, 0, 0.64);
+
+  /* Button System */
+  --button-solid-start: #F2930D;
+  --button-solid-end: #BA5900;
+  --button-solid-hover-end: #8D4300;
+  --button-solid-hover-overlay: rgba(11, 16, 23, 0.18);
+  --button-solid-foreground: #FFFFFF;
+  --button-solid-border: #FFFFFF;
+  --button-solid-decoration: rgba(186, 89, 0, 0.42);
+  --button-highlight: #FFF2D2;
+  --button-transparent-foreground: #1A212B;
+  --button-transparent-hover: rgba(26, 33, 43, 0.06);
+  --button-disabled-background: rgba(203, 212, 225, 0.2);
+  --button-disabled-foreground: rgba(154, 168, 188, 0.3);
+  --button-focus-ring: #F2930D;
+}

@@ -1,0 +1,541 @@
+.screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  isolation: isolate;
+  background-color: #1a212b;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: #f6f8fb;
+  font-family: var(--font-family-primary, "Lexend", sans-serif);
+}
+
+.overlay {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background: rgba(26, 20, 17, 0.72);
+  pointer-events: none;
+}
+
+.layout {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  grid-template-columns: minmax(0, 796px);
+  grid-template-rows: 40px minmax(0, 290px);
+  justify-content: center;
+  gap: 12px;
+  padding: 24px;
+}
+
+.layout > header {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.mapArea {
+  position: relative;
+  width: 100%;
+  height: min(290px, 100%);
+  min-height: 0;
+  margin: 0 auto;
+}
+
+.progressPanel {
+  position: absolute;
+  z-index: 4;
+  bottom: 12px;
+  left: 12px;
+  display: flex;
+  width: 224px;
+  max-height: calc(100% - 24px);
+  flex-direction: column;
+  gap: 5px;
+  padding: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  background: rgba(26, 33, 43, 0.92);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(6px);
+}
+
+.progressHeading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  color: #f6f8fb;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 14px;
+}
+
+.progressHeading strong {
+  color: #ffd38a;
+  white-space: nowrap;
+}
+
+.progressTrack {
+  width: 100%;
+  height: 5px;
+  overflow: hidden;
+  border-radius: 9999px;
+  background: rgba(203, 212, 225, 0.35);
+}
+
+.progressTrack span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: #f2930d;
+  transition: width 300ms ease-out;
+}
+
+.progressDetails {
+  display: grid;
+  margin: 0;
+  grid-template-columns: 1fr;
+  gap: 3px;
+}
+
+.progressDetails div {
+  min-width: 0;
+}
+
+.progressDetails dt {
+  color: rgba(246, 248, 251, 0.72);
+  font-size: 8px;
+  line-height: 11px;
+}
+
+.progressDetails dd {
+  margin: 0;
+  overflow: hidden;
+  color: #f6f8fb;
+  font-size: 9px;
+  font-weight: 500;
+  line-height: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.validateButton {
+  width: 100%;
+  height: 34px;
+  min-height: 34px;
+  padding: 5px 10px;
+  gap: 6px;
+  font-size: 10px;
+  line-height: 14px;
+}
+
+.mapControls {
+  position: absolute;
+  z-index: 5;
+  right: 12px;
+  bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.locateButton,
+.zoomControls {
+  border: 1px solid rgba(154, 168, 188, 0.2);
+  background: #fff;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.16);
+}
+
+.locateButton {
+  display: inline-flex;
+  width: 32px;
+  height: 32px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  cursor: pointer;
+}
+
+.zoomControls {
+  display: flex;
+  width: 32px;
+  height: 56px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3px;
+  border-radius: 16px;
+}
+
+.zoomControls button {
+  display: inline-flex;
+  width: 24px;
+  height: 24px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.zoomControls button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.zoomControls > span {
+  width: 16px;
+  height: 1px;
+  background: #e2e8f0;
+}
+
+.locateButton:focus-visible,
+.zoomControls button:focus-visible,
+.directionsButton:focus-visible,
+.referenceMapHeader button:focus-visible {
+  outline: 2px solid #f2930d;
+  outline-offset: 2px;
+}
+
+.statusMessage {
+  position: absolute;
+  z-index: 4;
+  top: 12px;
+  left: 50%;
+  max-width: min(420px, calc(100% - 112px));
+  padding: 6px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.36);
+  border-radius: 9999px;
+  background: rgba(26, 33, 43, 0.9);
+  color: #fff;
+  font-size: 10px;
+  line-height: 14px;
+  text-align: center;
+  transform: translateX(-50%);
+}
+
+.completionCard,
+.rewardCard {
+  position: relative;
+  display: flex;
+  width: min(100%, 604px);
+  height: min(268px, 100%);
+  min-height: 0;
+  margin: 11px auto;
+  overflow: hidden;
+  border: 1px solid rgba(211, 196, 165, 0.9);
+  border-radius: 16px;
+  background-color: #e8ddc5;
+  background-position: center;
+  background-repeat: repeat;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
+  color: #1a212b;
+}
+
+.completionCard {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 18px 24px;
+  text-align: center;
+}
+
+.successIcon {
+  display: inline-flex;
+  width: 64px;
+  height: 64px;
+  flex: 0 0 64px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #e1fcde;
+}
+
+.completionCard h2,
+.rewardCard h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 26px;
+}
+
+.completionCard p,
+.rewardCard p {
+  max-width: 540px;
+  margin: 0;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.rewardCard {
+  display: grid;
+  grid-template-columns: 142px minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) 48px;
+  align-items: center;
+  gap: 8px 18px;
+  padding: 16px;
+}
+
+.voucherVisual {
+  display: flex;
+  width: 142px;
+  height: 156px;
+  grid-row: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border: 1px solid rgba(154, 168, 188, 0.5);
+  border-radius: 16px;
+  background: #fff;
+}
+
+.qrPattern {
+  display: block;
+  width: 108px;
+  height: 108px;
+  background:
+    linear-gradient(90deg, #111 12%, transparent 12% 24%, #111 24% 36%, transparent 36% 48%, #111 48% 60%, transparent 60% 72%, #111 72% 84%, transparent 84%),
+    linear-gradient(#111 12%, transparent 12% 24%, #111 24% 36%, transparent 36% 48%, #111 48% 60%, transparent 60% 72%, #111 72% 84%, transparent 84%);
+  background-color: #fff;
+  background-size: 36px 36px;
+}
+
+.voucherVisual small {
+  color: #ba5900;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 10px;
+  text-transform: uppercase;
+}
+
+.rewardCopy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.rewardActions {
+  display: flex;
+  grid-column: 1 / -1;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(154, 168, 188, 0.35);
+}
+
+.directionsButton {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  gap: 8px;
+  border: 0;
+  background: transparent;
+  color: #1a212b;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.dialogBackdrop {
+  position: absolute;
+  z-index: 20;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(17, 21, 28, 0.68);
+  backdrop-filter: blur(3px);
+}
+
+.pointDialog,
+.referenceDialog {
+  overflow: hidden;
+  border: 1px solid rgba(211, 196, 165, 0.9);
+  border-radius: 16px;
+  background: #f6f1e7;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.34);
+  color: #1a212b;
+}
+
+.pointDialog {
+  display: grid;
+  width: min(100%, 500px);
+  grid-template-columns: 56px minmax(0, 1fr);
+  gap: 12px;
+  padding: 18px;
+}
+
+.pointNumber {
+  display: inline-flex;
+  width: 48px;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: #e88100;
+  box-shadow: 0 4px 10px rgba(104, 53, 0, 0.28);
+  color: #fff;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.dialogEyebrow {
+  margin: 0 0 3px;
+  color: #ba5900;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 14px;
+  text-transform: uppercase;
+}
+
+.pointDialog h2,
+.referenceDialog h2 {
+  margin: 0;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.pointDialog p,
+.referenceDialog p {
+  margin: 4px 0 0;
+  font-size: 11px;
+  line-height: 16px;
+}
+
+.dialogActions {
+  display: flex;
+  grid-column: 1 / -1;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.referenceDialog {
+  display: grid;
+  width: min(100%, 580px);
+  max-height: calc(100% - 24px);
+  grid-template-rows: auto minmax(0, 190px) auto;
+  gap: 8px;
+  padding: 14px;
+}
+
+.referenceMapHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.referenceMapHeader button {
+  display: inline-flex;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(154, 168, 188, 0.2);
+  border-radius: 12px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.referenceDialog img {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  border-radius: 10px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.referenceDialog > p {
+  margin: 0;
+  color: #475569;
+  text-align: center;
+}
+
+.toast {
+  position: absolute;
+  z-index: 12;
+  right: 24px;
+  bottom: 20px;
+  max-width: min(390px, calc(100% - 48px));
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 12px;
+  background: rgba(26, 33, 43, 0.96);
+  color: #f6f8fb;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (max-height: 360px) {
+  .layout {
+    grid-template-rows: 40px minmax(0, 1fr);
+    gap: 8px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  .progressPanel {
+    transform: scale(0.9);
+    transform-origin: bottom left;
+  }
+}
+
+@media (max-width: 680px) {
+  .layout {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .progressPanel {
+    width: 206px;
+  }
+
+  .rewardCard {
+    grid-template-columns: 116px minmax(0, 1fr);
+  }
+
+  .voucherVisual {
+    width: 116px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progressTrack span {
+    transition: none;
+  }
+}

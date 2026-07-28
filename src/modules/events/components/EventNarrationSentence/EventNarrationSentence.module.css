@@ -1,0 +1,19 @@
+.sentence {
+  padding: 1px 2px;
+  border-radius: 4px;
+  transition:
+    color 180ms ease,
+    background-color 180ms ease;
+}
+
+.sentence[data-active] {
+  background: rgba(255, 176, 45, 0.42);
+  color: #111827;
+  box-decoration-break: clone;
+  box-shadow: inset 3px 0 #ba5900;
+  -webkit-box-decoration-break: clone;
+}
+
+.sentence[data-completed]:not([data-active]) {
+  color: rgba(26, 33, 43, 0.78);
+}

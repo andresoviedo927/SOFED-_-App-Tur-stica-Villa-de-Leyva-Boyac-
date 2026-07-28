@@ -1,0 +1,15 @@
+.column {
+  display: flex;
+  width: 96px;
+  height: 290px;
+  flex: 0 0 96px;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media (max-height: 370px) {
+  .column {
+    height: 266px;
+  }
+}

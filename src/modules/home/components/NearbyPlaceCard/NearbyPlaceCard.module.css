@@ -1,0 +1,5 @@
+.card {
+  min-width: 180px;
+  max-width: 220px;
+  flex-shrink: 0;
+}

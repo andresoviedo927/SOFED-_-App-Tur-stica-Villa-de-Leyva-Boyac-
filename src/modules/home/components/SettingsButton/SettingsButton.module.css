@@ -1,0 +1,40 @@
+.button {
+  display: inline-flex;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border: 1px solid rgba(154, 168, 188, 0.2);
+  border-radius: 16px;
+  background: #FFFFFF;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.16);
+  color: #1A212B;
+  cursor: pointer;
+  transition:
+    box-shadow 150ms ease,
+    filter 150ms ease,
+    transform 100ms ease;
+}
+
+.button:hover {
+  filter: brightness(0.97);
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.2);
+}
+
+.button:active {
+  transform: translateY(1px);
+}
+
+.button:focus-visible {
+  outline: 2px solid #F2930D;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition: none;
+  }
+}

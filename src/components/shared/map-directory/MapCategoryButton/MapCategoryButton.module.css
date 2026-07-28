@@ -1,0 +1,86 @@
+.button {
+  display: grid;
+  width: 96px;
+  height: 66px;
+  min-height: 66px;
+  grid-template-rows: 48px 18px;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #f6f8fb;
+  cursor: pointer;
+}
+
+.button img {
+  display: block;
+  box-sizing: border-box;
+  width: 48px;
+  height: 48px;
+  padding: var(--category-icon-padding, 8px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 34% 28%, rgba(255, 215, 142, 0.72) 0 12%, transparent 13%),
+    linear-gradient(145deg, #e69a29 0%, #c56600 72%);
+  box-shadow:
+    0 2px 0 rgba(83, 41, 0, 0.76),
+    0 5px 8px rgba(0, 0, 0, 0.28);
+  object-fit: contain;
+  transition:
+    filter 180ms ease-out,
+    opacity 180ms ease-out,
+    transform 180ms ease-out;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.button span {
+  display: block;
+  width: 96px;
+  overflow: hidden;
+  font-size: var(--category-label-size, 10px);
+  font-weight: 500;
+  line-height: 18px;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.button:hover:not(:disabled) img {
+  transform: translateY(-1px) scale(1.03);
+}
+
+.button[data-state='selected'] img {
+  filter: saturate(1.08);
+  box-shadow:
+    0 2px 0 rgba(83, 41, 0, 0.76),
+    0 0 0 2px rgba(255, 255, 255, 0.42),
+    0 5px 10px rgba(242, 147, 13, 0.42);
+}
+
+.button[data-state='disabled'] {
+  cursor: not-allowed;
+}
+
+.button[data-state='disabled'] img {
+  background: linear-gradient(180deg, #9aa8bc 0%, #5f6670 100%);
+  filter: grayscale(1);
+  opacity: 0.55;
+}
+
+.button[data-state='disabled'] span {
+  color: rgba(246, 248, 251, 0.58);
+}
+
+.button:focus-visible {
+  border-radius: 10px;
+  outline: 2px solid #f2930d;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button img {
+    transition: none;
+  }
+}

@@ -1,0 +1,34 @@
+.guide {
+  position: relative;
+  width: clamp(240px, 35.8vw, 302px);
+  height: clamp(240px, 35.8vw, 302px);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.22));
+}
+
+.shadow {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  bottom: 1px;
+  transform: translateX(-50%);
+}
+
+@media (max-height: 350px) {
+  .guide {
+    width: 250px;
+    height: 250px;
+  }
+}

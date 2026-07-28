@@ -1,0 +1,198 @@
+@font-face {
+  font-family: 'Lexend';
+  src: url('../assets/fonts/Lexend-Variable.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+/*
+ * Figma Hand no permite redistribucion independiente. Esta declaracion usa
+ * la copia instalada en el dispositivo cuando esta disponible.
+ */
+@font-face {
+  font-family: 'Figma Hand';
+  src: local('Figma Hand'), local('FigmaHand-Regular');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+/* ==========================================================================
+   SISTEMA TIPOGRÁFICO CENTRALIZADO - VILLA DE LEYVA APP TURÍSTICA
+   ==========================================================================
+   
+   REGLAS DE USO DE TIPOGRAFÍA:
+   
+   1. FIGMA HAND:
+      - USO EXCLUSIVO: Nombre "Villa de Leyva" en el Home y Splash Screen.
+      - PROHIBIDO EN: Párrafos largos, formularios, datos, fechas, distancias,
+        botones pequeños, mensajes de error, información de navegación.
+      - FALLBACK: "Figma Hand", "Caveat", "Comic Sans MS", cursive.
+      
+   2. LEXEND:
+      - USO EN TODOS LOS ELEMENTOS FUNCIONALES: Cuerpos de texto, botones,
+        labels, formularios, chips, fechas, horarios, distancias, direcciones,
+        información de establecimientos, eventos, mensajes del sistema,
+        configuraciones, controles, navegación y modales.
+      - FALLBACK: "Lexend", Arial, sans-serif.
+   
+   3. REGLAS GENERALES:
+      - No escribir font-family, font-size, font-weight o line-height directamente en cada componente.
+      - Usar las clases o componentes centralizados (<Typography />, <Heading />, <BodyText />, <Label />).
+      - No usar tamaños de texto inferiores a 12px.
+      - No usar mayúsculas sostenidas en bloques extensos.
+      - Mantener áreas táctiles táctiles mínimas de 44x44px en botones e interactivos.
+   ========================================================================== */
+
+:root {
+  /* Familias Tipográficas Centralizadas */
+  --font-family-display: 'Figma Hand', 'Caveat', 'Comic Sans MS', cursive;
+  --font-family-primary: 'Lexend', Arial, sans-serif;
+
+  /* Pesos Tipográficos Disponibles (Máximo 3 activos por familia) */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Line Heights (Interlineados Cómodos) */
+  --line-height-tight: 1.15;
+  --line-height-heading: 1.25;
+  --line-height-body: 1.5;
+  --line-height-relaxed: 1.6;
+
+  /* Letter Spacing */
+  --letter-spacing-tight: -0.015em;
+  --letter-spacing-normal: 0em;
+  --letter-spacing-wide: 0.025em;
+
+  /* Escala Tipográfica Responsive con clamp() (Mobile Landscape -> Tablet Landscape) */
+  
+  /* Display (Figma Hand) */
+  --font-size-display: clamp(1.75rem, 4vw + 0.5rem, 2.75rem); /* 28px -> 44px */
+  
+  /* Headlines (Lexend / Figma Hand según contexto) */
+  --font-size-headline-large: clamp(1.5rem, 3.2vw + 0.25rem, 2.25rem); /* 24px -> 36px */
+  --font-size-headline-medium: clamp(1.25rem, 2.6vw + 0.25rem, 1.75rem); /* 20px -> 28px */
+  --font-size-headline-small: clamp(1.125rem, 2.2vw + 0.2rem, 1.5rem); /* 18px -> 24px */
+
+  /* Titles (Lexend SemiBold) */
+  --font-size-title-large: clamp(1rem, 1.8vw + 0.2rem, 1.25rem); /* 16px -> 20px */
+  --font-size-title-medium: clamp(0.9375rem, 1.5vw + 0.2rem, 1.125rem); /* 15px -> 18px */
+  --font-size-title-small: clamp(0.875rem, 1.2vw + 0.2rem, 1rem); /* 14px -> 16px */
+
+  /* Body (Lexend Regular / Medium) */
+  --font-size-body-large: clamp(0.9375rem, 1.4vw + 0.2rem, 1.0625rem); /* 15px -> 17px */
+  --font-size-body-medium: clamp(0.875rem, 1.2vw + 0.2rem, 1rem); /* 14px -> 16px */
+  --font-size-body-small: clamp(0.75rem, 1vw + 0.2rem, 0.875rem); /* 12px -> 14px (Min 12px) */
+
+  /* Labels & Controls (Lexend Medium / SemiBold) */
+  --font-size-label-large: clamp(0.875rem, 1.3vw + 0.2rem, 1rem); /* 14px -> 16px */
+  --font-size-label-medium: clamp(0.8125rem, 1.1vw + 0.2rem, 0.9375rem); /* 13px -> 15px */
+  --font-size-label-small: clamp(0.75rem, 1vw + 0.15rem, 0.8125rem); /* 12px -> 13px */
+}
+
+/* Base Typographic Utility Classes */
+.font-display {
+  font-family: var(--font-family-display);
+}
+
+.font-primary {
+  font-family: var(--font-family-primary);
+}
+
+/* Tokens de Jerarquía Tipográfica */
+.typography-display {
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-display);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+.typography-headline-large {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-headline-large);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-heading);
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+.typography-headline-medium {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-headline-medium);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-heading);
+}
+
+.typography-headline-small {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-headline-small);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-heading);
+}
+
+.typography-title-large {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-title-large);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-heading);
+}
+
+.typography-title-medium {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-title-medium);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-heading);
+}
+
+.typography-title-small {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-title-small);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-heading);
+}
+
+.typography-body-large {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-body-large);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-relaxed);
+}
+
+.typography-body-medium {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-body-medium);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-body);
+}
+
+.typography-body-small {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-body);
+}
+
+.typography-label-large {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-label-large);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-wide);
+}
+
+.typography-label-medium {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-label-medium);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-tight);
+}
+
+.typography-label-small {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-label-small);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-tight);
+}

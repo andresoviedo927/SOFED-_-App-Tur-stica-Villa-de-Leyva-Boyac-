@@ -1,0 +1,40 @@
+.particles {
+  position: absolute;
+  inset: -20%;
+  pointer-events: none;
+}
+
+.particles span {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #9bffac;
+  box-shadow: 0 0 7px rgba(87, 255, 113, 0.95);
+  animation: greenParticleSparkle
+    var(--particle-duration, 1100ms) ease-in-out
+    var(--particle-delay, 0ms) infinite;
+}
+
+@keyframes greenParticleSparkle {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 6px, 0)
+      scale(calc(var(--particle-scale, 1) * 0.7));
+  }
+  45% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -12px, 0)
+      scale(calc(var(--particle-scale, 1) * 1.15));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .particles span {
+    opacity: 0.55;
+    animation: none;
+  }
+}

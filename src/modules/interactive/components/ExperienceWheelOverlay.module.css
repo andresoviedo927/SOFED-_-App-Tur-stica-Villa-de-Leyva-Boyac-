@@ -1,0 +1,23 @@
+.overlay {
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(26, 33, 43, 0.6);
+  opacity: 0;
+  animation: wheel-overlay-in 240ms ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes wheel-overlay-in {
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay {
+    opacity: 1;
+    animation: none;
+  }
+}

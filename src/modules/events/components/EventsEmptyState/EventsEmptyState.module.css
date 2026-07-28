@@ -1,0 +1,24 @@
+.empty {
+  display: grid;
+  width: 100%;
+  height: 290px;
+  place-content: center;
+  gap: 8px;
+  border-radius: 16px;
+  background: rgba(26, 33, 43, 0.48);
+  color: #f6f8fb;
+  text-align: center;
+}
+
+.empty h2,
+.empty p {
+  margin: 0;
+}
+
+.empty h2 {
+  font-size: 20px;
+}
+
+.empty p {
+  font-size: 14px;
+}

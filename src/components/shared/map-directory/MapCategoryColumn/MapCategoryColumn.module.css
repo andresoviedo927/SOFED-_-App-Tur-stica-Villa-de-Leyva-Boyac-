@@ -1,0 +1,16 @@
+.column {
+  display: flex;
+  width: 96px;
+  height: 290px;
+  min-height: 0;
+  flex-direction: column;
+  align-items: center;
+}
+
+.column[data-distribution='space-between'] {
+  justify-content: space-between;
+}
+
+.column[data-distribution='center'] {
+  justify-content: center;
+}

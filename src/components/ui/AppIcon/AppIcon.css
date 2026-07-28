@@ -1,0 +1,25 @@
+.app-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+}
+
+.app-icon--normal {
+  opacity: 1;
+}
+
+.app-icon--active {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.app-icon--pressed {
+  opacity: 0.8;
+  transform: scale(0.95);
+}
+
+.app-icon--disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}

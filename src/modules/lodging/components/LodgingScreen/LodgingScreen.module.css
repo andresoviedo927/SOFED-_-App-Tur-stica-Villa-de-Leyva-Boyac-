@@ -1,0 +1,29 @@
+.content {
+  display: grid;
+  width: 100%;
+  height: 290px;
+  padding-inline: 24px;
+  grid-template-columns: 96px minmax(0, 644px);
+  gap: 8px;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+  white-space: nowrap;
+}
+
+@media (max-width: 700px) {
+  .content {
+    padding-inline: 0;
+    grid-template-columns: 88px minmax(0, 1fr);
+    gap: 4px;
+  }
+}

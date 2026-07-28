@@ -1,0 +1,29 @@
+.preview,
+.cameraVideo,
+.fallbackImage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.preview {
+  overflow: hidden;
+  background: #05080c;
+}
+
+.cameraVideo,
+.fallbackImage {
+  display: block;
+  object-fit: cover;
+}
+
+.cameraVideo {
+  transform: translateZ(0);
+}
+
+.fallbackImage {
+  z-index: 1;
+  user-select: none;
+  -webkit-user-drag: none;
+}

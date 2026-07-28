@@ -1,0 +1,25 @@
+.app-card {
+  background: var(--color-bg-panel);
+  border: 1px solid var(--color-border-card);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: var(--shadow-elevation-small);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.app-card--clickable {
+  cursor: pointer;
+}
+
+.app-card--clickable:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-elevation-medium);
+}
+
+.app-card-title {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-dark);
+  margin-bottom: 8px;
+}

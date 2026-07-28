@@ -1,0 +1,67 @@
+.guide {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  bottom: 42px;
+  width: clamp(160px, 26vw, 240px);
+  aspect-ratio: 2.5 / 1;
+  opacity: calc(0.22 + var(--scan-progress, 0) * 0.78);
+  transform: translateX(-50%) perspective(260px) rotateX(62deg);
+  border-radius: 50%;
+  pointer-events: none;
+  transition: opacity 500ms ease-out;
+}
+
+.guide[data-fading] {
+  opacity: 0.2;
+}
+
+.glow,
+.grid {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+}
+
+.glow {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(87, 255, 113, 0.42) 0%,
+    rgba(23, 191, 51, 0.2) 40%,
+    rgba(23, 191, 51, 0) 75%
+  );
+  filter: blur(2px);
+  animation: surfacePulse 1600ms ease-in-out infinite alternate;
+}
+
+.grid {
+  background-image:
+    linear-gradient(
+      rgba(131, 255, 151, 0.34) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(131, 255, 151, 0.34) 1px,
+      transparent 1px
+    );
+  background-size: 18px 18px;
+  mask-image: radial-gradient(
+    ellipse at center,
+    #000 20%,
+    transparent 75%
+  );
+}
+
+@keyframes surfacePulse {
+  to {
+    opacity: 0.68;
+    transform: scale(1.04);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glow {
+    animation: none;
+  }
+}

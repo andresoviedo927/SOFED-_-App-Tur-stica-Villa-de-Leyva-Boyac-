@@ -1,0 +1,86 @@
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+  border: none;
+  background: transparent;
+  padding: 0;
+}
+
+/* Circle Orange Variant matching Figma spec exactly */
+.icon-button--circle-orange {
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  min-height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, var(--color-primary-orange-start) 0%, var(--color-primary-orange-end) 100%);
+  border: 1px solid var(--color-white);
+  box-shadow: 
+    inset 0px -1px 1px 2.3px rgba(0, 0, 0, 0.5), 
+    inset 0px 1px 5px rgba(0, 0, 0, 0.64),
+    var(--shadow-orange-glow);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Top Gloss Arc Highlight from Figma Spec */
+.icon-button--circle-orange::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 6px;
+  right: 6px;
+  height: 22px;
+  border-radius: 50% 50% 40% 40%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.65) 0%, rgba(255, 255, 255, 0) 100%);
+  pointer-events: none;
+}
+
+/* Top-Left Gloss Accent Pill (Ellipse 19 from Figma Spec) */
+.icon-button--circle-orange::after {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 10px;
+  width: 10px;
+  height: 5px;
+  border-radius: 9999px;
+  background: var(--color-highlight-cream);
+  transform: rotate(-35deg);
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+.icon-button--circle-orange:hover {
+  transform: translateY(-2px) scale(1.03);
+  filter: brightness(1.08);
+}
+
+.icon-button--circle-orange:active {
+  transform: translateY(1px) scale(0.97);
+}
+
+/* Glass/Transparent Variant */
+.icon-button--transparent {
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.icon-button--transparent:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.05);
+}
+
+.icon-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}

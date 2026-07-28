@@ -1,0 +1,46 @@
+.text {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 5px;
+}
+
+.text h2 {
+  margin: 0;
+  color: #1a212b;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 24px;
+  text-align: center;
+}
+
+.scroll {
+  min-width: 0;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 1px 7px 2px;
+  color: #1a212b;
+  scrollbar-color: rgba(120, 83, 47, 0.45) transparent;
+  scrollbar-width: thin;
+  scrollbar-gutter: stable;
+}
+
+.scroll:focus-visible {
+  border-radius: 6px;
+  outline: 2px solid #f08a00;
+  outline-offset: 1px;
+}
+
+.scroll p {
+  margin: 0 0 6px;
+  font-size: 12px;
+  line-height: 18px;
+  text-align: center;
+}
+
+.scroll p:last-child {
+  margin-bottom: 0;
+}

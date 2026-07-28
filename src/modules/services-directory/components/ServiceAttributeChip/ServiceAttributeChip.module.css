@@ -1,0 +1,33 @@
+.chip {
+  display: inline-flex;
+  min-width: 0;
+  min-height: 26px;
+  flex: none;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border: 0;
+  border-radius: 13px;
+  background: #dee4ed;
+  color: #1a212b;
+  font-family: 'Lexend', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  text-decoration: none;
+}
+
+button.chip,
+a.chip {
+  cursor: pointer;
+}
+
+.chip strong {
+  font-weight: 600;
+}
+
+button.chip:focus-visible,
+a.chip:focus-visible {
+  outline: 2px solid #f2930d;
+  outline-offset: 2px;
+}

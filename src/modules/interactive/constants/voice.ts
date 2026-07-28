@@ -1,0 +1,77 @@
+export const LATIN_AMERICAN_SPANISH_LOCALES = [
+  'es-CO',
+  'es-MX',
+  'es-US',
+  'es-AR',
+  'es-CL',
+  'es-PE',
+  'es-VE',
+  'es-EC',
+  'es-UY',
+  'es-BO',
+  'es-PY',
+  'es-CR',
+  'es-PA',
+  'es-GT',
+  'es-HN',
+  'es-SV',
+  'es-NI',
+  'es-DO',
+  'es-PR',
+] as const;
+
+export const MALE_VOICE_HINTS = [
+  'gonzalo',
+  'carlos',
+  'antonio',
+  'jorge',
+  'diego',
+  'miguel',
+  'juan',
+  'andres',
+  'andrés',
+  'mateo',
+  'felipe',
+  'pablo',
+  'alejandro',
+  'sebastian',
+  'sebastián',
+  'raul',
+  'raúl',
+  'ricardo',
+  'eduardo',
+  'oscar',
+  'óscar',
+  'manuel',
+  'fernando',
+  'alvaro',
+  'álvaro',
+  'sergio',
+  'martin',
+  'martín',
+] as const;
+
+export const CHARACTER_VOICE_CONFIG = {
+  localePriority: [
+    'es-CO',
+    'es-MX',
+    'es-US',
+    'es-AR',
+    'es-CL',
+    'es-PE',
+  ],
+  blockedLocales: ['es-ES'],
+  gender: 'male',
+  perceivedAge: 'senior',
+  rate: 0.88,
+  pitch: 0.82,
+  freeOnly: true,
+} as const;
+
+export const GUIDE_VOICE_CONFIG = CHARACTER_VOICE_CONFIG;
+
+export const GUIDE_VOICE_TIMING = {
+  characterLeadInMs: 320,
+  sentencePauseMs: 180,
+  paragraphPauseMs: 550,
+} as const;

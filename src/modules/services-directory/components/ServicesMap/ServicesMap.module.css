@@ -1,0 +1,99 @@
+.frame {
+  width: 540px;
+  height: 290px;
+  padding: 8px;
+  border-radius: 16px;
+  background:
+    linear-gradient(rgba(166, 142, 98, 0.54), rgba(166, 142, 98, 0.54)),
+    url('../../../../assets/images/reading-paper-texture.svg') center / cover;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.16);
+}
+
+.map {
+  position: relative;
+  width: 524px;
+  height: 274px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #edf1f5;
+  cursor: grab;
+  touch-action: none;
+}
+
+.map:active {
+  cursor: grabbing;
+}
+
+.map:focus-visible {
+  outline: 2px solid #f2930d;
+  outline-offset: -3px;
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  transform-origin: center;
+  transition: transform 160ms ease-out;
+  will-change: transform;
+}
+
+.base {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.filterChip {
+  position: absolute;
+  z-index: 8;
+  top: 8px;
+  left: 8px;
+  max-width: 205px;
+  min-height: 32px;
+  padding: 5px 10px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 9999px;
+  background: rgba(219, 112, 0, 0.94);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.18);
+  color: #fff;
+  font: 600 10px/14px 'Lexend', sans-serif;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.empty {
+  position: absolute;
+  z-index: 6;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  width: 250px;
+  gap: 4px;
+  padding: 14px;
+  transform: translate(-50%, -50%);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.14);
+  color: #1a212b;
+  text-align: center;
+}
+
+.empty strong {
+  font-size: 12px;
+}
+
+.empty span {
+  font-size: 10px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .canvas {
+    transition: none;
+  }
+}

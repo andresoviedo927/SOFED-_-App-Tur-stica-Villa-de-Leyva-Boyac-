@@ -1,0 +1,441 @@
+.screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  isolation: isolate;
+  background-color: #1a212b;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: var(--font-family-primary, "Lexend", sans-serif);
+}
+
+.overlay {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background: rgba(26, 33, 43, 0.6);
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 24px;
+}
+
+.header {
+  display: grid;
+  width: 100%;
+  height: 40px;
+  min-height: 40px;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+}
+
+.backButton {
+  min-width: 0;
+  min-height: 44px;
+  justify-self: start;
+  padding-right: 8px;
+  padding-left: 8px;
+  color: #f6f8fb;
+}
+
+.screenTitle {
+  margin: 0;
+  color: #f6f8fb;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
+  text-align: center;
+}
+
+.narrationAction {
+  display: flex;
+  justify-self: end;
+}
+
+.narrationButton {
+  display: inline-flex;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border: 1px solid rgba(154, 168, 188, 0.2);
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.16);
+  color: #1a212b;
+}
+
+.narrationButton:disabled {
+  opacity: 1;
+}
+
+.audioSpinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(26, 33, 43, 0.28);
+  border-top-color: #1a212b;
+  border-radius: 50%;
+  animation: audio-spin 700ms linear infinite;
+}
+
+.readingCard {
+  position: relative;
+  display: grid;
+  width: min(100%, 604px);
+  height: 100%;
+  max-height: 290px;
+  min-height: 0;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+  overflow: hidden;
+  padding: 16px;
+  border-radius: 16px;
+  background-color: #c8bda3;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  transition: grid-template-columns 400ms ease-out;
+}
+
+.readingCard::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.4);
+  pointer-events: none;
+}
+
+.readingCard > * {
+  position: relative;
+  z-index: 1;
+}
+
+.readingCardActive {
+  grid-template-columns: minmax(0, 400px) minmax(120px, 156px);
+}
+
+.textContent {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+}
+
+.articleTitle {
+  width: 100%;
+  flex: 0 0 auto;
+  margin: 0;
+  color: #1a212b;
+  font-size: clamp(24px, 3.55vw, 32px);
+  font-style: normal;
+  font-weight: 600;
+  line-height: 36px;
+  text-align: center;
+}
+
+.scrollableBody {
+  min-width: 0;
+  min-height: 0;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0 8px 4px 4px;
+  color: #1a212b;
+  scrollbar-color: rgba(26, 33, 43, 0.42) rgba(255, 255, 255, 0.2);
+  scrollbar-width: thin;
+}
+
+.scrollableBody:focus-visible {
+  border-radius: 4px;
+  outline: 2px solid #7a4300;
+  outline-offset: 2px;
+}
+
+.scrollableBody::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollableBody::-webkit-scrollbar-track {
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.scrollableBody::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+  background: rgba(26, 33, 43, 0.42);
+}
+
+.scrollableBody p {
+  margin: 0 0 10px;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
+  text-align: center;
+}
+
+.scrollableBody p:last-child {
+  margin-bottom: 0;
+}
+
+.narrationParagraphActive {
+  padding-left: 8px;
+  border-left: 3px solid var(--color-narration-active-border);
+}
+
+.narrationSentence {
+  border-radius: 6px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  padding: 2px 1px;
+  transition:
+    background-color 180ms ease,
+    color 180ms ease,
+    opacity 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.narrationSentenceActive {
+  padding-right: 4px;
+  padding-left: 4px;
+  background: var(--color-narration-active-background);
+  box-shadow:
+    inset 3px 0 0 var(--color-narration-active-border),
+    inset 0 -1px 0 var(--color-narration-active-border);
+  color: #1a212b;
+}
+
+.narrationSentenceCompleted {
+  color: var(--color-narration-completed-text);
+}
+
+.followButton {
+  position: absolute;
+  z-index: 2;
+  right: 10px;
+  bottom: 8px;
+  display: inline-flex;
+  min-width: 0;
+  min-height: 34px;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  border-radius: 9999px;
+  background: rgba(26, 33, 43, 0.94);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.18);
+  color: #f6f8fb;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 14px;
+}
+
+.followButton svg {
+  flex: 0 0 16px;
+}
+
+.characterTransition {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: visible;
+  transform-origin: center bottom;
+}
+
+.characterVisible {
+  animation: character-enter 420ms ease-out both;
+}
+
+.characterExiting {
+  animation: character-exit 400ms ease-in both;
+}
+
+.character {
+  position: relative;
+  display: flex;
+  width: 100%;
+  max-width: 162px;
+  height: 100%;
+  max-height: 258px;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.character img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 265px;
+  max-width: none;
+  height: 265px;
+  flex: 0 0 265px;
+  object-fit: contain;
+  object-position: center bottom;
+}
+
+.characterShadow {
+  position: absolute;
+  z-index: 0;
+  right: 5%;
+  bottom: -3px;
+  left: 5%;
+  height: 22px;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(26, 33, 43, 0.42) 0%,
+    rgba(26, 33, 43, 0) 72%
+  );
+  pointer-events: none;
+}
+
+.errorToast {
+  position: absolute;
+  z-index: 3;
+  right: 24px;
+  bottom: 20px;
+  max-width: min(360px, calc(100% - 48px));
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  background: rgba(26, 33, 43, 0.94);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  color: #f6f8fb;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@keyframes audio-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes character-enter {
+  from {
+    opacity: 0;
+    transform: translateX(20px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes character-exit {
+  from {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(20px) scale(0.98);
+  }
+}
+
+@media (max-width: 680px) {
+  .content {
+    gap: 8px;
+    padding: 16px;
+  }
+
+  .readingCardActive {
+    grid-template-columns: minmax(0, 1fr) minmax(100px, 132px);
+    gap: 10px;
+  }
+
+  .scrollableBody p {
+    font-size: 12px;
+    line-height: 17px;
+  }
+}
+
+@media (max-height: 370px) {
+  .content {
+    gap: 8px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+
+  .readingCard {
+    max-height: calc(100% - 48px);
+    padding: 12px 16px;
+  }
+
+  .articleTitle {
+    font-size: 24px;
+    line-height: 28px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .readingCard {
+    transition: none;
+  }
+
+  .characterVisible {
+    animation-duration: 1ms;
+    animation-name: character-fade;
+  }
+
+  .characterExiting {
+    opacity: 0;
+    animation: none;
+  }
+
+  .audioSpinner {
+    animation-duration: 1400ms;
+  }
+
+  .narrationSentence {
+    transition: none;
+  }
+}
+
+@keyframes character-fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,117 @@
+.carousel {
+  width: 100%;
+  height: 290px;
+  min-width: 0;
+}
+
+.viewport {
+  width: 100%;
+  height: 290px;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scroll-behavior: smooth;
+  scroll-padding-inline: 24px;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  touch-action: pan-x;
+  cursor: grab;
+}
+
+.viewport::-webkit-scrollbar {
+  display: none;
+}
+
+.viewport[data-dragging='true'] {
+  scroll-behavior: auto;
+  scroll-snap-type: none;
+  cursor: grabbing;
+  user-select: none;
+}
+
+.viewport:focus-visible {
+  border-radius: 18px;
+  outline: 2px solid #f2930d;
+  outline-offset: 2px;
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  min-width: 100%;
+  min-height: 290px;
+  padding-inline: 24px;
+  align-items: stretch;
+  gap: 16px;
+}
+
+.skeleton {
+  width: 224px;
+  height: 290px;
+  flex: 0 0 224px;
+  border-radius: 16px;
+  background:
+    linear-gradient(
+      105deg,
+      rgba(246, 248, 251, 0.08) 25%,
+      rgba(246, 248, 251, 0.2) 42%,
+      rgba(246, 248, 251, 0.08) 58%
+    ),
+    rgba(154, 168, 188, 0.16);
+  background-size: 220% 100%;
+  animation: loading 1.2s linear infinite;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@keyframes loading {
+  to {
+    background-position-x: -220%;
+  }
+}
+
+@media (max-width: 700px) {
+  .viewport {
+    scroll-padding-inline: 14px;
+  }
+
+  .track {
+    padding-inline: 14px;
+  }
+}
+
+@media (max-height: 370px) {
+  .carousel,
+  .viewport {
+    height: 266px;
+  }
+
+  .track {
+    min-height: 266px;
+  }
+
+  .skeleton {
+    height: 266px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .viewport {
+    scroll-behavior: auto;
+  }
+
+  .skeleton {
+    animation: none;
+  }
+}

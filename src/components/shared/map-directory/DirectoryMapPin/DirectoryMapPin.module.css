@@ -1,0 +1,55 @@
+.pin {
+  position: absolute;
+  z-index: 3;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  padding: 0;
+  transform: translate(-50%, -82%) scale(0.85);
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  opacity: 0;
+  animation: pin-enter 220ms ease-out forwards;
+}
+
+.pin img {
+  width: var(--pin-width, 24px);
+  height: var(--pin-height, 30px);
+  object-fit: contain;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.22));
+  transition: transform 160ms ease-out;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.pin:hover img,
+.pin[data-selected='true'] img {
+  transform: scale(1.12);
+}
+
+.pin:focus-visible {
+  border-radius: 50%;
+  outline: 2px solid #1a212b;
+  outline-offset: -4px;
+}
+
+@keyframes pin-enter {
+  to {
+    transform: translate(-50%, -82%) scale(1);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pin {
+    transform: translate(-50%, -82%);
+    opacity: 1;
+    animation: none;
+  }
+
+  .pin img {
+    transition: none;
+  }
+}

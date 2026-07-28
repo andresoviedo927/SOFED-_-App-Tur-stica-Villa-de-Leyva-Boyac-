@@ -1,0 +1,13 @@
+.shadow {
+  display: block;
+  width: 141px;
+  height: 38px;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(26, 33, 43, 0.88) 0%,
+    rgba(26, 33, 43, 0.5) 34%,
+    rgba(26, 33, 43, 0) 72%
+  );
+  pointer-events: none;
+}

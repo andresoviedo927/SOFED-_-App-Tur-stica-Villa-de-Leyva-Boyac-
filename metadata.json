@@ -1,0 +1,6 @@
+{
+  "name": "Villa de Leyva",
+  "description": "Aplicación turística oficial de Villa de Leyva con directorio de servicios, hospedaje, eventos y módulo interactivo.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

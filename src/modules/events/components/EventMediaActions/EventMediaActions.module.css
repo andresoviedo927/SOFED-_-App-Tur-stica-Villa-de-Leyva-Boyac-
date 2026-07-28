@@ -1,0 +1,8 @@
+.actions {
+  display: flex;
+  height: 52px;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
+}
