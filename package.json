@@ -11,7 +11,7 @@
     "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist --repo https://github.com/andresoviedo927/SOFED-_-App-Tur-stica-Villa-de-Leyva-Boyac-.git"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",

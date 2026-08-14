@@ -5,6 +5,7 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  base: "/SOFED-_-App-Tur-stica-Villa-de-Leyva-Boyac-/",
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
