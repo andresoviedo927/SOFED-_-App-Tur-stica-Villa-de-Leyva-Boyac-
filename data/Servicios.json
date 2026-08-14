@@ -1,0 +1,557 @@
+{
+  "metadata": {
+    "archivo": "Servicios.json",
+    "ubicacion_base": "Villa de Leyva, Boyacá, Colombia",
+    "fecha_actualizacion": "2026-08-04",
+    "moneda": "COP",
+    "cantidad_categorias": 8,
+    "cantidad_lugares": 32,
+    "criterio_seleccion": "Se priorizaron lugares con alta calificación y volumen de reseñas en Google/Tripadvisor cuando esas métricas son pertinentes. Para iglesias, cajeros, salud, gasolinerías y transporte se priorizaron relevancia local, cobertura, ubicación y fuentes oficiales o directorios públicos.",
+    "notas_importantes": [
+      "Los horarios, teléfonos, tarifas y políticas de mascotas pueden cambiar. La app debe mostrar la fecha de actualización y recomendar confirmar antes de desplazarse.",
+      "Los campos Instagram, petfriendly y precio_promedio se omiten cuando no aplican o no existe información pública suficientemente verificable.",
+      "Cuando no se encontró un teléfono directo publicado, el campo telefono_whatsapp lo indica expresamente; no se inventaron datos.",
+      "En gasolinería se incluyen dos estaciones del casco urbano y dos alternativas del corredor regional cercano, porque la oferta pública verificable dentro de Villa de Leyva es limitada.",
+      "Las calificaciones son referencias observadas en fuentes web y no deben tratarse como datos en tiempo real de Google Maps.",
+      "Las coordenadas son referencias geográficas en grados decimales. Algunos puntos rurales o direcciones sin un marcador público inequívoco son aproximados y deben validarse antes de usarse para navegación crítica."
+    ],
+    "fuente_coordenadas": "OpenStreetMap contributors y otras fuentes públicas de mapas consultadas."
+  },
+  "servicios": [
+    {
+      "id": "cafeteria",
+      "nombre": "Cafetería",
+      "lugares": [
+        {
+          "nombre": "Sybarita Caffè",
+          "telefono_whatsapp": "+57 316 481 1872",
+          "instagram": "@sybaritacaffe",
+          "descripcion_corta": "Café de especialidad reconocido por sus métodos de preparación, granos colombianos y ambiente tranquilo cerca de la Plaza Mayor.",
+          "ubicacion": "Calle 12 #8A-27, centro histórico, Villa de Leyva",
+          "latitud": 5.632842,
+          "longitud": -73.523463,
+          "horarios": "Domingo 08:00-20:00; lunes a viernes 08:00-19:00; sábado 08:00-21:00.",
+          "petfriendly": "Sí; aparece reportado como apto para perros.",
+          "precio_promedio": "COP 15.000-30.000 por persona, aproximado.",
+          "calificacion_referencia": "Google: alrededor de 4,7/5; Tripadvisor: alrededor de 5,0/5, según agregadores y reseñas consultadas.",
+          "fuentes": [
+            "https://www.facebook.com/sybaritacaffe/",
+            "https://www.tripadvisor.co/Restaurant_Review-g676524-d10687217-Reviews-Sybarita_Caffe-Villa_de_Leyva_Boyaca_Department.html"
+          ]
+        },
+        {
+          "nombre": "La Galleta Pastelería Café",
+          "telefono_whatsapp": "+57 300 323 8052",
+          "instagram": "@la_galleta_villa",
+          "descripcion_corta": "Pastelería y café muy concurrido, conocido por sus postres, tortas, galletas y bebidas calientes.",
+          "ubicacion": "Carrera 9 #11-47, centro histórico, Villa de Leyva",
+          "latitud": 5.63271,
+          "longitud": -73.52415,
+          "horarios": "Lunes a viernes 10:00-20:00; sábado 10:00-21:00; domingo 10:00-20:00.",
+          "precio_promedio": "COP 20.000-40.000 por persona.",
+          "calificacion_referencia": "Google: alrededor de 4,5/5 con más de 2.000 reseñas; Tripadvisor: alrededor de 4,5/5.",
+          "fuentes": [
+            "https://www.instagram.com/la_galleta_villa/",
+            "https://es.restaurantguru.com/La-Galleta-Villa-de-Leyva"
+          ]
+        },
+        {
+          "nombre": "Astral Taller de Pan Artesanal",
+          "telefono_whatsapp": "+57 315 817 1679",
+          "instagram": "@astralpanaderia",
+          "descripcion_corta": "Panadería artesanal y café con panes de masa madre, repostería y opciones de desayuno.",
+          "ubicacion": "Calle 12 #7-56, centro histórico, Villa de Leyva",
+          "latitud": 5.63219,
+          "longitud": -73.52258,
+          "horarios": "Domingo a jueves 08:00-18:00; viernes y sábado 08:00-19:00.",
+          "precio_promedio": "COP 10.000-30.000 por persona.",
+          "calificacion_referencia": "Google: alrededor de 4,7/5; Tripadvisor: alrededor de 4,5/5.",
+          "fuentes": [
+            "https://www.instagram.com/astralpanaderia/",
+            "https://es.restaurantguru.com/Astral-Taller-de-Pan-Artesanal-Villa-de-Leyva"
+          ]
+        },
+        {
+          "nombre": "Café Los Gallos",
+          "telefono_whatsapp": "+57 310 349 8817",
+          "instagram": "@cafelosgallos",
+          "descripcion_corta": "Café tradicional y restaurante ligero, popular por desayunos, postres y bebidas en el centro histórico.",
+          "ubicacion": "Carrera 8 #13-00, Villa de Leyva",
+          "latitud": 5.63321,
+          "longitud": -73.5222,
+          "horarios": "Todos los días 08:30-21:00.",
+          "precio_promedio": "COP 20.000-40.000 por persona.",
+          "calificacion_referencia": "Google y agregadores: alrededor de 4,4/5 con más de 1.500 reseñas.",
+          "fuentes": [
+            "https://www.instagram.com/cafelosgallos/",
+            "https://es.restaurantguru.com/Cafe-Los-Gallos-Villa-de-Leyva"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "iglesias",
+      "nombre": "Iglesias",
+      "lugares": [
+        {
+          "nombre": "Parroquia Nuestra Señora del Rosario",
+          "telefono_whatsapp": "Fijo: +57 608 732 0157; celular/WhatsApp: +57 315 895 4689",
+          "descripcion_corta": "Templo parroquial principal de Villa de Leyva, ubicado frente a la Plaza Mayor y uno de los referentes religiosos e históricos del municipio.",
+          "ubicacion": "Carrera 9 #12-68, Plaza Mayor, Villa de Leyva",
+          "latitud": 5.63324,
+          "longitud": -73.52324,
+          "horarios": "Templo abierto alrededor de las celebraciones. Despacho: lunes a viernes 08:00-12:00 y 14:00-18:00; sábado 08:00-12:00 y 14:00-16:00.",
+          "calificacion_referencia": "Seleccionada por relevancia patrimonial, ubicación central y volumen de reseñas turísticas.",
+          "fuentes": [
+            "https://www.diocesisdechiquinquira.org/parroquia/parroquia-nuestra-se%C3%B1ora-del-rosario-villa-de-leyva-boyac%C3%A1"
+          ]
+        },
+        {
+          "nombre": "Iglesia y Museo del Carmen",
+          "telefono_whatsapp": "Fijo: +57 608 732 0262; WhatsApp: +57 320 243 5658",
+          "instagram": "@museodelcarmenocd",
+          "descripcion_corta": "Conjunto carmelita con iglesia y museo de arte religioso colonial, reconocido por su colección y su valor arquitectónico.",
+          "ubicacion": "Plazuela del Carmen, Calle 14 #10-53, Villa de Leyva",
+          "latitud": 5.63515,
+          "longitud": -73.52346,
+          "horarios": "Museo: miércoles a lunes 09:30-13:00 y 14:00-17:00; martes cerrado. Confirmar cambios por festividades.",
+          "precio_promedio": "Museo: COP 7.000-10.000 por persona, aproximado; ingreso al templo sin costo durante apertura.",
+          "calificacion_referencia": "Alta relevancia cultural y reseñas favorables en plataformas turísticas.",
+          "fuentes": [
+            "https://www.instagram.com/museodelcarmenocd/",
+            "https://www.facebook.com/museodelcarmenocd/"
+          ]
+        },
+        {
+          "nombre": "Claustro e Iglesia de San Francisco",
+          "telefono_whatsapp": "No se encontró un número directo público verificado; referencia turística municipal: +57 608 732 0232",
+          "descripcion_corta": "Antiguo conjunto franciscano convertido en espacio cultural; conserva valor religioso, histórico y arquitectónico.",
+          "ubicacion": "Calle 10 #7-92, Villa de Leyva",
+          "latitud": 5.63054,
+          "longitud": -73.5241,
+          "horarios": "Acceso principalmente durante actividades culturales. La programación y los horarios pueden variar; confirmar con la Oficina de Turismo.",
+          "calificacion_referencia": "Seleccionado por su importancia patrimonial dentro del centro histórico.",
+          "fuentes": [
+            "https://villadeleyva-boyaca.gov.co/",
+            "https://situr.boyaca.gov.co/"
+          ]
+        },
+        {
+          "nombre": "Monasterio de Santo Ecce Homo",
+          "telefono_whatsapp": "No se encontró un número directo público suficientemente verificado; consultar por sus canales sociales antes de viajar.",
+          "instagram": "@monasteriodesantoecce_homo",
+          "descripcion_corta": "Monasterio dominico fundado en el siglo XVII, declarado patrimonio y reconocido por su arquitectura, jardines y ambiente de recogimiento.",
+          "ubicacion": "Zona rural de Sutamarchán, aproximadamente 8-10 km de Villa de Leyva",
+          "latitud": 5.66715,
+          "longitud": -73.61495,
+          "horarios": "Horario reportado: lunes a viernes 09:00-17:00. Puede abrir fines de semana o festivos según programación; confirmar previamente.",
+          "precio_promedio": "Entrada económica; tarifa exacta no publicada de forma consistente. Confirmar en el lugar.",
+          "calificacion_referencia": "Tripadvisor: reseñas recientes positivas y reconocimiento como visita destacada cerca de Villa de Leyva.",
+          "fuentes": [
+            "https://www.instagram.com/monasteriodesantoecce_homo/",
+            "https://www.facebook.com/StoEcceHom/",
+            "https://www.tripadvisor.co/Attraction_Review-g676524-d4604579-Reviews-Monasterio_Del_Santo_Eccehomo-Villa_de_Leyva_Boyaca_Department.html"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cajeros_automaticos",
+      "nombre": "Cajeros automáticos",
+      "lugares": [
+        {
+          "nombre": "Cajero Bancolombia Villa de Leyva",
+          "telefono_whatsapp": "Línea nacional: 01 8000 912345; desde celular: #263",
+          "descripcion_corta": "Cajero de una de las redes bancarias con mayor cobertura nacional, ubicado a pocos pasos de la Plaza Mayor.",
+          "ubicacion": "Carrera 9 #11-25, centro histórico, Villa de Leyva",
+          "latitud": 5.63246,
+          "longitud": -73.52398,
+          "horarios": "Acceso reportado 24 horas, sujeto a disponibilidad del cajero, mantenimiento y condiciones de acceso del punto.",
+          "calificacion_referencia": "Seleccionado por cobertura nacional, ubicación central y facilidad para visitantes.",
+          "fuentes": [
+            "https://www.bancolombia.com/personas/canales/cajeros",
+            "https://www.bancolombia.com/centro-de-ayuda/contactanos"
+          ]
+        },
+        {
+          "nombre": "Cajero Banco de Bogotá Villa de Leyva",
+          "telefono_whatsapp": "Línea nacional: 01 8000 518877; Bogotá: +57 601 382 0000",
+          "descripcion_corta": "Cajero y punto bancario central, útil para retiros, consultas y operaciones básicas.",
+          "ubicacion": "Carrera 9 #11-28, centro histórico, Villa de Leyva",
+          "latitud": 5.63251,
+          "longitud": -73.52406,
+          "horarios": "Cajero reportado 24 horas; la oficina bancaria maneja horario distinto.",
+          "calificacion_referencia": "Seleccionado por ubicación céntrica y pertenencia a una red bancaria nacional.",
+          "fuentes": [
+            "https://www.bancodebogota.com/personas/atencion-al-cliente/puntos-de-atencion",
+            "https://www.waze.com/live-map/directions/co/boyaca/villa-de-leyva/banco-de-bogota"
+          ]
+        },
+        {
+          "nombre": "Cajero Davivienda Villa de Leyva",
+          "telefono_whatsapp": "Línea nacional: 01 8000 123838; Bogotá: +57 601 338 3838",
+          "descripcion_corta": "Cajero de la red Davivienda en el sector de la Plaza Mayor, conveniente para usuarios nacionales y visitantes.",
+          "ubicacion": "Sector Plaza Mayor, Carrera 10 entre calles 12 y 13, Villa de Leyva; confirmar numeración en el localizador oficial.",
+          "latitud": 5.63387,
+          "longitud": -73.5243,
+          "horarios": "Acceso del cajero sujeto a la sede; consultar en el localizador oficial antes de desplazarse.",
+          "calificacion_referencia": "Seleccionado por relevancia de la red y ubicación en el centro histórico.",
+          "fuentes": [
+            "https://www.davivienda.com/",
+            "https://www.davivienda.com/wps/portal/personas/nuevo/personas/canales_de_atencion"
+          ]
+        },
+        {
+          "nombre": "Cajero Banco Agrario de Colombia",
+          "telefono_whatsapp": "Línea nacional: 01 8000 915000; Bogotá: +57 601 594 8500",
+          "descripcion_corta": "Punto bancario especialmente relevante para habitantes rurales, productores y usuarios del Banco Agrario.",
+          "ubicacion": "Calle 12 #9-45, centro de Villa de Leyva",
+          "latitud": 5.63302,
+          "longitud": -73.5241,
+          "horarios": "Acceso al cajero según condiciones de la sede. Oficina reportada: martes a viernes 08:00-11:30 y 14:00-16:30; sábado 08:00-14:00.",
+          "calificacion_referencia": "Seleccionado por su importancia regional y atención a población urbana y rural.",
+          "fuentes": [
+            "https://www.bancoagrario.gov.co/",
+            "https://www.waze.com/live-map/directions/co/boyaca/villa-de-leyva/banco-agrario-de-colombia"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "que_hacer",
+      "nombre": "Qué hacer",
+      "lugares": [
+        {
+          "nombre": "Casa Terracota",
+          "telefono_whatsapp": "+57 324 259 0225",
+          "instagram": "@casaterracota",
+          "descripcion_corta": "Obra arquitectónica construida principalmente en arcilla, conocida como una de las casas de cerámica más grandes y singulares del mundo.",
+          "ubicacion": "Vereda Monquirá, sector cercano a la vía al Fósil, Villa de Leyva",
+          "latitud": 5.63481,
+          "longitud": -73.53655,
+          "horarios": "Normalmente 09:00-17:00; la última admisión y los días de apertura pueden variar. Confirmar reserva en el canal oficial.",
+          "precio_promedio": "COP 37.000-43.000 por adulto para visita básica, aproximado; experiencias guiadas pueden costar más.",
+          "calificacion_referencia": "Tripadvisor: alrededor de 4,1/5 con más de 1.100 reseñas.",
+          "fuentes": [
+            "https://casaterracota.com/",
+            "https://www.instagram.com/casaterracota/",
+            "https://www.tripadvisor.co/Attraction_Review-g676524-d2473958-Reviews-Casa_Terracota-Villa_de_Leyva_Boyaca_Department.html"
+          ]
+        },
+        {
+          "nombre": "Pozos Azules",
+          "telefono_whatsapp": "+57 312 549 3486",
+          "instagram": "@pozosazulesoficial",
+          "descripcion_corta": "Sendero natural alrededor de lagunas artificiales de tonos azules y verdes, uno de los paisajes más fotografiados de la zona.",
+          "ubicacion": "Kilómetro 3 de la vía al Fósil, Villa de Leyva",
+          "latitud": 5.62617,
+          "longitud": -73.5493,
+          "horarios": "Todos los días 08:30-17:00; el ingreso puede depender del clima.",
+          "petfriendly": "Sí; el canal oficial reporta ingreso de mascotas, sujeto a normas del lugar.",
+          "precio_promedio": "COP 20.000 por persona, aproximado.",
+          "calificacion_referencia": "Tripadvisor: alrededor de 3,6/5 con más de 1.200 reseñas; gran reconocimiento y alto volumen de visitas.",
+          "fuentes": [
+            "https://pozosazules.com/",
+            "https://www.instagram.com/pozosazulesoficial/",
+            "https://www.tripadvisor.co/Attraction_Review-g676524-d2302333-Reviews-Pozos_Azules-Villa_de_Leyva_Boyaca_Department.html"
+          ]
+        },
+        {
+          "nombre": "Museo Comunitario El Fósil",
+          "telefono_whatsapp": "+57 316 471 4419; alternativa: +57 312 580 1158",
+          "descripcion_corta": "Museo comunitario que conserva un gran fósil de reptil marino hallado en la región y explica la riqueza paleontológica de Villa de Leyva.",
+          "ubicacion": "Vereda Monquirá, kilómetro 5 de la vía hacia Santa Sofía y el Fósil, Villa de Leyva",
+          "latitud": 5.63706,
+          "longitud": -73.55862,
+          "horarios": "Todos los días, incluidos festivos, 08:00-17:00.",
+          "precio_promedio": "COP 15.000-25.000 por persona según edad, aproximado; confirmar tarifa vigente.",
+          "calificacion_referencia": "Tripadvisor: alrededor de 3,9/5 con más de 700 reseñas.",
+          "fuentes": [
+            "https://situr.boyaca.gov.co/atractivo-turistico/museo-el-fosil/",
+            "https://www.tripadvisor.co/Attraction_Review-g676524-d3186862-Reviews-El_Fosil-Villa_de_Leyva_Boyaca_Department.html"
+          ]
+        },
+        {
+          "nombre": "Viñedo Ain Karim - Marqués de Villa de Leyva",
+          "telefono_whatsapp": "+57 601 915 6635",
+          "instagram": "@vinedoainkarim",
+          "descripcion_corta": "Viñedo del altiplano boyacense con recorridos por cultivos, explicación del proceso de vinificación y degustaciones.",
+          "ubicacion": "Kilómetro 10, vía Villa de Leyva-Santa Sofía, sector Sutamarchán",
+          "latitud": 5.65409,
+          "longitud": -73.5909,
+          "horarios": "Atención turística normalmente entre 10:00 y 17:00; reserva recomendada y horario sujeto al tipo de experiencia.",
+          "precio_promedio": "COP 35.000-65.000 por persona, aproximado, según recorrido y degustación.",
+          "calificacion_referencia": "Tripadvisor: alrededor de 4,2/5 con más de 600 reseñas.",
+          "fuentes": [
+            "https://vinedoainkarim.com/",
+            "https://www.instagram.com/vinedoainkarim/",
+            "https://www.tripadvisor.co/Attraction_Review-g676524-d2332865-Reviews-Vinedo_Ain_Karim-Villa_de_Leyva_Boyaca_Department.html"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gasolineria",
+      "nombre": "Gasolinería",
+      "lugares": [
+        {
+          "nombre": "EDS Terpel Surtidor Villa de Leyva",
+          "telefono_whatsapp": "Línea Terpel: 01 8000 518555; desde celular: #462",
+          "descripcion_corta": "Estación de servicio Terpel ubicada en el acceso sur del casco urbano, conveniente para viajeros y residentes.",
+          "ubicacion": "Transversal 10 #8-88, Villa de Leyva",
+          "latitud": 5.62971,
+          "longitud": -73.52728,
+          "horarios": "Operación reportada en jornada continua; confirmar disponibilidad y servicios directamente con la red Terpel.",
+          "calificacion_referencia": "Seleccionada por ubicación, reconocimiento de marca y relevancia dentro del casco urbano.",
+          "fuentes": [
+            "https://www.terpel.com/estaciones-de-servicio",
+            "https://www.terpel.com/contactenos"
+          ]
+        },
+        {
+          "nombre": "Estación de Servicio Colonial BRIO",
+          "telefono_whatsapp": "No se encontró un número público directo suficientemente verificado.",
+          "descripcion_corta": "Estación de servicio tradicional situada en la entrada sur de Villa de Leyva, con abastecimiento para vehículos particulares y transporte local.",
+          "ubicacion": "Carrera 9 #2-25, barrio La Palma, Villa de Leyva",
+          "latitud": 5.62361,
+          "longitud": -73.52915,
+          "horarios": "Horario no publicado de manera consistente; confirmar presencialmente antes de depender de una atención nocturna.",
+          "calificacion_referencia": "Seleccionada por cercanía al casco urbano y presencia histórica en directorios locales.",
+          "fuentes": [
+            "https://www.paginasamarillas.com.co/empresas/estacion-de-servicio-colonial/villa-de-leyva-16732134",
+            "https://www.waze.com/live-map/directions/co/boyaca/villa-de-leyva/estacion-de-servicio-colonial"
+          ]
+        },
+        {
+          "nombre": "Estación de Servicio La Fragua",
+          "telefono_whatsapp": "+57 310 802 5771",
+          "descripcion_corta": "Alternativa de combustible en Sáchica, útil para quienes viajan entre Villa de Leyva, Tunja y la ruta del sur.",
+          "ubicacion": "Calle 4 #1A-37, Sáchica, Boyacá; aproximadamente 15 minutos de Villa de Leyva",
+          "latitud": 5.584742,
+          "longitud": -73.541862,
+          "horarios": "Horario no publicado de forma consistente; llamar antes de desplazarse.",
+          "calificacion_referencia": "Seleccionada como alternativa regional cercana en un corredor vial importante.",
+          "fuentes": [
+            "https://www.waze.com/live-map/directions/co/boyaca/sachica/estacion-de-servicio-la-fragua",
+            "https://www.paginasamarillas.com.co/empresas/estacion-de-servicio-la-fragua/sachica-16441151"
+          ]
+        },
+        {
+          "nombre": "EDS La Estrella - JJ Inversiones",
+          "telefono_whatsapp": "+57 313 849 1798",
+          "descripcion_corta": "Estación del corredor hacia Tunja y Cucaita, útil como punto alternativo de abastecimiento en viajes regionales.",
+          "ubicacion": "Kilómetro 8 de la vía a Villa de Leyva, sector Cucaita, Boyacá",
+          "latitud": 5.5621,
+          "longitud": -73.4318,
+          "horarios": "Horario no publicado en la fuente empresarial; llamar antes de desplazarse.",
+          "calificacion_referencia": "Seleccionada por su ubicación estratégica en el corredor regional de acceso a Villa de Leyva.",
+          "fuentes": [
+            "https://www.informacolombia.com/directorio-empresas/informacion-empresa/jj-inversiones-sas"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "restaurantes",
+      "nombre": "Restaurantes",
+      "lugares": [
+        {
+          "nombre": "Chuska Cocina",
+          "telefono_whatsapp": "+57 312 451 0742",
+          "instagram": "@chuskacocina",
+          "descripcion_corta": "Restaurante de cocina colombiana contemporánea y fusión, destacado por su servicio, presentación y altísimo volumen de reseñas positivas.",
+          "ubicacion": "Carrera 9 #11-24, centro histórico, Villa de Leyva",
+          "latitud": 5.63257,
+          "longitud": -73.52393,
+          "horarios": "Lunes a jueves y domingo 08:30-21:30; viernes y sábado 08:30-22:00.",
+          "precio_promedio": "COP 40.000-100.000 por persona.",
+          "calificacion_referencia": "Google: alrededor de 4,9/5 con más de 7.000 reseñas; Tripadvisor: alrededor de 4,9/5.",
+          "fuentes": [
+            "https://www.instagram.com/chuskacocina/",
+            "https://es.restaurantguru.com/Chuska-Cocina-Villa-de-Leyva",
+            "https://www.tripadvisor.co/Restaurant_Review-g676524-d23607075-Reviews-Chuska_Cocina-Villa_de_Leyva_Boyaca_Department.html"
+          ]
+        },
+        {
+          "nombre": "Mercado Municipal",
+          "telefono_whatsapp": "+57 318 363 7049",
+          "instagram": "@mercadomunicipalvdl",
+          "descripcion_corta": "Restaurante de cocina de mercado y productos locales, con patio interior y una de las trayectorias gastronómicas más reconocidas de Villa de Leyva.",
+          "ubicacion": "Calle 12 #8-00, centro histórico, Villa de Leyva",
+          "latitud": 5.63262,
+          "longitud": -73.52274,
+          "horarios": "Todos los días 12:30-22:00.",
+          "precio_promedio": "COP 60.000-120.000 por persona.",
+          "calificacion_referencia": "Google: alrededor de 4,4/5 con más de 1.700 reseñas; Tripadvisor: alrededor de 4,1/5.",
+          "fuentes": [
+            "https://www.instagram.com/mercadomunicipalvdl/",
+            "https://es.restaurantguru.com/Mercado-Municipal-Villa-de-Leyva",
+            "https://www.tripadvisor.co/Restaurant_Review-g676524-d2418446-Reviews-Mercado_Municipal-Villa_de_Leyva_Boyaca_Department.html"
+          ]
+        },
+        {
+          "nombre": "Casa San Pedro Restaurante",
+          "telefono_whatsapp": "+57 321 317 9119",
+          "instagram": "@casasanpedro_",
+          "descripcion_corta": "Restaurante italiano y mediterráneo de larga trayectoria, conocido por pastas, carnes y ambiente colonial.",
+          "ubicacion": "Calle 12 #10-96, centro histórico, Villa de Leyva",
+          "latitud": 5.63455,
+          "longitud": -73.52492,
+          "horarios": "Lunes a jueves 12:00-21:00; viernes 12:00-23:00; sábado 10:00-23:00; domingo 10:00-18:00.",
+          "petfriendly": "Sí; el restaurante publica una política de bienvenida a mascotas. Confirmar condiciones de la sede central.",
+          "precio_promedio": "COP 60.000-80.000 por persona.",
+          "calificacion_referencia": "Google: alrededor de 4,3/5 con más de 2.000 reseñas; Tripadvisor: alrededor de 4,3/5.",
+          "fuentes": [
+            "https://casasanpedro.com.co/",
+            "https://www.instagram.com/casasanpedro_/",
+            "https://es.restaurantguru.com/Casa-San-Pedro-Villa-de-Leyva"
+          ]
+        },
+        {
+          "nombre": "La María Bistro",
+          "telefono_whatsapp": "+57 321 201 5556",
+          "instagram": "@bistro.lamaria",
+          "descripcion_corta": "Bistró contemporáneo con desayunos, platos internacionales y cocina de autor frente al Parque Nariño.",
+          "ubicacion": "Parque Nariño, Carrera 8 #11-56, Villa de Leyva",
+          "latitud": 5.63209,
+          "longitud": -73.52324,
+          "horarios": "Lunes 08:00-20:00; martes cerrado; miércoles 08:00-20:00; jueves a domingo 08:00-22:00.",
+          "precio_promedio": "COP 40.000-80.000 por persona.",
+          "calificacion_referencia": "Google: alrededor de 4,6/5 con más de 900 reseñas; Tripadvisor: alrededor de 4,8/5.",
+          "fuentes": [
+            "https://www.instagram.com/bistro.lamaria/",
+            "https://es.restaurantguru.com/La-Maria-Bistro-Villa-de-Leyva",
+            "https://www.tripadvisor.co/Restaurant_Review-g676524-d12846749-Reviews-La_Maria_Bistro-Villa_de_Leyva_Boyaca_Department.html"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hospitales_farmacias",
+      "nombre": "Hospitales y farmacias",
+      "lugares": [
+        {
+          "nombre": "E.S.E. Hospital San Francisco de Villa de Leyva",
+          "telefono_whatsapp": "Citas e información: +57 314 852 0767; líneas adicionales: +57 312 452 4119 y +57 310 431 6836",
+          "descripcion_corta": "Principal institución pública de salud del municipio, con urgencias, consulta externa y servicios básicos hospitalarios.",
+          "ubicacion": "Kilómetro 1 vía Arcabuco, Villa de Leyva",
+          "latitud": 5.63064,
+          "longitud": -73.52453,
+          "horarios": "Urgencias: 24 horas, todos los días. Consulta externa y servicios administrativos: según agenda institucional.",
+          "calificacion_referencia": "Seleccionado por ser la institución hospitalaria pública de referencia del municipio.",
+          "fuentes": [
+            "https://www.hospitalsanfranciscovilladeleyva.gov.co/",
+            "https://www.facebook.com/esehospitalsanfranciscovilladeleyva/"
+          ]
+        },
+        {
+          "nombre": "Droguerías La Rebaja Villa de Leyva",
+          "telefono_whatsapp": "Domicilios: +57 317 300 4444; WhatsApp: +57 322 217 9381",
+          "descripcion_corta": "Droguería de cadena con medicamentos, cuidado personal y servicio de domicilios.",
+          "ubicacion": "Carrera 10 #11-60, centro histórico, Villa de Leyva",
+          "latitud": 5.63285,
+          "longitud": -73.5249,
+          "horarios": "Lunes a sábado 07:30-22:00; domingo 09:00-22:00. Confirmar festivos.",
+          "calificacion_referencia": "Seleccionada por ubicación central, amplitud de horario y respaldo de una red nacional.",
+          "fuentes": [
+            "https://www.larebajavirtual.com/",
+            "https://www.tiendeo.com.co/Tiendas/villa-de-leyva/droguerias-la-rebaja-carrera/215692"
+          ]
+        },
+        {
+          "nombre": "Droguería Colsubsidio Villa de Leyva",
+          "telefono_whatsapp": "+57 312 403 6927",
+          "descripcion_corta": "Punto farmacéutico de la red Colsubsidio con medicamentos, productos de bienestar y atención a usuarios de convenios.",
+          "ubicacion": "Carrera 12, kilómetro 1 vía Santa Sofía, Villa de Leyva",
+          "latitud": 5.63245,
+          "longitud": -73.53315,
+          "horarios": "Horario comercial sujeto a la sede; confirmar por teléfono o en el directorio oficial antes de desplazarse.",
+          "calificacion_referencia": "Seleccionada por respaldo institucional y cobertura de servicios farmacéuticos.",
+          "fuentes": [
+            "https://www.colsubsidio.com/salud/droguerias",
+            "https://www.waze.com/live-map/directions/co/boyaca/villa-de-leyva/drogueria-colsubsidio"
+          ]
+        },
+        {
+          "nombre": "Droguería Real Villa Leyva",
+          "telefono_whatsapp": "+57 310 750 7729",
+          "descripcion_corta": "Droguería local cercana al acceso sur del centro, útil para compras de medicamentos y productos de cuidado básico.",
+          "ubicacion": "Carrera 9 #7-52, Villa de Leyva",
+          "latitud": 5.62945,
+          "longitud": -73.5253,
+          "horarios": "Atención 24 horas reportada en directorios; confirmar por teléfono, especialmente en horario nocturno.",
+          "calificacion_referencia": "Seleccionada por su ubicación y reporte de atención extendida.",
+          "fuentes": [
+            "https://www.paginasamarillas.com.co/villa-de-leyva/servicios/droguerias-24-horas"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "transporte_publico",
+      "nombre": "Transporte público",
+      "lugares": [
+        {
+          "nombre": "Terminal de Transporte de Villa de Leyva",
+          "telefono_whatsapp": "+57 608 732 0622",
+          "descripcion_corta": "Punto principal de salida y llegada de buses intermunicipales hacia Bogotá, Tunja, Chiquinquirá y municipios cercanos.",
+          "ubicacion": "Carrera 9 #8-50, Villa de Leyva",
+          "latitud": 5.63064,
+          "longitud": -73.52574,
+          "horarios": "Operación diaria; las taquillas y salidas dependen de cada empresa. Consultar desde primeras horas de la mañana.",
+          "calificacion_referencia": "Seleccionado por ser el nodo principal de transporte público intermunicipal del municipio.",
+          "fuentes": [
+            "https://www.villadeleyva-boyaca.gov.co/",
+            "https://www.waze.com/live-map/directions/co/boyaca/villa-de-leyva/terminal-de-transportes-villa-de-leyva"
+          ]
+        },
+        {
+          "nombre": "Flota Valle de Tenza - Agencia Villa de Leyva",
+          "telefono_whatsapp": "+57 314 537 7486",
+          "descripcion_corta": "Empresa intermunicipal con rutas frecuentes hacia Bogotá y otras poblaciones de Boyacá y Cundinamarca.",
+          "ubicacion": "Terminal de Transporte, Carrera 9 #8-50, Villa de Leyva",
+          "latitud": 5.63064,
+          "longitud": -73.52574,
+          "horarios": "Salidas según ruta. Centro de consulta reportado de lunes a domingo 03:00-18:30.",
+          "petfriendly": "Admite mascotas pequeñas o medianas bajo condiciones de transporte; consultar requisitos antes de comprar.",
+          "precio_promedio": "Villa de Leyva-Bogotá: COP 45.000-60.000 por trayecto, aproximado y sujeto a fecha y tipo de servicio.",
+          "calificacion_referencia": "Seleccionada por frecuencia, cobertura regional y operación directa desde el terminal.",
+          "fuentes": [
+            "https://www.valledetenza.com/",
+            "https://www.valledetenza.com/preguntas-frecuentes/"
+          ]
+        },
+        {
+          "nombre": "Libertadores / Coflonorte - Agencia Villa de Leyva",
+          "telefono_whatsapp": "Taquilla local: +57 310 213 4055; WhatsApp nacional: +57 322 252 6992",
+          "descripcion_corta": "Servicio de buses intermunicipales hacia Bogotá, Tunja y otros destinos, operado por la red Coflonorte-Libertadores.",
+          "ubicacion": "Terminal de Transporte, Carrera 9 #8-50, Villa de Leyva",
+          "latitud": 5.63064,
+          "longitud": -73.52574,
+          "horarios": "Salidas hacia Bogotá reportadas aproximadamente entre 04:45 y 15:00; confirmar el mismo día.",
+          "precio_promedio": "Villa de Leyva-Bogotá: COP 45.000-60.000 por trayecto, aproximado.",
+          "calificacion_referencia": "Seleccionada por cobertura intermunicipal y presencia estable en el terminal local.",
+          "fuentes": [
+            "https://www.coflonorte.com/",
+            "https://www.coflonorte.com/contacto/"
+          ]
+        },
+        {
+          "nombre": "Coomultransvilla",
+          "telefono_whatsapp": "+57 608 732 2056",
+          "descripcion_corta": "Cooperativa local que presta transporte municipal y regional mediante taxis, colectivos y rutas hacia municipios cercanos.",
+          "ubicacion": "Terminal de Transporte, Carrera 9 #8-40, local 4, Villa de Leyva",
+          "latitud": 5.63062,
+          "longitud": -73.52584,
+          "horarios": "Salidas y turnos según ruta; confirmar en oficina o por teléfono.",
+          "precio_promedio": "COP 5.000-30.000 por trayecto, aproximado, según destino y modalidad.",
+          "calificacion_referencia": "Seleccionada por su cobertura local, municipal y rural, especialmente útil más allá de las rutas a Bogotá.",
+          "fuentes": [
+            "https://coomultransvilla.com/",
+            "https://coomultransvilla.com/contacto/"
+          ]
+        }
+      ]
+    }
+  ]
+}

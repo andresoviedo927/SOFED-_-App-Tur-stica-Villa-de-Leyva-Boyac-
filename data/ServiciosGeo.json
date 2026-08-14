@@ -1,0 +1,99 @@
+{
+  "metadata": {
+    "ubicacion_base": "Villa de Leyva, Boyacá, Colombia",
+    "criterio": "Solo coordenadas contrastadas con fuentes cartográficas o institucionales públicas.",
+    "fecha_verificacion": "2026-08-04"
+  },
+  "ubicaciones": [
+    {
+      "id": "cafeteria-astral-taller-de-pan-artesanal",
+      "lat": 5.63219,
+      "lng": -73.52258,
+      "fuente": "https://mapcarta.com/es/N4689067090"
+    },
+    {
+      "id": "iglesias-parroquia-nuestra-senora-del-rosario",
+      "lat": 5.6333667,
+      "lng": -73.5233333,
+      "fuente": "https://www.villadeleyva-boyaca.gov.co/Transparencia/Normatividad/Acuerdo%20006-2016.pdf"
+    },
+    {
+      "id": "iglesias-iglesia-y-museo-del-carmen",
+      "lat": 5.6353,
+      "lng": -73.5231333,
+      "fuente": "https://www.villadeleyva-boyaca.gov.co/Transparencia/Normatividad/Acuerdo%20006-2016.pdf"
+    },
+    {
+      "id": "iglesias-claustro-e-iglesia-de-san-francisco",
+      "lat": 5.63054,
+      "lng": -73.5241,
+      "fuente": "https://mapcarta.com/es/W449565716"
+    },
+    {
+      "id": "que_hacer-casa-terracota",
+      "lat": 5.634914,
+      "lng": -73.536594,
+      "fuente": "https://situr.boyaca.gov.co/atractivo-turistico/casa-terracota/"
+    },
+    {
+      "id": "que_hacer-pozos-azules",
+      "lat": 5.62617,
+      "lng": -73.5493,
+      "fuente": "https://mapcarta.com/es/N4790255921"
+    },
+    {
+      "id": "que_hacer-museo-comunitario-el-fosil",
+      "lat": 5.63706,
+      "lng": -73.55862,
+      "fuente": "https://mapcarta.com/es/N334168994"
+    },
+    {
+      "id": "que_hacer-vinedo-ain-karim-marques-de-villa-de-leyva",
+      "lat": 5.65409,
+      "lng": -73.5909,
+      "fuente": "https://mapcarta.com/es/W392492775"
+    },
+    {
+      "id": "restaurantes-mercado-municipal",
+      "lat": 5.63262,
+      "lng": -73.52274,
+      "fuente": "https://mapcarta.com/es/W1020325382"
+    },
+    {
+      "id": "restaurantes-la-maria-bistro",
+      "lat": 5.63209,
+      "lng": -73.52324,
+      "fuente": "https://mapcarta.com/es/N6408095985"
+    },
+    {
+      "id": "hospitales_farmacias-e-s-e-hospital-san-francisco-de-villa-de-leyva",
+      "lat": 5.64044,
+      "lng": -73.51801,
+      "fuente": "https://mapcarta.com/W1271294195"
+    },
+    {
+      "id": "transporte_publico-terminal-de-transporte-de-villa-de-leyva",
+      "lat": 5.63064,
+      "lng": -73.52574,
+      "fuente": "https://mapcarta.com/es/W42335979"
+    },
+    {
+      "id": "transporte_publico-flota-valle-de-tenza-agencia-villa-de-leyva",
+      "lat": 5.63064,
+      "lng": -73.52574,
+      "fuente": "https://mapcarta.com/es/W42335979"
+    },
+    {
+      "id": "transporte_publico-libertadores-coflonorte-agencia-villa-de-leyva",
+      "lat": 5.63064,
+      "lng": -73.52574,
+      "fuente": "https://mapcarta.com/es/W42335979"
+    },
+    {
+      "id": "transporte_publico-coomultransvilla",
+      "lat": 5.63064,
+      "lng": -73.52574,
+      "fuente": "https://mapcarta.com/es/W42335979"
+    }
+  ]
+}

@@ -1,0 +1,402 @@
+{
+  "metadata": {
+    "nombre": "Hospedajes de Villa de Leyva",
+    "ubicacion_base": {
+      "municipio": "Villa de Leyva",
+      "departamento": "Boyacá",
+      "pais": "Colombia"
+    },
+    "fecha_consulta": "2026-08-04",
+    "cantidad_total": 12,
+    "cantidad_por_tipo": {
+      "Hoteles": 4,
+      "Cabañas": 4,
+      "Camping": 4
+    },
+    "criterio_seleccion": "Se priorizaron alojamientos con calificaciones, volumen de reseñas, premios o presencia relevante en plataformas de viajes y fuentes oficiales.",
+    "advertencia": "Los horarios, políticas de cancelación, admisión de mascotas, desayuno y parqueadero pueden cambiar según la habitación, la tarifa y la fecha. Se recomienda confirmar directamente con el alojamiento antes de reservar. Las calificaciones y cantidades de reseñas son una fotografía de las fuentes consultadas y no se actualizan automáticamente."
+  },
+  "tipos_hospedaje": [
+    {
+      "tipo": "Hoteles",
+      "hospedajes": [
+        {
+          "id": "hotel-casa-terra",
+          "nombre": "Hotel Casa Terra",
+          "telefono": "+57 311 344 1033",
+          "whatsapp": "+57 311 344 1033",
+          "instagram": "https://www.instagram.com/hotelcasaterra/",
+          "sitio_web": "https://www.hotelcasaterra.com/",
+          "descripcion_corta": "Hotel boutique tranquilo y ajardinado en el sector histórico, a pocos minutos a pie de la Plaza Mayor.",
+          "ubicacion": "Calle 11 #6-40, sector histórico y colonial, Villa de Leyva, Boyacá",
+          "coordenadas": {
+            "latitud": 5.6307,
+            "longitud": -73.5226
+          },
+          "check_in": "Desde las 14:00",
+          "check_out": "Hasta las 11:00",
+          "parqueadero": "Sí, privado y gratuito",
+          "desayuno_incluido": "Sí",
+          "relevancia": {
+            "plataforma": "Tripadvisor, mostrado en Google Hoteles",
+            "calificacion": "4.8/5",
+            "cantidad_resenas": 326
+          },
+          "fuentes": [
+            "https://www.google.com.co/travel/hotels/entity/CgoI8bH4uOPJ7-JYEAE",
+            "https://www.booking.com/hotel/co/casa-terra-villa-de-leyva2.es.html",
+            "https://www.instagram.com/hotelcasaterra/"
+          ]
+        },
+        {
+          "id": "hospederia-duruelo",
+          "nombre": "Hospedería y Centro de Convenciones Duruelo",
+          "telefono": "+57 314 473 0966",
+          "whatsapp": "+57 314 473 0966",
+          "telefonos_adicionales": [
+            "+57 313 467 1751",
+            "+57 314 439 4816"
+          ],
+          "instagram": "https://www.instagram.com/hduruelo/",
+          "sitio_web": "https://duruelo.com.co/",
+          "descripcion_corta": "Hospedería tradicional de estilo republicano con amplios jardines, restaurantes, spa, zonas recreativas y espacios para eventos.",
+          "ubicacion": "Calle 3 #12-88, Villa de Leyva, Boyacá",
+          "coordenadas": {
+            "latitud": 5.62892,
+            "longitud": -73.51796
+          },
+          "check_in": "Desde las 15:00",
+          "check_out": "Hasta las 13:00",
+          "parqueadero": "Sí, gratuito",
+          "petfriendly": "Sí, bajo la política de admisión de mascotas del hotel; pueden aplicar condiciones o cargos",
+          "desayuno_incluido": "Sí",
+          "relevancia": {
+            "plataforma": "Tripadvisor",
+            "distincion": "Travellers' Choice; ubicado entre el 10 % de los establecimientos más populares de la plataforma"
+          },
+          "fuentes": [
+            "https://duruelo.com.co/",
+            "https://duruelo.com.co/contactanos/",
+            "https://duruelo.com.co/terminos-y-condiciones/",
+            "https://duruelo.com.co/politica-de-reserva/",
+            "https://www.tripadvisor.co/Hotel_Review-g676524-d619928-Reviews-Hospederia_Duruelo-Villa_de_Leyva_Boyaca_Department.html",
+            "https://www.google.com.co/travel/hotels/entity/CgsI5vGwz_adrdSsARAB"
+          ]
+        },
+        {
+          "id": "hotel-casa-alcestre",
+          "nombre": "Hotel Casa Alcestre",
+          "telefono": "+57 601 916 0900",
+          "instagram": "https://www.instagram.com/casaalcestre/",
+          "sitio_web": "https://www.alcestre.com/",
+          "descripcion_corta": "Hotel boutique de lujo ubicado junto a la Plaza Mayor, con arquitectura de inspiración colonial, restaurante y spa.",
+          "ubicacion": "Carrera 10 #13-07, esquina de la Plaza Mayor, Villa de Leyva, Boyacá",
+          "coordenadas": {
+            "latitud": 5.634,
+            "longitud": -73.5237
+          },
+          "check_in": "Desde las 15:00",
+          "check_out": "Hasta las 12:00",
+          "parqueadero": "Sí, privado y gratuito",
+          "desayuno_incluido": "Depende de la tarifa; el hotel ofrece desayuno a la carta o americano",
+          "relevancia": {
+            "plataforma": "Hotels.com",
+            "calificacion": "9.4/10",
+            "cantidad_resenas": 170
+          },
+          "fuentes": [
+            "https://www.alcestre.com/",
+            "https://www.alcestre.com/en/contacto",
+            "https://www.booking.com/hotel/co/alcestre-villa-de-leyva.es.html",
+            "https://www.hotels.com/es/ho2675271648/hotel-alcestre-bogota-colombia/",
+            "https://www.instagram.com/casaalcestre/"
+          ]
+        },
+        {
+          "id": "hotel-campanario-de-la-villa",
+          "nombre": "Hotel Campanario de la Villa",
+          "telefono": "+57 310 550 0216",
+          "whatsapp": "+57 310 550 0216",
+          "telefonos_adicionales": [
+            "+57 608 732 0755"
+          ],
+          "instagram": "https://www.instagram.com/campanariodelavilla/",
+          "sitio_web": "https://www.hotelcampanariodelavilla.com/",
+          "descripcion_corta": "Hotel de arquitectura colonial cerca de la Plaza Mayor, con piscina cubierta, restaurante, spa y habitaciones familiares.",
+          "ubicacion": "Carrera 11A #12-47, Villa de Leyva, Boyacá",
+          "coordenadas": {
+            "latitud": 5.6348,
+            "longitud": -73.5247
+          },
+          "check_in": "Desde las 15:00",
+          "check_out": "Hasta las 12:00",
+          "parqueadero": "Sí, sujeto a disponibilidad en el hotel o en parqueadero aliado",
+          "petfriendly": "Sí; se cobra una tarifa por noche y aplican políticas de convivencia",
+          "desayuno_incluido": "Sí, desayuno tipo buffet",
+          "relevancia": {
+            "plataforma": "Tripadvisor",
+            "calificacion": "4.3/5",
+            "cantidad_resenas": 209,
+            "distincion": "Travellers' Choice"
+          },
+          "fuentes": [
+            "https://www.hotelcampanariodelavilla.com/",
+            "https://www.hotelcampanariodelavilla.com/contacto",
+            "https://www.hotelcampanariodelavilla.com/en/politicas",
+            "https://www.booking.com/hotel/co/campanario-de-la-villa-villa-de-leyva.es.html",
+            "https://www.tripadvisor.co/Hotel_Review-g676524-d7797951-Reviews-Hotel_Campanario_De_La_Villa-Villa_de_Leyva_Boyaca_Department.html",
+            "https://www.instagram.com/campanariodelavilla/"
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "Cabañas",
+      "hospedajes": [
+        {
+          "id": "cabanas-villa-encanto",
+          "nombre": "Cabañas Villa Encanto",
+          "telefono": "+57 311 586 1874",
+          "whatsapp": "+57 311 586 1874",
+          "instagram": "https://www.instagram.com/cvillaencanto/",
+          "descripcion_corta": "Cabañas rústicas rodeadas de zonas verdes, con ambiente silencioso y acceso caminando al centro histórico.",
+          "ubicacion": "Calle 16 #15-20, Villa de Leyva, Boyacá",
+          "coordenadas": {
+            "latitud": 5.640283,
+            "longitud": -73.525465
+          },
+          "check_in": "Desde las 15:00",
+          "check_out": "Hasta las 12:30",
+          "parqueadero": "Sí, privado y gratuito",
+          "petfriendly": "Sí, sin cargo adicional según la ficha consultada",
+          "relevancia": {
+            "plataforma": "Booking.com",
+            "calificacion": "9.7/10",
+            "cantidad_resenas": 111
+          },
+          "fuentes": [
+            "https://www.booking.com/hotel/co/cabanas-villa-encanto.es.html",
+            "https://www.booking.com/reviews/co/hotel/cabanas-villa-encanto.es-mx.html",
+            "https://www.instagram.com/cvillaencanto/",
+            "https://triptap.com/places/co/boyac/villa-de-leyva/cabanas-villa-encanto-t0457a15"
+          ]
+        },
+        {
+          "id": "cabanas-villa-celeste",
+          "nombre": "Cabañas Villa Celeste",
+          "telefono": "+57 310 496 1965",
+          "whatsapp": "+57 310 496 1965",
+          "instagram": "https://www.instagram.com/cabanasvillaceleste/",
+          "descripcion_corta": "Cabañas campestres con vistas a la montaña, amplias zonas verdes y espacios adecuados para parejas, familias y mascotas.",
+          "ubicacion": "Kilómetro 2, vía Villa de Leyva–Sáchica, Villa de Leyva, Boyacá",
+          "coordenadas": {
+            "latitud": 5.595958,
+            "longitud": -73.532671
+          },
+          "check_in": "De 15:00 a 20:00",
+          "check_out": "De 12:00 a 13:00",
+          "parqueadero": "Sí, privado y gratuito",
+          "petfriendly": "Sí; pueden aplicar cargos",
+          "desayuno_incluido": "Se ofrece desayuno americano; confirmar si está incluido en la tarifa elegida",
+          "relevancia": {
+            "plataforma": "Booking.com",
+            "calificacion": "9.4/10",
+            "cantidad_resenas": 306
+          },
+          "fuentes": [
+            "https://www.booking.com/hotel/co/cabanas-villa-celeste.es.html",
+            "https://www.instagram.com/cabanasvillaceleste/",
+            "https://goboy.com.co/listing/cabanas-villa-celeste/"
+          ]
+        },
+        {
+          "id": "cabanas-sol-y-luna",
+          "nombre": "Cabañas Sol y Luna",
+          "telefono": "+57 318 833 7559",
+          "whatsapp": "+57 318 833 7559",
+          "instagram": "https://www.instagram.com/cabanasolyluna/",
+          "descripcion_corta": "Villas campestres de estilo colonial con jardines, zona de barbacoa y vistas hacia el valle y la montaña de Iguaque.",
+          "ubicacion": "Puente Zinc, vereda Sabana, Finca Villa Lucero, Villa de Leyva, Boyacá",
+          "coordenadas": {
+            "latitud": 5.667342,
+            "longitud": -73.514229
+          },
+          "check_in": "De 14:00 a 18:00",
+          "check_out": "De 11:00 a 12:00",
+          "parqueadero": "Sí, privado y gratuito",
+          "petfriendly": "Sí",
+          "desayuno_incluido": "Disponible; confirmar su inclusión según el plan reservado",
+          "relevancia": {
+            "plataforma": "Booking.com",
+            "cantidad_resenas_verificadas": 27,
+            "comentario": "Las reseñas destacan la tranquilidad, la comodidad de las camas y las zonas verdes para mascotas"
+          },
+          "fuentes": [
+            "https://www.booking.com/hotel/co/cabanas-villa-lucero-spa.es.html",
+            "https://www.booking.com/reviews/co/hotel/cabanas-villa-lucero-spa.es-ar.html",
+            "https://goboy.com.co/listing/cabanas-sol-y-luna/",
+            "https://www.instagram.com/cabanasolyluna/"
+          ]
+        },
+        {
+          "id": "hotel-bombon-anaka-cabanas",
+          "nombre": "Hotel Bombon",
+          "nombre_alternativo": "Anaka Cabañas",
+          "telefono": "+57 310 259 4562",
+          "descripcion_corta": "Complejo de habitaciones y cabañas campestres, conocido también como Anaka Cabañas, con ambiente tranquilo y servicios de bienestar.",
+          "ubicacion": "Avenida Circunvalar, vía Arcabuco, Finca Anaka, Villa de Leyva, Boyacá",
+          "coordenadas": {
+            "latitud": 5.640757,
+            "longitud": -73.52278
+          },
+          "cancelacion_gratuita": "Disponible en algunas tarifas reembolsables; se debe revisar la fecha límite de la reserva",
+          "check_in": "De 13:00 a 22:00",
+          "check_out": "Hasta las 12:00",
+          "parqueadero": "Sí",
+          "relevancia": {
+            "plataformas": [
+              "Tripadvisor",
+              "Hotels.com"
+            ],
+            "comentario": "Alojamiento establecido y reseñado durante varios años bajo los nombres Anaka Cabañas y Hotel Bombon"
+          },
+          "fuentes": [
+            "https://www.hotels.com/es/ho582037/anaka-cabanas-villa-de-leyva-colombia/",
+            "https://co.hoteles.com/ho582037/anaka-cabanas-villa-de-leyva-colombia/",
+            "https://www.tripadvisor.es/Hotel_Review-g676524-d2045724-Reviews-Anaka_Cabanas-Villa_de_Leyva_Boyaca_Department.html",
+            "https://www.momondo.com.co/hoteles/villa-de-leyva/Anaka-Cabanas.mhd2020356.ksp"
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "Camping",
+      "hospedajes": [
+        {
+          "id": "glamping-y-camping-el-lago",
+          "nombre": "Glamping y Camping El Lago",
+          "telefono": "+57 313 494 6882",
+          "whatsapp": "+57 313 494 6882",
+          "descripcion_corta": "Zona rural de camping y bungalós con vistas a la montaña, lago, jardín, zonas de picnic y opciones para fogata.",
+          "ubicacion": "Vereda El Roble, kilómetro 3 vía Arcabuco, Villa de Leyva, Boyacá",
+          "coordenadas": {
+            "latitud": 5.659195,
+            "longitud": -73.510826
+          },
+          "check_in": "De 14:00 a 20:00",
+          "check_out": "De 07:00 a 10:00",
+          "parqueadero": "Sí, privado y gratuito",
+          "idiomas_atencion": [
+            "Español"
+          ],
+          "petfriendly": "Sí; pueden aplicar cargos",
+          "desayuno_incluido": "Figura como incluido en la ficha de Tripadvisor; confirmar según la modalidad reservada",
+          "relevancia": {
+            "plataforma": "Booking.com",
+            "calificacion": "9.5/10",
+            "cantidad_resenas": 48
+          },
+          "fuentes": [
+            "https://www.booking.com/hotel/co/glamping-y-camping-el-lago.es.html",
+            "https://glamping-y-camping-el-lago.hotels-villa-de-leyva.com/es/",
+            "https://www.tripadvisor.co/Hotels-g676524-c3-zff29-Villa_de_Leyva_Boyaca_Department-Hotels.html"
+          ]
+        },
+        {
+          "id": "camping-villa-de-leyva",
+          "nombre": "Camping Villa de Leyva",
+          "telefono": "+57 311 505 8446",
+          "whatsapp": "+57 311 505 8446",
+          "instagram": "https://www.instagram.com/campingvilladeleyva/",
+          "sitio_web": "https://campingvilladeleyva.com/",
+          "descripcion_corta": "Camping establecido cerca del casco urbano, orientado a viajeros en carpa y experiencias al aire libre.",
+          "ubicacion": "Aproximadamente 500 metros por la vía Cementerio–Arcabuco, Villa de Leyva, Boyacá",
+          "coordenadas": {
+            "latitud": 5.647822386914916,
+            "longitud": -73.5184454403943
+          },
+          "relevancia": {
+            "plataforma": "Instagram",
+            "seguidores_aproximados": 3398,
+            "comentario": "Cuenta oficial especializada en camping, sitio web propio y ubicación cercana a la Plaza Mayor"
+          },
+          "fuentes": [
+            "https://www.instagram.com/campingvilladeleyva/",
+            "https://www.facebook.com/pietracamping/",
+            "https://campingvilladeleyva.com/"
+          ]
+        },
+        {
+          "id": "glamping-pozo-azul",
+          "nombre": "Glamping Pozo Azul",
+          "telefono": "+57 315 645 1251",
+          "whatsapp": "+57 315 645 1251",
+          "instagram": "https://www.instagram.com/glampingpozoazul/",
+          "sitio_web": "https://hotels.cloudbeds.com/reservation/FZqKBa",
+          "descripcion_corta": "Alojamiento rural tipo glamping y chalet, rodeado de naturaleza y próximo al Museo El Fósil y otros atractivos paleontológicos.",
+          "ubicacion": "Kilómetro 3.5 vía Santa Sofía, sector El Fósil, Villa de Leyva, Boyacá",
+          "coordenadas": {
+            "latitud": 5.635713,
+            "longitud": -73.556705
+          },
+          "check_in": "Desde las 15:00",
+          "check_out": "Hasta las 12:00",
+          "parqueadero": "Sí, privado y gratuito",
+          "petfriendly": "Sí",
+          "desayuno_incluido": "Incluido en varias tarifas y promociones publicadas; confirmar al reservar",
+          "relevancia": {
+            "plataformas": [
+              "Booking.com",
+              "Tripadvisor"
+            ],
+            "cantidad_resenas_booking": 59,
+            "posicion_tripadvisor": "Incluido entre las cinco estancias de glamping destacadas de Villa de Leyva"
+          },
+          "fuentes": [
+            "https://hotels.cloudbeds.com/reservation/FZqKBa",
+            "https://www.booking.com/hotel/co/glamping-pozo-azul-cabana-alpina-familiar-deluxe.es.html",
+            "https://www.booking.com/reviews/co/hotel/glamping-pozo-azul-cabana-alpina-familiar-deluxe.es.html",
+            "https://www.tripadvisor.co/Hotels-g676524-zff105-Villa_de_Leyva_Boyaca_Department-Hotels.html",
+            "https://www.instagram.com/glampingpozoazul/"
+          ]
+        },
+        {
+          "id": "aventura-park-glamping-la-periquera",
+          "nombre": "Glamping y Chalet Aventura Park Villa de Leyva La Periquera",
+          "telefono": "+57 322 961 2932",
+          "whatsapp": "+57 322 961 2932",
+          "instagram": "https://www.instagram.com/aventuraparkvilladeleyva/",
+          "sitio_web": "https://www.aventuraparkvilladeleyva.com/",
+          "descripcion_corta": "Alojamiento rural con glampings, chalets y bungalós junto a un parque de aventura, cerca de las cascadas La Periquera.",
+          "ubicacion": "Frente a La Periquera, vía Pozo de la Vieja, aproximadamente 16 km de la Plaza Mayor de Villa de Leyva, Boyacá",
+          "coordenadas": {
+            "latitud": 5.72215,
+            "longitud": -73.52358
+          },
+          "check_in": "Desde las 15:00",
+          "check_out": "Hasta las 11:00",
+          "parqueadero": "Sí, incluido en las tarifas publicadas",
+          "desayuno_incluido": "Sí, incluido en las tarifas publicadas",
+          "relevancia": {
+            "plataformas": [
+              "Google Hoteles",
+              "Tripadvisor",
+              "Booking.com"
+            ],
+            "calificacion": "4.7/5",
+            "cantidad_resenas_booking": 104,
+            "comentario": "La calificación de 4.7/5 corresponde a Tripadvisor mostrada en Google Hoteles"
+          },
+          "fuentes": [
+            "https://www.aventuraparkvilladeleyva.com/",
+            "https://www.aventuraparkvilladeleyva.com/alojamiento.html",
+            "https://www.aventuraparkvilladeleyva.com/preguntas-frecuentes.html",
+            "https://www.booking.com/reviews/co/hotel/glamping-aventura-park-villa-de-leyva.es.html",
+            "https://www.google.com.co/travel/hotels/entity/ChoIscf5yZnft5rdARoNL2cvMTFkel95eHl6dBAB",
+            "https://www.instagram.com/aventuraparkvilladeleyva/"
+          ]
+        }
+      ]
+    }
+  ]
+}
