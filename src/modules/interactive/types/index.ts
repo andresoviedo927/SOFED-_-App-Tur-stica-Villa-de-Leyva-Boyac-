@@ -9,9 +9,7 @@ export type MapPinColor =
   | 'blue'
   | 'yellow'
   | 'green'
-  | 'red'
-  | 'orange'
-  | 'black';
+  | 'red';
 
 export interface MapPinPOI {
   id: string;
@@ -48,7 +46,6 @@ export interface InteractivePlace {
   id: string;
   title: string;
   backgroundImage: string;
-  characterImage: string;
   centerIcon: string;
   experiences: PlaceExperience[];
 }

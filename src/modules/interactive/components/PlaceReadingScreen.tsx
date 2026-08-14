@@ -1,9 +1,9 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import IMAGES from '@/assets/images';
+import VIDEOS from '@/assets/videos';
 import TEXTS from '@/constants/texts';
-import { getSavedSettings } from '@/modules/settings/services/settingsService';
+import useSavedSettings from '@/modules/settings/hooks/useSavedSettings';
 import { PLAZA_PRINCIPAL_NARRATION } from '../data/plazaPrincipalNarration';
-import useNarration from '../hooks/useNarration';
 import ReadingCard from './ReadingCard';
 import ReadingHeader from './ReadingHeader';
 import styles from './PlaceReadingScreen.module.css';
@@ -16,104 +16,92 @@ export const PlaceReadingScreen = ({
   onBack,
 }: PlaceReadingScreenProps) => {
   const readingTexts = TEXTS.interactive.plazaPrincipal.reading;
-  const settings = useMemo(() => getSavedSettings(), []);
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [narrationErrorMessage, setNarrationErrorMessage] =
-    useState<string | null>(null);
-
-  const {
-    narrationStatus,
-    isNarrationActive,
-    isCharacterVisible,
-    activeParagraphId,
-    activeSentenceId,
-    completedSentenceIds,
-    isAutoFollowEnabled,
-    toggle,
-    pauseAutoFollow,
-    resumeAutoFollow,
-  } = useNarration({
-    content: PLAZA_PRINCIPAL_NARRATION,
-    language: 'es-CO',
-    volume: settings.narrationVolume / 100,
-    onError: (error) =>
-      setNarrationErrorMessage(
-        error.code === 'voice-not-found'
-          ? readingTexts.incompatibleVoice
-          : error.code === 'unsupported'
-            ? readingTexts.narrationUnavailable
-          : readingTexts.narrationError
-      ),
-  });
+  const settings = useSavedSettings();
+  const characterVideoRef = useRef<HTMLVideoElement>(null);
+  const [isMuted, setIsMuted] = useState(
+    () => !settings.automaticNarration
+  );
 
   useEffect(() => {
-    if (narrationStatus !== 'error') {
-      setNarrationErrorMessage(null);
-    }
-  }, [narrationStatus]);
+    setIsMuted(!settings.automaticNarration);
+  }, [settings.automaticNarration]);
 
-  const liveMessage =
-    narrationStatus === 'playing'
-      ? activeParagraphId
-        ? `${readingTexts.currentReadingPosition}: ${
-            PLAZA_PRINCIPAL_NARRATION.findIndex(
-              (paragraph) => paragraph.id === activeParagraphId
-            ) + 1
-          } de ${PLAZA_PRINCIPAL_NARRATION.length}`
-        : readingTexts.narrationStarted
-      : narrationStatus === 'stopping' ||
-          narrationStatus === 'completed'
-        ? readingTexts.narrationStopped
-        : '';
+  useEffect(() => {
+    const video = characterVideoRef.current;
+    if (!video) {
+      return;
+    }
+
+    video.volume = Math.min(
+      1,
+      Math.max(0, settings.narrationVolume / 100)
+    );
+    video.muted = isMuted;
+  }, [isMuted, settings.narrationVolume]);
+
+  useEffect(() => {
+    const video = characterVideoRef.current;
+    if (!video) {
+      return undefined;
+    }
+
+    let disposed = false;
+
+    const detachAutoplayRetry = () => {
+      window.removeEventListener('pointerdown', attemptPlayback, true);
+      window.removeEventListener('keydown', attemptPlayback, true);
+    };
+
+    const attemptPlayback = () => {
+      if (disposed || video.ended) {
+        detachAutoplayRetry();
+        return;
+      }
+
+      void video
+        .play()
+        .then(detachAutoplayRetry)
+        .catch(() => {
+          // A user gesture will retry playback if audible autoplay is blocked.
+        });
+    };
+
+    window.addEventListener('pointerdown', attemptPlayback, true);
+    window.addEventListener('keydown', attemptPlayback, true);
+    attemptPlayback();
+
+    return () => {
+      disposed = true;
+      detachAutoplayRetry();
+      video.pause();
+    };
+  }, []);
 
   return (
     <main
       className={styles.screen}
       style={{
-        backgroundImage: `url("${IMAGES.interactive.reading.background}")`,
+        backgroundImage: `linear-gradient(rgba(26, 33, 43, 0.6), rgba(26, 33, 43, 0.6)), url("${IMAGES.interactive.reading.background}")`,
       }}
     >
-      <div className={styles.overlay} aria-hidden="true" />
-      <div className={styles.content}>
-        <ReadingHeader
-          backLabel={TEXTS.common.back}
-          screenTitle={readingTexts.screenTitle}
-          narrationStatus={narrationStatus}
-          isNarrationActive={isNarrationActive}
-          startNarrationLabel={readingTexts.startNarration}
-          loadingNarrationLabel={readingTexts.preparingNarration}
-          stopNarrationLabel={readingTexts.stopNarration}
-          onBack={onBack}
-          onToggleNarration={toggle}
-        />
+      <ReadingHeader
+        backLabel={TEXTS.common.back}
+        screenTitle={readingTexts.screenTitle}
+        isMuted={isMuted}
+        muteLabel={TEXTS.interactive.plazaPrincipal.audioOn}
+        unmuteLabel={TEXTS.interactive.plazaPrincipal.audioOff}
+        onBack={onBack}
+        onToggleAudio={() => setIsMuted((current) => !current)}
+      />
 
-        <ReadingCard
-          articleTitle={readingTexts.articleTitle}
-          content={PLAZA_PRINCIPAL_NARRATION}
-          activeParagraphId={activeParagraphId}
-          activeSentenceId={activeSentenceId}
-          completedSentenceIds={completedSentenceIds}
-          isNarrationActive={isNarrationActive}
-          isAutoFollowEnabled={isAutoFollowEnabled}
-          scrollAreaLabel={readingTexts.scrollAreaLabel}
-          characterAlt={readingTexts.characterAlt}
-          narrationStatus={narrationStatus}
-          isCharacterVisible={isCharacterVisible}
-          scrollRef={scrollRef}
-          onManualScroll={pauseAutoFollow}
-          onResumeAutoFollow={resumeAutoFollow}
-        />
-      </div>
-
-      <p className={styles.srOnly} aria-live="polite">
-        {liveMessage}
-      </p>
-
-      {narrationErrorMessage && (
-        <div className={styles.errorToast} role="alert">
-          {narrationErrorMessage}
-        </div>
-      )}
+      <ReadingCard
+        articleTitle={readingTexts.articleTitle}
+        content={PLAZA_PRINCIPAL_NARRATION}
+        characterVideo={VIDEOS.plazaPrincipal.readingCharacter}
+        characterLabel={readingTexts.characterAlt}
+        isMuted={isMuted}
+        characterVideoRef={characterVideoRef}
+      />
     </main>
   );
 };

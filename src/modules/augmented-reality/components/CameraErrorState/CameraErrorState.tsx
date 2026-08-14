@@ -35,7 +35,11 @@ const CameraErrorState = ({
         <button type="button" onClick={onDemo}>
           {demoLabel}
         </button>
-        <button type="button" onClick={onBack}>
+        <button
+          type="button"
+          aria-label={backLabel}
+          onClick={onBack}
+        >
           {backLabel}
         </button>
       </div>

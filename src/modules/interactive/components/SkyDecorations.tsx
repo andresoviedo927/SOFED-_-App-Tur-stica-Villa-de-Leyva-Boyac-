@@ -3,7 +3,7 @@ import React from 'react';
 export const SkyDecorations: React.FC = () => {
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-      {/* Sun element (1_sol) at top left */}
+      {/* Interactive sun at the top left */}
       <div className="absolute left-[20px] sm:left-[40px] top-0 w-[220px] sm:w-[285px] h-[190px] sm:h-[243px]">
         <svg viewBox="0 0 285 243" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
           <defs>

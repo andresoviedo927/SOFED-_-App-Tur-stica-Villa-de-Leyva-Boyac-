@@ -37,7 +37,7 @@ const DEFAULT_ELEMENT_MAP: Record<TypographyVariant, React.ElementType> = {
  * Typography Component
  * Centralized, accessible text renderer enforcing Villa de Leyva design tokens.
  *
- * NOTE: 'display' uses Figma Hand font (exclusively for Villa de Leyva branding).
+ * NOTE: 'display' uses Gochi Hand font (exclusively for Villa de Leyva branding).
  * All other variants use Lexend font for functional readability.
  */
 export const Typography: React.FC<TypographyProps> = ({

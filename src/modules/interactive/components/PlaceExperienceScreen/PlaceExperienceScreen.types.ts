@@ -4,4 +4,5 @@ export interface PlaceExperienceScreenProps {
   place: InteractivePlace;
   onBack: () => void;
   onNavigate: (destination: string) => void;
+  onOpenSettings?: () => void;
 }

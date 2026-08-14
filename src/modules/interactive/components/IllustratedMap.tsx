@@ -7,11 +7,10 @@ import styles from './InteractiveMapScreen.module.css';
 
 interface IllustratedMapProps {
   pins: MapPinPOI[];
-  selectedPin: MapPinPOI | null;
   zoomScale: number;
   panOffset: { x: number; y: number };
   isDragging: boolean;
-  onSelectPin: (pin: MapPinPOI) => void;
+  onOpenPlazaPrincipal?: () => void;
   onPointerDown: React.PointerEventHandler<HTMLDivElement>;
   onPointerMove: React.PointerEventHandler<HTMLDivElement>;
   onPointerUp: React.PointerEventHandler<HTMLDivElement>;
@@ -19,11 +18,10 @@ interface IllustratedMapProps {
 
 export const IllustratedMap: React.FC<IllustratedMapProps> = ({
   pins,
-  selectedPin,
   zoomScale,
   panOffset,
   isDragging,
-  onSelectPin,
+  onOpenPlazaPrincipal,
   onPointerDown,
   onPointerMove,
   onPointerUp,
@@ -40,7 +38,7 @@ export const IllustratedMap: React.FC<IllustratedMapProps> = ({
     onPointerCancel={onPointerUp}
   >
     <div
-      className={styles.mapTransform}
+      className={`${styles.mapTransform} ${styles.mapImageLayer}`}
       style={{
         transform: `translate3d(${panOffset.x}px, ${panOffset.y}px, 0) scale(${zoomScale})`,
       }}
@@ -51,12 +49,20 @@ export const IllustratedMap: React.FC<IllustratedMapProps> = ({
         alt=""
         draggable={false}
       />
+    </div>
+    <div
+      className={`${styles.mapTransform} ${styles.pinLayer}`}
+      style={{
+        transform: `translate3d(${panOffset.x}px, ${panOffset.y}px, 0) scale(${zoomScale})`,
+      }}
+    >
       {pins.map((pin) => (
         <MapPin
           key={pin.id}
           pin={pin}
-          isSelected={selectedPin?.id === pin.id}
-          onSelect={onSelectPin}
+          onOpenDestination={
+            pin.destination ? onOpenPlazaPrincipal : undefined
+          }
         />
       ))}
     </div>

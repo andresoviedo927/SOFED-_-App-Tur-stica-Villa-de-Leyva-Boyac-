@@ -8,9 +8,9 @@ const SplashScreen = () => (
     <div className={styles.content}>
       <h1 className={styles.title}>{TEXTS.splash.title}</h1>
       <img
-        className={styles.church}
-        src={IMAGES.splash.church}
-        alt={TEXTS.splash.churchAlt}
+        className={styles.logo}
+        src={IMAGES.splash.logo}
+        alt={TEXTS.splash.logoAlt}
         width="140"
         height="140"
         draggable={false}

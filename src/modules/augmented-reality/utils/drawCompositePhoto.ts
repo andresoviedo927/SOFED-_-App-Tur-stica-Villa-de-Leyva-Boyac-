@@ -8,7 +8,7 @@ import calculateCoverCrop from './calculateCoverCrop';
 interface DrawCompositePhotoOptions {
   video: HTMLVideoElement | null;
   fallbackImage: HTMLImageElement | null;
-  characterImage: HTMLImageElement;
+  characterMedia: HTMLImageElement | HTMLVideoElement | null;
   viewportWidth: number;
   viewportHeight: number;
 }
@@ -32,7 +32,7 @@ const getOutputSize = (
 export const drawCompositePhoto = ({
   video,
   fallbackImage,
-  characterImage,
+  characterMedia,
   viewportWidth,
   viewportHeight,
 }: DrawCompositePhotoOptions): HTMLCanvasElement => {
@@ -78,11 +78,26 @@ export const drawCompositePhoto = ({
     canvas.height
   );
 
+  if (!characterMedia) {
+    return canvas;
+  }
+
   const characterWidth =
     canvas.width * AR_CHARACTER_PLACEMENT.widthRatio;
+  const characterSourceWidth =
+    characterMedia instanceof HTMLVideoElement
+      ? characterMedia.videoWidth
+      : characterMedia.naturalWidth;
+  const characterSourceHeight =
+    characterMedia instanceof HTMLVideoElement
+      ? characterMedia.videoHeight
+      : characterMedia.naturalHeight;
+  if (!characterSourceWidth || !characterSourceHeight) {
+    throw new Error('Character media unavailable');
+  }
   const characterHeight =
     characterWidth *
-    (characterImage.naturalHeight / characterImage.naturalWidth);
+    (characterSourceHeight / characterSourceWidth);
   const characterX =
     canvas.width * AR_CHARACTER_PLACEMENT.centerX -
     characterWidth / 2;
@@ -109,7 +124,7 @@ export const drawCompositePhoto = ({
   context.restore();
 
   context.drawImage(
-    characterImage,
+    characterMedia,
     characterX,
     characterY,
     characterWidth,

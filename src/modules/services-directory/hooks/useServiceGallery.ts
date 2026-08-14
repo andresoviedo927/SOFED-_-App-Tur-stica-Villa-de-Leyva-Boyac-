@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { playSoundEffect } from '@/services/SoundEffectsService';
 import type {
   ServiceGalleryImage,
   ServiceGalleryStatus,
@@ -18,6 +19,8 @@ export const useServiceGallery = (images: ServiceGalleryImage[]) => {
   }, [images]);
 
   const showPrevious = useCallback(() => {
+    if (images.length < 2) return;
+    playSoundEffect('swipe');
     setGalleryStatus('loading');
     setActiveImageIndex((current) =>
       current === 0 ? images.length - 1 : current - 1
@@ -25,16 +28,23 @@ export const useServiceGallery = (images: ServiceGalleryImage[]) => {
   }, [images.length]);
 
   const showNext = useCallback(() => {
+    if (images.length < 2) return;
+    playSoundEffect('swipe');
     setGalleryStatus('loading');
     setActiveImageIndex((current) =>
       current === images.length - 1 ? 0 : current + 1
     );
   }, [images.length]);
 
-  const selectImage = useCallback((index: number) => {
-    setGalleryStatus('loading');
-    setActiveImageIndex(index);
-  }, []);
+  const selectImage = useCallback(
+    (index: number) => {
+      if (index === activeImageIndex) return;
+      playSoundEffect('swipe');
+      setGalleryStatus('loading');
+      setActiveImageIndex(index);
+    },
+    [activeImageIndex]
+  );
 
   const handleTouchStart = useCallback((clientX: number) => {
     touchStartX.current = clientX;

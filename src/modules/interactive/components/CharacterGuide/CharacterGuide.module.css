@@ -1,34 +1,88 @@
 .guide {
-  position: relative;
-  width: clamp(240px, 35.8vw, 302px);
-  height: clamp(240px, 35.8vw, 302px);
+  position: absolute;
+  right: 8px;
+  bottom: -24px;
+  isolation: isolate;
+  width: 350px;
+  height: 326px;
   margin: 0;
+  padding: 0;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
+  justify-self: center;
+  overflow: hidden;
 }
 
-.image {
+.video {
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  bottom: 0;
+  display: block;
+  width: auto;
+  height: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: bottom center;
+  transform-origin: bottom center;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  opacity: 0;
+  transform: translateX(-50%);
+  pointer-events: none;
+  user-select: none;
+}
+
+.video[data-fallback='true'] {
+  z-index: 2;
+  opacity: 1;
+}
+
+.canvas {
   position: relative;
   z-index: 2;
-  width: 100%;
+  display: block;
+  width: auto;
   height: 100%;
+  max-height: 100%;
   object-fit: contain;
+  object-position: bottom center;
+  transform-origin: bottom center;
+  border: 0;
+  outline: 0;
+  background: transparent;
   user-select: none;
-  filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.22));
+  pointer-events: none;
+  filter: drop-shadow(0 12px 12px rgba(0, 0, 0, 0.28));
+  animation: characterEnter 650ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: opacity, transform;
 }
 
 .shadow {
   position: absolute;
   z-index: 1;
   left: 50%;
-  bottom: 1px;
+  bottom: 0;
   transform: translateX(-50%);
 }
 
-@media (max-height: 350px) {
-  .guide {
-    width: 250px;
-    height: 250px;
+@keyframes characterEnter {
+  from {
+    opacity: 0;
+    transform: scale(0.82) translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .canvas {
+    animation: none;
+    will-change: auto;
   }
 }

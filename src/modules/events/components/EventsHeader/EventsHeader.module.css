@@ -20,14 +20,17 @@
   margin: 0;
   overflow: hidden;
   color: #f6f8fb;
-  font-size: 22px;
+  font-family: var(--font-family-primary, "Lexend", sans-serif);
+  font-size: 16px;
   font-weight: 600;
-  line-height: 24px;
+  line-height: 18px;
   text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.settings {
+.reservedSpace {
+  width: 40px;
+  height: 40px;
   justify-self: end;
 }

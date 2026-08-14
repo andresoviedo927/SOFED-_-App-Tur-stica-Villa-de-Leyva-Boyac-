@@ -1,1 +1,10 @@
-/* Layout is provided by the shared MapCategoryColumn component. */
+.column {
+  display: flex;
+  width: 96px;
+  height: 290px;
+  min-height: 0;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}

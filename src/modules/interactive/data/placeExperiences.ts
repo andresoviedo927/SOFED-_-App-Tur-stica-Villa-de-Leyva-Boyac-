@@ -6,16 +6,15 @@ import type { InteractivePlace } from '../types';
 export const PLAZA_PRINCIPAL_PLACE: InteractivePlace = {
   id: 'plaza-principal',
   title: TEXTS.interactive.plazaPrincipal.title,
-  backgroundImage: IMAGES.settings.background,
-  characterImage: IMAGES.characters.guide4,
-  centerIcon: IMAGES.icons.plazaPrincipal,
+  backgroundImage: IMAGES.plazaPrincipal.background,
+  centerIcon: IMAGES.plazaPrincipal.centerIcon,
   experiences: [
     {
       id: 'plaza-game',
       type: 'game',
       label:
         TEXTS.interactive.plazaPrincipal.experiences.game,
-      icon: IMAGES.icons.puzzle,
+      icon: IMAGES.plazaPrincipal.puzzleIcon,
       destination: ROUTES.PLAZA_PRINCIPAL_GAME,
     },
     {
@@ -23,7 +22,7 @@ export const PLAZA_PRINCIPAL_PLACE: InteractivePlace = {
       type: 'reading',
       label:
         TEXTS.interactive.plazaPrincipal.experiences.reading,
-      icon: IMAGES.icons.reading,
+      icon: IMAGES.plazaPrincipal.readingIcon,
       destination: ROUTES.PLAZA_PRINCIPAL_READING,
     },
     {
@@ -31,7 +30,7 @@ export const PLAZA_PRINCIPAL_PLACE: InteractivePlace = {
       type: 'gallery',
       label:
         TEXTS.interactive.plazaPrincipal.experiences.gallery,
-      icon: IMAGES.icons.gallery,
+      icon: IMAGES.plazaPrincipal.galleryIcon,
       destination: ROUTES.PLAZA_PRINCIPAL_GALLERY,
     },
     {
@@ -40,7 +39,7 @@ export const PLAZA_PRINCIPAL_PLACE: InteractivePlace = {
       label:
         TEXTS.interactive.plazaPrincipal.experiences
           .augmentedReality,
-      icon: IMAGES.icons.augmentedReality,
+      icon: IMAGES.plazaPrincipal.augmentedRealityIcon,
       destination: ROUTES.PLAZA_PRINCIPAL_AR,
     },
   ],

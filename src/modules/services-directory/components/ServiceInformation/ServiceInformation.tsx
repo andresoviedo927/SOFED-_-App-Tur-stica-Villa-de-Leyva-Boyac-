@@ -7,13 +7,16 @@ import styles from './ServiceInformation.module.css';
 export const ServiceInformation = ({
   service,
   onShowOnMap,
+  className = '',
+  contactDisplay = 'label',
 }: ServiceInformationProps) => (
-  <article className={styles.information}>
+  <article className={`${styles.information} ${className}`}>
     <div className={styles.sticky}>
       <h2>{service.name}</h2>
       <ServiceContactLinks
         contacts={service.contacts}
         serviceName={service.name}
+        display={contactDisplay}
       />
     </div>
     <div className={styles.scroll}>

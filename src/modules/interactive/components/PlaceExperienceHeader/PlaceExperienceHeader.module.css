@@ -2,7 +2,8 @@
   position: relative;
   z-index: 10;
   width: 100%;
-  min-height: 44px;
+  height: 40px;
+  min-height: 40px;
   display: grid;
   grid-template-columns: 112px 1fr 112px;
   align-items: center;
@@ -11,7 +12,7 @@
 .backButton {
   justify-self: start;
   min-width: 104px;
-  min-height: 44px;
+  min-height: 40px;
   padding-inline: 8px 12px;
   color: #f6f8fb !important;
   background: transparent !important;
@@ -19,16 +20,12 @@
   box-shadow: none !important;
 }
 
-.backButton:hover {
-  background: rgba(255, 255, 255, 0.12) !important;
-}
-
 .title {
   width: 100%;
   margin: 0;
   color: #f6f8fb;
   font-family: 'Lexend', sans-serif;
-  font-size: 22px;
+  font-size: 16px;
   font-weight: 600;
   line-height: 24px;
   text-align: center;

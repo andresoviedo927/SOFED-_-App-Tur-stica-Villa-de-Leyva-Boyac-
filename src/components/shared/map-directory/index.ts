@@ -8,3 +8,4 @@ export * from './DirectoryMapPin';
 export * from './DirectoryMapTooltip';
 export * from './DirectoryMapControls';
 export * from './useDirectoryMapController';
+export * from './fitMapToVisiblePins';

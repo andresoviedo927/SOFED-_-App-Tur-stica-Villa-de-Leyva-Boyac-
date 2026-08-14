@@ -3,8 +3,38 @@
   display: grid;
   min-width: 0;
   min-height: 0;
+  overflow: hidden;
   place-items: end center;
   animation: enter 380ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  background: transparent;
+}
+
+.character[data-video] {
+  height: 258px;
+  opacity: 1;
+  transform: translateY(16px);
+  animation: none;
+  -webkit-mask-image: radial-gradient(
+    ellipse 100% 100% at 50% 54%,
+    #000 84%,
+    rgba(0, 0, 0, 0.92) 92%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 100% 100% at 50% 54%,
+    #000 84%,
+    rgba(0, 0, 0, 0.92) 92%,
+    transparent 100%
+  );
+  transition:
+    opacity 220ms ease,
+    transform 320ms ease;
+}
+
+.character[data-video][data-hidden] {
+  opacity: 0;
+  transform: translate(24px, 16px);
+  pointer-events: none;
 }
 
 .character::after {
@@ -23,18 +53,58 @@
   filter: blur(5px);
 }
 
-.character img {
+.character img,
+.videoSource,
+.videoCanvas {
   position: relative;
   z-index: 1;
   display: block;
-  width: 156px;
+  width: auto;
   max-width: 100%;
-  height: 258px;
+  height: auto;
   max-height: 100%;
   object-fit: contain;
   object-position: center bottom;
   user-select: none;
   -webkit-user-drag: none;
+}
+
+.character img {
+  width: 156px;
+  height: 258px;
+}
+
+.videoSource {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  filter: contrast(1.12) brightness(1.12) saturate(0.92);
+  transform: scale(1.05);
+  transform-origin: center bottom;
+}
+
+.videoSource[data-fallback='true'] {
+  opacity: 1;
+}
+
+.videoCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  mix-blend-mode: darken;
+  filter: contrast(1.08) brightness(1.02) saturate(0.96);
+  transform: scale(1.05);
+  transform-origin: center bottom;
+}
+
+.videoCanvas[hidden] {
+  display: none;
 }
 
 .character[data-exiting] {
@@ -63,5 +133,9 @@
   .character,
   .character[data-exiting] {
     animation-duration: 1ms;
+  }
+
+  .character[data-video] {
+    transition: none;
   }
 }

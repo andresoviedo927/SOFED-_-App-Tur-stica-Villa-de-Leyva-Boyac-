@@ -1,10 +1,9 @@
-import IMAGES from '@/assets/images';
-import VIDEOS from '@/assets/videos';
-
 export interface DroneVideoContent {
   id: string;
   src: string;
-  poster: string;
+  provider?: 'youtube';
+  watchUrl?: string;
+  poster?: string;
   title: string;
   description?: string;
   accessibilityLabel: string;
@@ -12,20 +11,14 @@ export interface DroneVideoContent {
   objectPosition?: string;
 }
 
-/**
- * Single-video configuration.
- *
- * The poster uses the real Plaza Mayor photograph already in the project.
- * src remains empty until the requested aerial video is supplied locally.
- */
 export const plazaPrincipalDroneVideo: DroneVideoContent = {
   id: 'plaza-principal-drone-flight',
-  src: VIDEOS.plazaPrincipal.droneFlight,
-  poster: IMAGES.gallery.plazaPrincipal.dronePoster,
-  title: 'Vuelo aéreo sobre la Plaza Principal',
+  provider: 'youtube',
+  src: 'https://www.youtube.com/embed/7DeGW1S3eaA?autoplay=1&mute=0&rel=0&modestbranding=1',
+  watchUrl: 'https://www.youtube.com/watch?v=7DeGW1S3eaA',
+  title: 'Vuelo de drone sobre la Plaza Mayor de Villa de Leyva',
   accessibilityLabel:
-    'Video aéreo de la Plaza Principal de Villa de Leyva',
-  objectPosition: 'center',
+    'Video de drone sobre la Plaza Mayor de Villa de Leyva',
 };
 
 export default plazaPrincipalDroneVideo;

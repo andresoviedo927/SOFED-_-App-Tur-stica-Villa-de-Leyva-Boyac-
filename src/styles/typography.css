@@ -6,29 +6,17 @@
   font-display: swap;
 }
 
-/*
- * Figma Hand no permite redistribucion independiente. Esta declaracion usa
- * la copia instalada en el dispositivo cuando esta disponible.
- */
-@font-face {
-  font-family: 'Figma Hand';
-  src: local('Figma Hand'), local('FigmaHand-Regular');
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-}
-
 /* ==========================================================================
    SISTEMA TIPOGRÁFICO CENTRALIZADO - VILLA DE LEYVA APP TURÍSTICA
    ==========================================================================
    
    REGLAS DE USO DE TIPOGRAFÍA:
    
-   1. FIGMA HAND:
+   1. GOCHI HAND:
       - USO EXCLUSIVO: Nombre "Villa de Leyva" en el Home y Splash Screen.
       - PROHIBIDO EN: Párrafos largos, formularios, datos, fechas, distancias,
         botones pequeños, mensajes de error, información de navegación.
-      - FALLBACK: "Figma Hand", "Caveat", "Comic Sans MS", cursive.
+      - FALLBACK: "Gochi Hand", "Comic Sans MS", cursive.
       
    2. LEXEND:
       - USO EN TODOS LOS ELEMENTOS FUNCIONALES: Cuerpos de texto, botones,
@@ -47,7 +35,7 @@
 
 :root {
   /* Familias Tipográficas Centralizadas */
-  --font-family-display: 'Figma Hand', 'Caveat', 'Comic Sans MS', cursive;
+  --font-family-display: 'Gochi Hand', 'Comic Sans MS', cursive;
   --font-family-primary: 'Lexend', Arial, sans-serif;
 
   /* Pesos Tipográficos Disponibles (Máximo 3 activos por familia) */
@@ -69,10 +57,10 @@
 
   /* Escala Tipográfica Responsive con clamp() (Mobile Landscape -> Tablet Landscape) */
   
-  /* Display (Figma Hand) */
+  /* Display (Gochi Hand) */
   --font-size-display: clamp(1.75rem, 4vw + 0.5rem, 2.75rem); /* 28px -> 44px */
   
-  /* Headlines (Lexend / Figma Hand según contexto) */
+  /* Headlines (Lexend / Gochi Hand según contexto) */
   --font-size-headline-large: clamp(1.5rem, 3.2vw + 0.25rem, 2.25rem); /* 24px -> 36px */
   --font-size-headline-medium: clamp(1.25rem, 2.6vw + 0.25rem, 1.75rem); /* 20px -> 28px */
   --font-size-headline-small: clamp(1.125rem, 2.2vw + 0.2rem, 1.5rem); /* 18px -> 24px */

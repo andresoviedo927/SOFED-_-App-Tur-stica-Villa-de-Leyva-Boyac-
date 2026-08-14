@@ -15,7 +15,8 @@ import type {
 interface UseCompositePhotoCaptureOptions {
   videoRef: RefObject<HTMLVideoElement | null>;
   viewportRef: RefObject<HTMLElement | null>;
-  characterImageSrc: string;
+  characterVideoRef?: RefObject<HTMLVideoElement | null>;
+  includeCharacter?: boolean;
   fallbackImageSrc: string;
   useFallback: boolean;
 }
@@ -47,7 +48,8 @@ const canvasToBlob = (
 export const useCompositePhotoCapture = ({
   videoRef,
   viewportRef,
-  characterImageSrc,
+  characterVideoRef,
+  includeCharacter = true,
   fallbackImageSrc,
   useFallback,
 }: UseCompositePhotoCaptureOptions): UseCompositePhotoCaptureResult => {
@@ -81,7 +83,13 @@ export const useCompositePhotoCapture = ({
       const viewport = viewportRef.current;
       if (!viewport) throw new Error('Viewport unavailable');
 
-      const characterImage = await loadImage(characterImageSrc);
+      const characterVideo = characterVideoRef?.current ?? null;
+      if (
+        includeCharacter &&
+        (!characterVideo?.videoWidth || !characterVideo.videoHeight)
+      ) {
+        throw new Error('Character video unavailable');
+      }
       const fallbackImage = useFallback
         ? await loadImage(fallbackImageSrc)
         : null;
@@ -89,7 +97,7 @@ export const useCompositePhotoCapture = ({
       const canvas = drawCompositePhoto({
         video: useFallback ? null : videoRef.current,
         fallbackImage,
-        characterImage,
+        characterMedia: includeCharacter ? characterVideo : null,
         viewportWidth: bounds.width,
         viewportHeight: bounds.height,
       });
@@ -111,8 +119,9 @@ export const useCompositePhotoCapture = ({
       setStatus('error');
     }
   }, [
-    characterImageSrc,
+    characterVideoRef,
     fallbackImageSrc,
+    includeCharacter,
     revokePhotoUrl,
     useFallback,
     videoRef,

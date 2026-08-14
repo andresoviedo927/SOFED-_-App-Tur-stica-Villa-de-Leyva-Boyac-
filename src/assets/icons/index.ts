@@ -36,6 +36,7 @@ import {
   TriangleAlert,
   RotateCcw,
   Play,
+  Download,
 } from 'lucide-react';
 
 export const ICONS = {
@@ -58,6 +59,7 @@ export const ICONS = {
   'fi-rr-triangle-warning': TriangleAlert,
   'fi-rr-rotate-left': RotateCcw,
   'fi-rr-play': Play,
+  'fi-rr-download': Download,
 
   // Home Main Options
   'fi-rr-touch': MousePointerClick,

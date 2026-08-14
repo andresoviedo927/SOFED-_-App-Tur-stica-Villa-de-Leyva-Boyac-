@@ -1,167 +1,284 @@
 import {
-  useRef,
-  type KeyboardEvent,
-  type PointerEvent,
-  type WheelEvent,
+  useEffect,
+  useMemo,
+  useState,
+  type SyntheticEvent,
 } from 'react';
-import IMAGES from '@/assets/images';
-import TEXTS from '@/constants/texts';
+import {
+  divIcon,
+  latLngBounds,
+  type LatLngExpression,
+} from 'leaflet';
+import {
+  MapContainer,
+  Marker,
+  TileLayer,
+  Tooltip,
+  useMap,
+} from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import { fitMapToVisiblePins } from '@/components/shared/map-directory';
+import { playSoundEffect } from '@/services/SoundEffectsService';
 import type {
-  ServiceCategory,
-  ServiceMapPoint,
+  ServiceCategoryId,
+  ServiceLocation,
 } from '../../types/services.types';
-import { ServiceMapPin } from '../ServiceMapPin';
-import { ServiceMapTooltip } from '../ServiceMapTooltip';
-import { ServicesMapControls } from '../ServicesMapControls';
 import styles from './ServicesMap.module.css';
 
+const VILLA_DE_LEYVA_CENTER: LatLngExpression = [5.6332, -73.5231];
+const VILLA_DE_LEYVA_BOUNDS: [LatLngExpression, LatLngExpression] = [
+  [5.55, -73.66],
+  [5.72, -73.43],
+];
+
+const CATEGORY_MARKER_CLASS: Record<ServiceCategoryId, string> = {
+  cafes: 'markerCafes',
+  churches: 'markerChurches',
+  atms: 'markerAtms',
+  thingsToDo: 'markerThingsToDo',
+  gasStations: 'markerGasStations',
+  restaurants: 'markerRestaurants',
+  health: 'markerHealth',
+  publicTransport: 'markerPublicTransport',
+};
+
 interface ServicesMapProps {
-  selectedCategory: ServiceCategory | null;
-  points: ServiceMapPoint[];
-  selectedPoint: ServiceMapPoint | null;
-  zoom: number;
-  offset: { x: number; y: number };
-  isAtMinZoom: boolean;
-  isAtMaxZoom: boolean;
-  onRemoveFilter: () => void;
-  onSelectPoint: (pointId: string) => void;
-  onClosePoint: () => void;
-  onOpenDetails: (point: ServiceMapPoint) => void;
-  onReset: () => void;
-  onZoomIn: () => void;
-  onZoomOut: () => void;
-  onPanBy: (x: number, y: number) => void;
+  locations: ServiceLocation[];
+  loading: boolean;
+  error: string | null;
+  markersVisible: boolean;
+  focusedServiceId: string | null;
+  onOpenServiceDetail: (
+    categoryId: string,
+    serviceId: string
+  ) => void;
 }
 
+const hasCoordinates = (
+  location: ServiceLocation
+): location is ServiceLocation & { lat: number; lng: number } =>
+  Number.isFinite(location.lat) && Number.isFinite(location.lng);
+
+const MapViewport = ({
+  locations,
+  focusedLocation,
+}: {
+  locations: Array<ServiceLocation & { lat: number; lng: number }>;
+  focusedLocation?: ServiceLocation & { lat: number; lng: number };
+}) => {
+  const map = useMap();
+
+  useEffect(() => {
+    if (focusedLocation) {
+      map.flyTo([focusedLocation.lat, focusedLocation.lng], 17, {
+        duration: 0.45,
+      });
+      return;
+    }
+
+    if (locations.length === 0) {
+      map.setView(VILLA_DE_LEYVA_CENTER, 15);
+      return;
+    }
+
+    if (
+      locations.length === 1 ||
+      locations.every(
+        (location) =>
+          location.lat === locations[0].lat &&
+          location.lng === locations[0].lng
+      )
+    ) {
+      map.flyTo([locations[0].lat, locations[0].lng], 16, {
+        duration: 0.45,
+      });
+      return;
+    }
+
+    map.fitBounds(
+      latLngBounds(
+        locations.map((location) => [location.lat, location.lng])
+      ),
+      {
+        padding: [32, 32],
+        maxZoom: 16,
+        animate: true,
+        duration: 0.45,
+      }
+    );
+  }, [focusedLocation, locations, map]);
+
+  return null;
+};
+
+interface MapControlsProps {
+  locations: Array<ServiceLocation & { lat: number; lng: number }>;
+}
+
+const MapControls = ({ locations }: MapControlsProps) => {
+  const map = useMap();
+
+  const stopMapInteraction = (
+    event: SyntheticEvent<HTMLElement>
+  ) => event.stopPropagation();
+
+  return (
+    <div
+      className={styles.mapControls}
+      onClick={stopMapInteraction}
+      onDoubleClick={stopMapInteraction}
+      onPointerDown={stopMapInteraction}
+    >
+      <button
+        type="button"
+        className={styles.locateControl}
+        onClick={() => fitMapToVisiblePins(map, locations)}
+        aria-label="Centrar los pines visibles"
+        title="Centrar pines visibles"
+      >
+        <span aria-hidden="true" />
+      </button>
+      <div className={styles.zoomControls} aria-label="Controles de zoom">
+        <button
+          type="button"
+          onClick={() => map.zoomIn()}
+          aria-label="Acercar mapa"
+        >
+          +
+        </button>
+        <button
+          type="button"
+          onClick={() => map.zoomOut()}
+          aria-label="Alejar mapa"
+        >
+          −
+        </button>
+      </div>
+    </div>
+  );
+};
+
 export const ServicesMap = ({
-  selectedCategory,
-  points,
-  selectedPoint,
-  zoom,
-  offset,
-  isAtMinZoom,
-  isAtMaxZoom,
-  onRemoveFilter,
-  onSelectPoint,
-  onClosePoint,
-  onOpenDetails,
-  onReset,
-  onZoomIn,
-  onZoomOut,
-  onPanBy,
+  locations,
+  loading,
+  error,
+  markersVisible,
+  focusedServiceId,
+  onOpenServiceDetail,
 }: ServicesMapProps) => {
-  const dragStart = useRef<{ x: number; y: number } | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const mappedLocations = useMemo(
+    () => (markersVisible ? locations.filter(hasCoordinates) : []),
+    [locations, markersVisible]
+  );
+  const focusedLocation = useMemo(
+    () =>
+      mappedLocations.find(
+        (location) => location.id === focusedServiceId
+      ),
+    [focusedServiceId, mappedLocations]
+  );
 
-  const handlePointerDown = (event: PointerEvent<HTMLDivElement>) => {
-    if (event.button !== 0) return;
-    event.currentTarget.setPointerCapture(event.pointerId);
-    dragStart.current = { x: event.clientX, y: event.clientY };
-  };
+  useEffect(() => {
+    if (focusedLocation) setSelectedId(focusedLocation.id);
+  }, [focusedLocation]);
 
-  const handlePointerMove = (event: PointerEvent<HTMLDivElement>) => {
-    if (!dragStart.current) return;
-    const deltaX = event.clientX - dragStart.current.x;
-    const deltaY = event.clientY - dragStart.current.y;
-    dragStart.current = { x: event.clientX, y: event.clientY };
-    onPanBy(deltaX, deltaY);
-  };
-
-  const endDrag = () => {
-    dragStart.current = null;
-  };
-
-  const handleWheel = (event: WheelEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    if (event.deltaY < 0) onZoomIn();
-    else onZoomOut();
-  };
-
-  const handleKeyboard = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === '+' || event.key === '=') onZoomIn();
-    if (event.key === '-') onZoomOut();
-    if (event.key === 'Home') onReset();
-    if (event.key === 'Escape') onClosePoint();
-  };
+  useEffect(() => {
+    if (
+      !markersVisible ||
+      (selectedId &&
+        !locations.some((location) => location.id === selectedId))
+    ) {
+      setSelectedId(null);
+    }
+  }, [locations, markersVisible, selectedId]);
 
   return (
     <div className={styles.frame}>
-      <div
-        className={styles.map}
-        role="application"
-        tabIndex={0}
-        aria-label={TEXTS.services.map.label}
-        onPointerDown={handlePointerDown}
-        onPointerMove={handlePointerMove}
-        onPointerUp={endDrag}
-        onPointerCancel={endDrag}
-        onWheel={handleWheel}
-        onKeyDown={handleKeyboard}
+      <section
+        className={styles.mapPane}
+        aria-label="Mapa interactivo de servicios"
       >
-        <div
-          className={styles.canvas}
-          style={{
-            transform: `translate(${offset.x}px, ${offset.y}px) scale(${zoom})`,
-          }}
+        <MapContainer
+          className={styles.map}
+          center={VILLA_DE_LEYVA_CENTER}
+          zoom={15}
+          minZoom={12}
+          maxZoom={18}
+          maxBounds={VILLA_DE_LEYVA_BOUNDS}
+          maxBoundsViscosity={0.85}
+          zoomControl={false}
         >
-          <img
-            className={styles.base}
-            src={IMAGES.servicesMap.base}
-            alt=""
-            draggable={false}
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          {points.map((point, index) => (
-            <ServiceMapPin
-              key={point.id}
-              point={point}
-              index={index}
-              isSelected={selectedPoint?.id === point.id}
-              onSelect={onSelectPoint}
-            />
-          ))}
-        </div>
-
-        {selectedCategory && (
-          <button
-            type="button"
-            className={styles.filterChip}
-            onPointerDown={(event) => event.stopPropagation()}
-            onClick={onRemoveFilter}
-          >
-            {TEXTS.services.map.filterChip.replace(
-              '{category}',
-              selectedCategory.label
-            )}
-          </button>
-        )}
-
-        {selectedCategory && points.length === 0 && (
-          <div className={styles.empty} role="status">
-            <strong>{TEXTS.services.map.noResultsTitle}</strong>
-            <span>{TEXTS.services.map.noResultsMessage}</span>
-          </div>
-        )}
-
-        {selectedPoint && selectedCategory && (
-          <ServiceMapTooltip
-            key={selectedPoint.id}
-            point={selectedPoint}
-            categoryLabel={selectedCategory.label}
-            onClose={onClosePoint}
-            onViewDetails={() => onOpenDetails(selectedPoint)}
+          <MapViewport
+            locations={mappedLocations}
+            focusedLocation={focusedLocation}
           />
-        )}
+          {mappedLocations.map((location) => {
+            const markerIcon = divIcon({
+              className: styles.markerHost,
+              html: `<span class="${styles.markerPin} ${styles[CATEGORY_MARKER_CLASS[location.categoryId]]}"><i></i></span>`,
+              iconSize: [28, 34],
+              iconAnchor: [14, 34],
+            });
+            const isSelected = selectedId === location.id;
 
-        <ServicesMapControls
-          resetLabel={TEXTS.services.map.resetView}
-          zoomInLabel={TEXTS.services.map.zoomIn}
-          zoomOutLabel={TEXTS.services.map.zoomOut}
-          disableZoomIn={isAtMaxZoom}
-          disableZoomOut={isAtMinZoom}
-          onReset={onReset}
-          onZoomIn={onZoomIn}
-          onZoomOut={onZoomOut}
-        />
-      </div>
+            return (
+              <Marker
+                key={location.id}
+                position={[location.lat, location.lng]}
+                icon={markerIcon}
+                eventHandlers={{
+                  click: () => {
+                    playSoundEffect('pin');
+                    setSelectedId(location.id);
+                  },
+                }}
+              >
+                {isSelected && (
+                  <Tooltip
+                    permanent
+                    interactive
+                    direction="top"
+                    offset={[0, -28]}
+                    opacity={1}
+                    className={styles.serviceTooltip}
+                  >
+                    <button
+                      type="button"
+                      data-sound-effect="none"
+                      onPointerDown={(event) => event.stopPropagation()}
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        playSoundEffect('open');
+                        onOpenServiceDetail(
+                          location.categoryId,
+                          location.id
+                        );
+                      }}
+                      aria-label={`Abrir detalle de ${location.name}`}
+                    >
+                      {location.name}
+                    </button>
+                  </Tooltip>
+                )}
+              </Marker>
+            );
+          })}
+          <MapControls locations={mappedLocations} />
+        </MapContainer>
+        {!loading && error && (
+          <p className={styles.mapEmpty}>{error}</p>
+        )}
+        {!loading && !error && markersVisible && mappedLocations.length === 0 && (
+          <p className={styles.mapEmpty}>
+            No hay ubicaciones verificadas para mostrar.
+          </p>
+        )}
+      </section>
     </div>
   );
 };

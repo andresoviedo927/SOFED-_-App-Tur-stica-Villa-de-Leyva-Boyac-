@@ -1,4 +1,4 @@
 export interface CharacterGuideProps {
-  image: string;
+  video: string;
   name: string;
 }

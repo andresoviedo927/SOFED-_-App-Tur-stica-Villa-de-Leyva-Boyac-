@@ -6,7 +6,7 @@ Aplicación turística oficial de Villa de Leyva diseñada con Arquitectura Limp
 
 1. **Textos Centralizados**: Ningún componente debe contener textos visibles escritos directamente en JSX. Todos los textos se almacenan en `src/constants/texts.ts`.
 2. **Colores Centralizados**: Ningún componente debe declarar colores HEX/RGB arbitrarios. Todos los colores se consumen desde `src/styles/colors.css` y `src/styles/theme.ts`.
-3. **Tipografías Centralizadas**: Las familias tipográficas (`Caveat`/`Figma Hand` para textos artesanales/culturales y `Lexend` para UI/labels) se definen exclusivamente en `src/styles/typography.css`.
+3. **Tipografías Centralizadas**: Las familias tipográficas (`Gochi Hand` para textos artesanales/culturales y `Lexend` para UI/labels) se definen exclusivamente en `src/styles/typography.css`.
 4. **Imágenes Centralizadas**: Todas las imágenes se exportan desde `src/assets/images/index.ts`.
 5. **Iconos Centralizados**: Todos los iconos se exportan y mapean desde `src/assets/icons/index.ts`.
 6. **Props Tipadas**: Todos los componentes deben tener sus interfaces de props totalmente tipadas (`ComponentName.types.ts`).

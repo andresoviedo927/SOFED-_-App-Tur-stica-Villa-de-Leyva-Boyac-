@@ -24,6 +24,7 @@ export const ServiceGalleryNavigation = ({
     <>
       <button
         type="button"
+        data-sound-effect="none"
         className={`${styles.arrow} ${styles.previous}`}
         aria-label={TEXTS.services.detail.previousPhoto}
         onClick={onPrevious}
@@ -36,6 +37,7 @@ export const ServiceGalleryNavigation = ({
       </button>
       <button
         type="button"
+        data-sound-effect="none"
         className={`${styles.arrow} ${styles.next}`}
         aria-label={TEXTS.services.detail.nextPhoto}
         onClick={onNext}
@@ -51,6 +53,7 @@ export const ServiceGalleryNavigation = ({
           <button
             key={image.id}
             type="button"
+            data-sound-effect="none"
             aria-label={`${TEXTS.services.detail.goToPhoto} ${index + 1}`}
             aria-current={index === activeIndex ? 'true' : undefined}
             onClick={() => onSelect(index)}

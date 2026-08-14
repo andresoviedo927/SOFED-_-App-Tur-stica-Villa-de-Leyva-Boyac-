@@ -13,13 +13,10 @@ import type {
 } from '../../types';
 import useCameraStream from '../../hooks/useCameraStream';
 import useCompositePhotoCapture from '../../hooks/useCompositePhotoCapture';
-import useSimulatedCharacterPlacement from '../../hooks/useSimulatedCharacterPlacement';
-import ARCharacterOverlay from '../ARCharacterOverlay';
 import CameraErrorState from '../CameraErrorState';
 import CameraPreview from '../CameraPreview';
 import CameraShutterButton from '../CameraShutterButton';
 import CapturedPhotoPreview from '../CapturedPhotoPreview';
-import SurfacePlacementGuide from '../SurfacePlacementGuide';
 import styles from './AugmentedRealityCameraScreen.module.css';
 
 interface AugmentedRealityCameraScreenProps {
@@ -39,17 +36,15 @@ const AugmentedRealityCameraScreen = ({
     useState<AugmentedRealityStatus>('idle');
   const [isDemoMode, setIsDemoMode] = useState(false);
   const camera = useCameraStream();
-  const placement = useSimulatedCharacterPlacement();
   const capture = useCompositePhotoCapture({
     videoRef: camera.videoRef,
     viewportRef,
-    characterImageSrc: IMAGES.characters.augmentedRealityPhoto,
+    includeCharacter: false,
     fallbackImageSrc: IMAGES.augmentedReality.photoBackground,
     useFallback: isDemoMode,
   });
 
   const stopExperience = useCallback(() => {
-    placement.cancelPlacementSequence();
     capture.reset();
     camera.stopCamera();
     window.speechSynthesis?.cancel();
@@ -62,7 +57,6 @@ const AugmentedRealityCameraScreen = ({
     camera.stopCamera,
     camera.videoRef,
     capture.reset,
-    placement.cancelPlacementSequence,
   ]);
 
   const handleBack = useCallback(() => {
@@ -95,24 +89,11 @@ const AugmentedRealityCameraScreen = ({
     if (camera.status === 'requesting') {
       setStatus('requestingPermission');
     } else if (camera.status === 'ready') {
-      setStatus('startingCamera');
-      placement.startPlacementSequence();
+      setStatus('characterVisible');
     } else if (camera.status === 'error') {
       setStatus('error');
     }
-  }, [camera.status, placement.startPlacementSequence]);
-
-  useEffect(() => {
-    const statusMap = {
-      scanning: 'scanningSurface',
-      surfaceReady: 'surfaceReady',
-      placing: 'placingCharacter',
-      visible: 'characterVisible',
-    } as const;
-    if (placement.status !== 'idle') {
-      setStatus(statusMap[placement.status]);
-    }
-  }, [placement.status]);
+  }, [camera.status]);
 
   useEffect(() => {
     if (capture.status === 'capturing') setStatus('capturing');
@@ -122,40 +103,33 @@ const AugmentedRealityCameraScreen = ({
 
   useEffect(
     () => () => {
-      placement.cancelPlacementSequence();
       capture.reset();
       camera.stopCamera();
     },
     [
       camera.stopCamera,
       capture.reset,
-      placement.cancelPlacementSequence,
     ]
   );
 
   const startDemo = useCallback(() => {
     camera.stopCamera();
     capture.reset();
-    placement.resetPlacementSequence();
     setIsDemoMode(true);
-    placement.startPlacementSequence();
+    setStatus('characterVisible');
   }, [
     camera.stopCamera,
     capture.reset,
-    placement.resetPlacementSequence,
-    placement.startPlacementSequence,
   ]);
 
   const retryCamera = useCallback(() => {
     setIsDemoMode(false);
     capture.reset();
-    placement.resetPlacementSequence();
     setStatus('requestingPermission');
     void camera.retryCamera();
   }, [
     camera.retryCamera,
     capture.reset,
-    placement.resetPlacementSequence,
   ]);
 
   const retake = useCallback(() => {
@@ -182,34 +156,12 @@ const AugmentedRealityCameraScreen = ({
   const announcement = useMemo(() => {
     if (status === 'startingCamera')
       return copy.accessibility.cameraActivated;
-    if (
-      status === 'scanningSurface' ||
-      status === 'surfaceReady' ||
-      status === 'placingCharacter'
-    )
-      return copy.accessibility.preparing;
     if (status === 'characterVisible')
-      return copy.accessibility.characterPlaced;
+      return copy.accessibility.cameraActivated;
     if (status === 'preview')
       return copy.accessibility.photoCaptured;
     return '';
   }, [copy, status]);
-
-  const scanMessage =
-    placement.elapsedTime < 1000
-      ? copy.scanning.title
-      : copy.scanning.preparing;
-  const guideVisible = [
-    'scanningSurface',
-    'surfaceReady',
-    'placingCharacter',
-    'characterVisible',
-  ].includes(status);
-  const characterVisible = [
-    'placingCharacter',
-    'characterVisible',
-    'capturing',
-  ].includes(status);
 
   return (
     <main
@@ -251,32 +203,6 @@ const AugmentedRealityCameraScreen = ({
               <span className={styles.spinner} aria-hidden="true" />
               {copy.activatingCamera}
             </div>
-          )}
-
-          {(status === 'scanningSurface' ||
-            status === 'surfaceReady') && (
-            <div className={styles.scanMessage}>
-              <strong>{scanMessage}</strong>
-              <span>{copy.scanning.description}</span>
-            </div>
-          )}
-
-          {guideVisible && (
-            <SurfacePlacementGuide
-              progress={placement.progress}
-              isFading={
-                status === 'placingCharacter' ||
-                status === 'characterVisible'
-              }
-            />
-          )}
-
-          {characterVisible && (
-            <ARCharacterOverlay
-              src={IMAGES.characters.augmentedRealityPhoto}
-              alt={copy.accessibility.characterAlt}
-              isPlacing={status === 'placingCharacter'}
-            />
           )}
 
           <CameraShutterButton

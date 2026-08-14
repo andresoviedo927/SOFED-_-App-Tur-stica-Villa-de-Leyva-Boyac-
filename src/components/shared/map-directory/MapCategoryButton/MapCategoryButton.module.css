@@ -1,4 +1,5 @@
 .button {
+  position: relative;
   display: grid;
   width: 96px;
   height: 66px;
@@ -13,6 +14,8 @@
 }
 
 .button img {
+  position: relative;
+  z-index: 1;
   display: block;
   box-sizing: border-box;
   width: 48px;
@@ -35,16 +38,39 @@
   -webkit-user-drag: none;
 }
 
-.button span {
+.label {
   display: block;
   width: 96px;
   overflow: hidden;
   font-size: var(--category-label-size, 10px);
   font-weight: 500;
   line-height: 18px;
+  font-family: 'Lexend', sans-serif;
   text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.button[data-visual='services'] img {
+  border: 1px solid rgba(255, 255, 255, 0.92);
+  background: linear-gradient(180deg, #f2930d 0%, #ba5900 100%);
+  box-shadow:
+    inset 0 -2px 2px 3px rgba(0, 0, 0, 0.48),
+    inset 0 3px 8px rgba(0, 0, 0, 0.32),
+    0 0 12px rgba(242, 147, 13, 0.58);
+}
+
+.gloss {
+  position: absolute;
+  z-index: 2;
+  top: 5px;
+  left: 32px;
+  width: 22px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.28);
+  transform: rotate(-20deg);
+  pointer-events: none;
 }
 
 .button:hover:not(:disabled) img {
@@ -63,14 +89,40 @@
   cursor: not-allowed;
 }
 
+.button[data-state='disabled'][data-toggleable='true'] {
+  cursor: pointer;
+}
+
 .button[data-state='disabled'] img {
   background: linear-gradient(180deg, #9aa8bc 0%, #5f6670 100%);
   filter: grayscale(1);
   opacity: 0.55;
 }
 
-.button[data-state='disabled'] span {
+.button[data-state='disabled'] .label {
   color: rgba(246, 248, 251, 0.58);
+}
+
+.button[data-visual='services'][data-state='selected'] img {
+  filter: saturate(1.06);
+  box-shadow:
+    inset 0 -2px 2px 3px rgba(0, 0, 0, 0.48),
+    inset 0 3px 8px rgba(0, 0, 0, 0.32),
+    0 0 12px rgba(242, 147, 13, 0.58);
+}
+
+.button[data-visual='services'][data-state='disabled'] img {
+  background: linear-gradient(180deg, #aaa8a6 0%, #62605f 100%);
+  box-shadow:
+    inset 0 -2px 2px 3px rgba(0, 0, 0, 0.42),
+    inset 0 3px 8px rgba(0, 0, 0, 0.26),
+    0 0 8px rgba(255, 255, 255, 0.24);
+  filter: grayscale(1);
+  opacity: 0.82;
+}
+
+.button[data-visual='services'][data-state='disabled'] .label {
+  color: rgba(246, 248, 251, 0.76);
 }
 
 .button:focus-visible {

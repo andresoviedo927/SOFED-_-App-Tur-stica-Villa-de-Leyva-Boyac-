@@ -1,3 +1,4 @@
+import panoramaIcon360 from '../../../../assets/images/Panorama-Icono-360.png';
 import styles from './PanoramaInteractionHint.module.css';
 
 interface PanoramaInteractionHintProps {
@@ -14,9 +15,12 @@ export const PanoramaInteractionHint = ({
     data-visible={isVisible}
     aria-hidden={!isVisible}
   >
-    <span className={styles.icon} aria-hidden="true">
-      360°
-    </span>
+    <img
+      className={styles.icon}
+      src={panoramaIcon360}
+      alt=""
+      aria-hidden="true"
+    />
     <span className={styles.srOnly}>{text}</span>
   </div>
 );

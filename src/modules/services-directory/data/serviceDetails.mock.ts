@@ -110,7 +110,7 @@ export const serviceDetailsMock: ServiceDetail[] =
     gallery: [
       {
         id: `${point.id}-photo-1`,
-        src: IMAGES.VILLA_DE_LEYVA_NIGHT,
+        src: IMAGES.TOURISM_FALLBACK_NIGHT,
         alt: TEXTS.services.detail.galleryPhotoAlt.replace(
           '{service}',
           point.name
@@ -118,7 +118,7 @@ export const serviceDetailsMock: ServiceDetail[] =
       },
       {
         id: `${point.id}-photo-2`,
-        src: IMAGES.HOME_BACKGROUND,
+        src: IMAGES.TOURISM_FALLBACK_BACKGROUND,
         alt: TEXTS.services.detail.galleryPhotoAlt.replace(
           '{service}',
           point.name

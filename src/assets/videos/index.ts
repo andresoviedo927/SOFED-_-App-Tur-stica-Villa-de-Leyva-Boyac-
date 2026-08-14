@@ -1,13 +1,17 @@
+import personajeBienvenida from './Personaje-bienvenida.mp4';
+import personajeLectura from './Personaje-lectura.mp4';
+import personajeCometas from './Personaje-cometas.mp4';
+
 /**
  * Centralized video assets.
- *
- * No aerial video file is currently present in Contenido or the project.
- * Add the real local import here when supplied; components must not invent
- * filenames or depend on an external media service.
  */
 export const VIDEOS = {
   plazaPrincipal: {
-    droneFlight: '',
+    welcomeCharacter: personajeBienvenida,
+    readingCharacter: personajeLectura,
+  },
+  events: {
+    windKitesCharacter: personajeCometas,
   },
 } as const;
 

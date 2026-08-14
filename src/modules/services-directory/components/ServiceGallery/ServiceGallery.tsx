@@ -8,6 +8,8 @@ import styles from './ServiceGallery.module.css';
 export const ServiceGallery = ({
   images,
   serviceName,
+  className = '',
+  transitionMode = 'fade',
 }: ServiceGalleryProps) => {
   const gallery = useServiceGallery(images);
   const activeImage = images[gallery.activeImageIndex];
@@ -28,7 +30,7 @@ export const ServiceGallery = ({
 
   return (
     <section
-      className={styles.gallery}
+      className={`${styles.gallery} ${className}`}
       tabIndex={0}
       aria-label={TEXTS.services.detail.galleryLabel.replace(
         '{service}',
@@ -44,24 +46,46 @@ export const ServiceGallery = ({
         </div>
       ) : (
         <>
-          {gallery.galleryStatus === 'loading' && (
-            <div className={styles.skeleton} aria-hidden="true" />
-          )}
-          {gallery.galleryStatus === 'error' ? (
-            <div className={styles.unavailable} role="alert">
-              {TEXTS.services.detail.galleryError}
+          {transitionMode === 'horizontal' ? (
+            <div
+              className={styles.track}
+              style={{
+                transform: `translate3d(-${gallery.activeImageIndex * 100}%, 0, 0)`,
+              }}
+            >
+              {images.map((image) => (
+                <div className={styles.slide} key={image.id}>
+                  <img
+                    className={styles.horizontalImage}
+                    src={image.src}
+                    alt={image.alt}
+                    draggable={false}
+                  />
+                </div>
+              ))}
             </div>
           ) : (
-            <img
-              key={activeImage.id}
-              className={styles.image}
-              data-ready={gallery.galleryStatus === 'ready'}
-              src={activeImage.src}
-              alt={activeImage.alt}
-              draggable={false}
-              onLoad={gallery.markReady}
-              onError={gallery.markError}
-            />
+            <>
+              {gallery.galleryStatus === 'loading' && (
+                <div className={styles.skeleton} aria-hidden="true" />
+              )}
+              {gallery.galleryStatus === 'error' ? (
+                <div className={styles.unavailable} role="alert">
+                  {TEXTS.services.detail.galleryError}
+                </div>
+              ) : (
+                <img
+                  key={activeImage.id}
+                  className={styles.image}
+                  data-ready={gallery.galleryStatus === 'ready'}
+                  src={activeImage.src}
+                  alt={activeImage.alt}
+                  draggable={false}
+                  onLoad={gallery.markReady}
+                  onError={gallery.markError}
+                />
+              )}
+            </>
           )}
           <ServiceGalleryNavigation
             images={images}

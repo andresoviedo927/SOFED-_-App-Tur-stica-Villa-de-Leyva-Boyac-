@@ -26,6 +26,7 @@ export interface TourismEvent {
   gallery: readonly EventGalleryPhoto[];
   droneVideo?: EventDroneVideo;
   narratorCharacter?: string;
+  narratorVideo?: string;
   location?: string;
   schedule?: string;
   price?: string;

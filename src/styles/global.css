@@ -141,6 +141,23 @@ button:active, a:active, [role="button"]:active {
   transform: scale(0.96);
 }
 
+button[aria-label^="Volver"] {
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  filter: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+button[aria-label^="Volver"]:hover {
+  background: transparent !important;
+}
+
+button[aria-label^="Volver"]:active {
+  transform: scale(0.96) !important;
+}
+
 button:disabled, button[aria-disabled="true"] {
   opacity: 0.5;
   cursor: not-allowed;

@@ -4,7 +4,7 @@
  * ==========================================================================
  *
  * GUÍA DE USO DE TIPOGRAFÍA:
- * 1. FIGMA HAND:
+ * 1. GOCHI HAND:
  *    - Usar EXCLUSIVAMENTE para la marca "Villa de Leyva" en el Home y Splash Screen.
  *    - PROHIBIDO en párrafos, formularios, listas, botones pequeños, datos o modales.
  * 2. LEXEND:
@@ -55,14 +55,14 @@ export const TypographyAndIconShowcase: React.FC = () => {
       {/* Seccion 1: Tipografía */}
       <section className="space-y-4">
         <Heading level={2} size="medium" className="border-b border-white/10 pb-2">
-          1. Jerarquía Tipográfica (Lexend & Figma Hand)
+          1. Jerarquía Tipográfica (Lexend & Gochi Hand)
         </Heading>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-white/5 p-4 rounded-xl">
-          {/* Figma Hand Example */}
+          {/* Gochi Hand Example */}
           <div className="p-3 border border-[#F2930D]/30 rounded-lg bg-[#0B1017]">
             <Label size="small" className="text-[#F2930D] uppercase tracking-wider block mb-1">
-              Figma Hand (Solo Título Marca)
+              Gochi Hand (Solo Título Marca)
             </Label>
             <Heading level={1} size="display" className="text-amber-200">
               Villa de Leyva

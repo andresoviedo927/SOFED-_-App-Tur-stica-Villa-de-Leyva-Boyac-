@@ -2,7 +2,7 @@
  * Centralized Typed Theme Token References for Villa de Leyva App
  *
  * TYPOGRAPHY RULES:
- * - Figma Hand: STRICTLY reserved for "Villa de Leyva" title in Home and Splash screen.
+ * - Gochi Hand: STRICTLY reserved for "Villa de Leyva" title in Home and Splash screen.
  * - Lexend: Used for all functional UI text (body, labels, buttons, forms, maps, settings, modal).
  *
  * ICON RULES:
@@ -52,7 +52,7 @@ export const colors = {
 
 export const typography = {
   // Font Families
-  familyDisplay: 'var(--font-family-display)', // "Figma Hand", "Caveat", "Comic Sans MS", cursive
+  familyDisplay: 'var(--font-family-display)', // "Gochi Hand", "Comic Sans MS", cursive
   familyPrimary: 'var(--font-family-primary)', // "Lexend", Arial, sans-serif
 
   // Hierarchy Token Class Names

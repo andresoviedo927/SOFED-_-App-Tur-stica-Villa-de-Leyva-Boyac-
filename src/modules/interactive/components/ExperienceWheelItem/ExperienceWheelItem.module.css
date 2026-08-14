@@ -1,13 +1,15 @@
 .item {
   position: absolute;
   z-index: 3;
+  box-sizing: border-box;
   padding: 0;
-  border: 0;
+  overflow: hidden;
+  border: 3.17881px solid #ffffff;
   cursor: pointer;
   box-shadow:
-    inset 0 -3px 2.4px 6px rgba(0, 0, 0, 0.5),
-    inset 0 3px 16px rgba(0, 0, 0, 0.78);
-  transition: filter 140ms ease, transform 140ms ease;
+    inset 0 -3.17881px 2.38411px rgba(0, 0, 0, 0.5),
+    inset 0 3.17881px 15.894px #000000;
+  transition: filter 140ms ease;
 }
 
 .item:hover {
@@ -17,7 +19,6 @@
 .item:active,
 .item[aria-pressed='true'] {
   filter: brightness(1.28) saturate(1.08);
-  transform: scale(0.985);
 }
 
 .item[aria-pressed='true'] {
@@ -40,67 +41,68 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 50%;
-  clip-path: polygon(8% 16%, 92% 16%, 68% 86%, 32% 86%);
-  background: linear-gradient(180deg, #124d98 0%, #021b54 100%);
+  height: 100%;
+  clip-path: polygon(0 0, 100% 0, 50% 50%);
+  background: linear-gradient(180deg, #105fce 1.25%, #1a212b 49.71%);
 }
 
 .reading {
   top: 0;
   left: 0;
-  width: 50%;
+  width: 100%;
   height: 100%;
-  clip-path: polygon(16% 8%, 86% 32%, 86% 68%, 16% 92%);
-  background: linear-gradient(90deg, #25106f 0%, #5120b6 100%);
+  clip-path: polygon(0 100%, 0 0, 50% 50%);
+  background: linear-gradient(90deg, #5c17e5 1.25%, #1a212b 50%);
 }
 
 .gallery {
   top: 0;
-  right: 0;
-  width: 50%;
+  left: 0;
+  width: 100%;
   height: 100%;
-  clip-path: polygon(84% 8%, 14% 32%, 14% 68%, 84% 92%);
-  background: linear-gradient(270deg, #8b001a 0%, #4b0010 100%);
+  clip-path: polygon(100% 0, 100% 100%, 50% 50%);
+  background: linear-gradient(90deg, #1a212b 51.04%, #b1000f 100%);
 }
 
 .augmentedReality {
-  bottom: 0;
+  top: 0;
   left: 0;
   width: 100%;
-  height: 50%;
-  clip-path: polygon(8% 84%, 32% 14%, 68% 14%, 92% 84%);
-  background: linear-gradient(180deg, #08612f 0%, #003d1c 100%);
+  height: 100%;
+  clip-path: polygon(100% 100%, 0 100%, 50% 50%);
+  background: linear-gradient(180deg, #1a212b 51.82%, #016a1c 100%);
 }
 
 .icon {
   position: absolute;
-  width: 58px;
-  height: 58px;
+  z-index: 5;
+  width: 64px;
+  height: 64px;
   object-fit: contain;
   pointer-events: none;
   filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.28));
 }
 
 .game .icon {
-  top: 14px;
+  top: 4.82119px;
   left: 50%;
   transform: translateX(-50%);
 }
 
 .reading .icon {
   top: 50%;
-  left: 14px;
+  left: 0.82119px;
   transform: translateY(-50%);
 }
 
 .gallery .icon {
   top: 50%;
-  right: 14px;
+  right: 0.82119px;
   transform: translateY(-50%);
 }
 
 .augmentedReality .icon {
-  bottom: 14px;
+  bottom: -2.63881px;
   left: 50%;
   transform: translateX(-50%);
 }

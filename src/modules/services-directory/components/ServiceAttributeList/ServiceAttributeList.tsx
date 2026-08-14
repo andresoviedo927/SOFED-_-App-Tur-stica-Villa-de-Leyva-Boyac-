@@ -9,7 +9,7 @@ export const ServiceAttributeList = ({
 }: ServiceAttributeListProps) => (
   <div className={styles.attributes}>
     {attributes
-      .filter((attribute) => attribute.label && attribute.value)
+      .filter((attribute) => attribute.value)
       .map((attribute) => (
         <ServiceAttributeChip
           key={attribute.id}

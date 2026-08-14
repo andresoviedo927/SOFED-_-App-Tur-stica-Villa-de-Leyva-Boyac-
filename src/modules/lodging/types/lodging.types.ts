@@ -29,3 +29,43 @@ export interface LodgingMapState {
     y: number;
   };
 }
+
+export interface LodgingRating {
+  value: number;
+  scale: number;
+  display: string;
+  reviewCount?: number;
+  source?: string;
+}
+
+export interface LodgingLocation {
+  id: string;
+  categoryId: LodgingCategoryId;
+  categoryLabel: string;
+  name: string;
+  alternateName?: string;
+  description?: string;
+  address?: string;
+  phones: string[];
+  whatsapp?: string;
+  instagram?: string;
+  website?: string;
+  cancellation?: string;
+  checkIn?: string;
+  checkOut?: string;
+  parking?: string;
+  petFriendly?: string;
+  breakfast?: string;
+  languages: string[];
+  rating?: LodgingRating;
+  lat?: number;
+  lng?: number;
+}
+
+export interface LodgingDirectoryMetadata {
+  updatedAt?: string;
+  totalPlaces: number;
+  invalidCoordinateIds: string[];
+}
+
+export type LodgingSort = 'relevance' | 'nearest' | 'rating' | 'reviews';

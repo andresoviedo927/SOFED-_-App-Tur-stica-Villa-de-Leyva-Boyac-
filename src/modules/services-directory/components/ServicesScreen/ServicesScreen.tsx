@@ -1,7 +1,8 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import IMAGES from '@/assets/images';
 import TEXTS from '@/constants/texts';
 import { serviceCategories } from '../../data/serviceCategories';
+import useServiceLocations from '../../hooks/useServiceLocations';
 import useServicesMap from '../../hooks/useServicesMap';
 import type { ServiceCategory } from '../../types/services.types';
 import { ServiceCategoryColumn } from '../ServiceCategoryColumn';
@@ -24,6 +25,10 @@ export const ServicesScreen = ({
   onOpenServiceDetail,
 }: ServicesScreenProps) => {
   const map = useServicesMap();
+  const [focusedServiceId] = useState(() =>
+    map.consumePersistedServiceId()
+  );
+  const { locations, loading, error } = useServiceLocations();
   const leftCategories = useMemo(
     () => serviceCategories.filter((category) => category.column === 'left'),
     []
@@ -32,10 +37,15 @@ export const ServicesScreen = ({
     () => serviceCategories.filter((category) => category.column === 'right'),
     []
   );
-  const selectedCategory =
-    serviceCategories.find(
-      (category) => category.id === map.selectedCategoryId
-    ) ?? null;
+  const visibleLocations = useMemo(
+    () =>
+      map.selectedService
+        ? locations.filter(
+            (location) => location.categoryId === map.selectedService
+          )
+        : locations,
+    [locations, map.selectedService]
+  );
 
   useEffect(() => {
     window.speechSynthesis?.cancel();
@@ -48,7 +58,7 @@ export const ServicesScreen = ({
   return (
     <main
       className={styles.screen}
-      style={{ backgroundImage: `url(${IMAGES.interactive.map})` }}
+      style={{ backgroundImage: `url(${IMAGES.settings.pageBackground})` }}
     >
       <div className={styles.overlay} />
       <div className={styles.layout}>
@@ -64,25 +74,12 @@ export const ServicesScreen = ({
             onSelect={selectCategory}
           />
           <ServicesMap
-            selectedCategory={selectedCategory}
-            points={map.visiblePoints}
-            selectedPoint={map.selectedPoint}
-            zoom={map.zoom}
-            offset={map.mapOffset}
-            isAtMinZoom={map.isAtMinZoom}
-            isAtMaxZoom={map.isAtMaxZoom}
-            onRemoveFilter={() => {
-              if (selectedCategory) selectCategory(selectedCategory);
-            }}
-            onSelectPoint={map.selectPoint}
-            onClosePoint={map.closePointDetails}
-            onOpenDetails={(point) =>
-              onOpenServiceDetail(point.categoryId, point.id)
-            }
-            onReset={map.resetView}
-            onZoomIn={map.zoomIn}
-            onZoomOut={map.zoomOut}
-            onPanBy={map.panBy}
+            locations={visibleLocations}
+            loading={loading}
+            error={error}
+            markersVisible={map.selectedService !== null}
+            focusedServiceId={focusedServiceId}
+            onOpenServiceDetail={onOpenServiceDetail}
           />
           <ServiceCategoryColumn
             categories={rightCategories}

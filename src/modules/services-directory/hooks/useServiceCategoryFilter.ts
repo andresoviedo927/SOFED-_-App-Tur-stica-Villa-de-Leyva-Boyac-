@@ -1,40 +1,32 @@
-import {
-  useCallback,
-  useState,
-} from 'react';
-import TEXTS from '@/constants/texts';
+import { useCallback, useState } from 'react';
 import type {
   ServiceCategoryId,
   ServiceCategoryState,
 } from '../types/services.types';
 
-let persistedSelectedCategoryId: ServiceCategoryId | null = null;
+let persistedSelectedService: ServiceCategoryId | null = null;
 
 export const persistServiceCategory = (
   categoryId: ServiceCategoryId
 ) => {
-  persistedSelectedCategoryId = categoryId;
+  persistedSelectedService = categoryId;
 };
 
 export const useServiceCategoryFilter = () => {
-  const [selectedCategoryId, setSelectedCategoryId] =
-    useState<ServiceCategoryId | null>(
-      persistedSelectedCategoryId
-    );
+  const [selectedService, setSelectedService] = useState<
+    ServiceCategoryId | null
+  >(() => persistedSelectedService);
   const [announcement, setAnnouncement] = useState('');
 
   const selectCategory = useCallback(
     (categoryId: ServiceCategoryId, categoryLabel: string) => {
-      setSelectedCategoryId((current) => {
+      setSelectedService((current) => {
         const next = current === categoryId ? null : categoryId;
-        persistedSelectedCategoryId = next;
+        persistedSelectedService = next;
         setAnnouncement(
           next
-            ? TEXTS.services.map.filterActivated.replace(
-                '{category}',
-                categoryLabel
-              )
-            : TEXTS.services.map.filterRemoved
+            ? `Servicio ${categoryLabel} activado.`
+            : `Servicio ${categoryLabel} desactivado. No hay servicios seleccionados.`
         );
         return next;
       });
@@ -42,20 +34,25 @@ export const useServiceCategoryFilter = () => {
     []
   );
 
+  const clearSelection = useCallback(() => {
+    persistedSelectedService = null;
+    setSelectedService(null);
+    setAnnouncement('No hay servicios seleccionados.');
+  }, []);
+
   const getCategoryState = useCallback(
     (categoryId: ServiceCategoryId): ServiceCategoryState => {
-      if (!selectedCategoryId) return 'default';
-      return selectedCategoryId === categoryId
-        ? 'selected'
-        : 'disabled';
+      if (selectedService === null) return 'default';
+      return selectedService === categoryId ? 'selected' : 'disabled';
     },
-    [selectedCategoryId]
+    [selectedService]
   );
 
   return {
-    selectedCategoryId,
+    selectedService,
     announcement,
     selectCategory,
+    clearSelection,
     getCategoryState,
   };
 };

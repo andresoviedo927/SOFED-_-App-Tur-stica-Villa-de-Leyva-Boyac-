@@ -1,10 +1,14 @@
 .wheel {
   position: relative;
-  width: clamp(220px, 28.5vw, 240px);
-  height: clamp(220px, 28.5vw, 240px);
+  display: block;
+  width: 240px;
+  height: 240px;
+  padding: 0;
+  isolation: isolate;
   flex: none;
+  box-sizing: border-box;
   overflow: hidden;
-  border: 3px solid #ffffff;
+  border: 0;
   border-radius: 50%;
   background: #1a212b;
   box-shadow:
@@ -12,12 +16,23 @@
     inset 0 0 0 2px rgba(0, 0, 0, 0.62);
 }
 
+.wheel::before {
+  content: '';
+  position: absolute;
+  z-index: 7;
+  inset: 0;
+  box-sizing: border-box;
+  border: 3.17881px solid #ffffff;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
 .separator {
   position: absolute;
   z-index: 6;
   top: 50%;
   left: 50%;
-  width: 3px;
+  width: 3.17881px;
   height: 142%;
   background: #ffffff;
   transform-origin: center;
@@ -30,11 +45,4 @@
 
 .diagonalTwo {
   transform: translate(-50%, -50%) rotate(-45deg);
-}
-
-@media (max-height: 350px) {
-  .wheel {
-    width: 216px;
-    height: 216px;
-  }
 }

@@ -16,7 +16,6 @@ import type {
 import PanoramaErrorState from '../PanoramaErrorState';
 import PanoramaInteractionHint from '../PanoramaInteractionHint';
 import PanoramaLoadingState from '../PanoramaLoadingState';
-import PanoramaResetButton from '../PanoramaResetButton';
 import type { SinglePanoramaViewerProps } from './SinglePanoramaViewer.types';
 import styles from './SinglePanoramaViewer.module.css';
 
@@ -31,15 +30,16 @@ export const SinglePanoramaViewer = ({
   viewerLabel,
   interactionHint,
   wideInteractionHint,
-  resetLabel,
   loadingLabel,
   errorTitle,
   errorMessage,
   retryLabel,
 }: SinglePanoramaViewerProps) => {
   const viewportRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLImageElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const adapterRef = useRef<PanoramaViewerAdapter | null>(null);
+  const resumeAutoPanTimerRef = useRef<number | null>(null);
+  const hintDismissedRef = useRef(false);
   const pointersRef = useRef(
     new Map<number, { x: number; y: number }>()
   );
@@ -47,15 +47,27 @@ export const SinglePanoramaViewer = ({
   const [state, setState] =
     useState<PanoramaScreenState>(INITIAL_STATE);
   const [isDragging, setIsDragging] = useState(false);
+  const [isHintVisible, setIsHintVisible] = useState(false);
   const [retryVersion, setRetryVersion] = useState(0);
 
   useEffect(() => {
     const viewport = viewportRef.current;
-    const image = imageRef.current;
-    if (!viewport || !image) return;
+    const canvas = canvasRef.current;
+    if (!viewport || !canvas) return;
 
     let cancelled = false;
-    const adapter = createPanoramaViewerAdapter(viewport, image);
+    let adapter: PanoramaViewerAdapter;
+    try {
+      adapter = createPanoramaViewerAdapter(viewport, canvas);
+    } catch (error: unknown) {
+      setState({
+        status: 'error',
+        hasUserInteracted: false,
+        errorMessage:
+          error instanceof Error ? error.message : String(error),
+      });
+      return;
+    }
     adapterRef.current = adapter;
     setState(INITIAL_STATE);
     setState((current) => ({
@@ -88,10 +100,56 @@ export const SinglePanoramaViewer = ({
       adapter.destroy();
       adapterRef.current = null;
       pointersRef.current.clear();
+      if (resumeAutoPanTimerRef.current !== null) {
+        window.clearTimeout(resumeAutoPanTimerRef.current);
+      }
     };
   }, [panorama, retryVersion]);
 
+  useEffect(() => {
+    if (
+      state.status !== 'ready' ||
+      hintDismissedRef.current
+    ) {
+      setIsHintVisible(false);
+      return;
+    }
+
+    setIsHintVisible(true);
+    const timer = window.setTimeout(() => {
+      hintDismissedRef.current = true;
+      setIsHintVisible(false);
+    }, 3000);
+
+    return () => window.clearTimeout(timer);
+  }, [state.status]);
+
+  const dismissHint = () => {
+    if (hintDismissedRef.current) {
+      return;
+    }
+
+    hintDismissedRef.current = true;
+    setIsHintVisible(false);
+  };
+
+  const pauseAutoPan = (resumeAfter?: number) => {
+    if (resumeAutoPanTimerRef.current !== null) {
+      window.clearTimeout(resumeAutoPanTimerRef.current);
+    }
+    adapterRef.current?.setInteracting(true);
+
+    if (resumeAfter !== undefined) {
+      resumeAutoPanTimerRef.current = window.setTimeout(() => {
+        adapterRef.current?.setInteracting(false);
+        resumeAutoPanTimerRef.current = null;
+      }, resumeAfter);
+    }
+  };
+
   const markInteraction = () => {
+    dismissHint();
+
     if (state.status !== 'ready' || state.hasUserInteracted) {
       return;
     }
@@ -115,6 +173,7 @@ export const SinglePanoramaViewer = ({
     });
     setIsDragging(true);
     markInteraction();
+    pauseAutoPan();
 
     if (pointersRef.current.size === 2) {
       const points = [...pointersRef.current.values()];
@@ -169,6 +228,7 @@ export const SinglePanoramaViewer = ({
 
     if (pointersRef.current.size === 0) {
       setIsDragging(false);
+      adapterRef.current?.setInteracting(false);
     }
   };
 
@@ -177,6 +237,7 @@ export const SinglePanoramaViewer = ({
 
     event.preventDefault();
     markInteraction();
+    pauseAutoPan(600);
 
     if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) {
       adapterRef.current?.panBy(-event.deltaX, 0);
@@ -202,6 +263,7 @@ export const SinglePanoramaViewer = ({
     if (delta) {
       event.preventDefault();
       markInteraction();
+      pauseAutoPan(500);
       adapterRef.current?.panBy(...delta);
       return;
     }
@@ -209,10 +271,12 @@ export const SinglePanoramaViewer = ({
     if (event.key === '+' || event.key === '=') {
       event.preventDefault();
       markInteraction();
+      pauseAutoPan(500);
       adapterRef.current?.zoomIn();
     } else if (event.key === '-') {
       event.preventDefault();
       markInteraction();
+      pauseAutoPan(500);
       adapterRef.current?.zoomOut();
     } else if (event.key === 'Home') {
       event.preventDefault();
@@ -242,11 +306,15 @@ export const SinglePanoramaViewer = ({
       onWheel={handleWheel}
       onKeyDown={handleKeyDown}
     >
-      <img
-        ref={imageRef}
-        className={styles.image}
-        alt={panorama.alt}
-        draggable={false}
+      <canvas
+        ref={canvasRef}
+        className={styles.canvas}
+        aria-hidden="true"
+      />
+
+      <PanoramaInteractionHint
+        text={hintText}
+        isVisible={isHintVisible}
       />
 
       <span
@@ -271,22 +339,6 @@ export const SinglePanoramaViewer = ({
         />
       )}
 
-      <PanoramaInteractionHint
-        text={hintText}
-        isVisible={
-          state.status === 'ready' &&
-          !state.hasUserInteracted
-        }
-      />
-
-      <PanoramaResetButton
-        label={resetLabel}
-        isVisible={
-          state.status === 'ready' &&
-          state.hasUserInteracted
-        }
-        onReset={() => adapterRef.current?.reset()}
-      />
     </section>
   );
 };

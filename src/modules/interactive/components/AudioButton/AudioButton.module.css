@@ -14,17 +14,8 @@
   transition: transform 150ms ease, background-color 150ms ease;
 }
 
-.button:hover {
-  background: #f6f8fb;
-}
-
 .button:active {
   transform: scale(0.94);
-}
-
-.button[aria-pressed='true'] {
-  background: #fff7e8;
-  box-shadow: 0 0 0 2px #f2930d, 0 8px 16px rgba(0, 0, 0, 0.16);
 }
 
 .button[data-audio-state='muted'] {

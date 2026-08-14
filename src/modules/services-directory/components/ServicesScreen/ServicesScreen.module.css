@@ -1,10 +1,19 @@
 .screen {
   position: relative;
-  width: 100vw;
-  min-width: 568px;
-  height: 100dvh;
-  min-height: 320px;
+  display: flex;
+  width: 844px;
+  min-width: 844px;
+  max-width: 844px;
+  height: 390px;
+  min-height: 390px;
+  max-height: 390px;
+  margin: 0 auto;
+  padding: 24px;
   overflow: hidden;
+  box-sizing: border-box;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
   background-color: #1f1b19;
   background-position: center;
   background-repeat: no-repeat;
@@ -15,19 +24,22 @@
 .overlay {
   position: absolute;
   inset: 0;
-  background: rgba(24, 19, 17, 0.76);
+  background: rgba(26, 33, 43, 0.6);
   pointer-events: none;
 }
 
 .layout {
   position: relative;
   z-index: 1;
-  display: grid;
-  width: min(100%, 844px);
+  display: flex;
+  width: 100%;
   height: 100%;
-  margin: 0 auto;
-  padding: 24px;
-  grid-template-rows: 40px minmax(0, 290px);
+  min-height: 0;
+  padding: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+  flex-direction: column;
+  align-items: center;
   gap: 12px;
 }
 
@@ -35,7 +47,12 @@
   display: grid;
   width: 100%;
   height: 290px;
+  min-height: 290px;
+  max-height: 290px;
   padding-inline: 24px;
+  overflow: hidden;
+  box-sizing: border-box;
+  flex: 0 0 290px;
   grid-template-columns: 96px minmax(430px, 540px) 96px;
   gap: 8px;
   align-items: stretch;
@@ -51,16 +68,4 @@
   clip: rect(0, 0, 0, 0);
   border: 0;
   white-space: nowrap;
-}
-
-@media (max-width: 760px) {
-  .layout {
-    padding-inline: 12px;
-  }
-
-  .content {
-    padding-inline: 0;
-    grid-template-columns: 88px minmax(360px, 1fr) 88px;
-    gap: 4px;
-  }
 }

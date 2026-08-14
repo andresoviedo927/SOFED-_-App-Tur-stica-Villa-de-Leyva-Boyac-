@@ -67,11 +67,9 @@ export const PhotoGalleryScreen = ({
     <main
       className={styles.screen}
       style={{
-        backgroundImage: `url("${IMAGES.interactive.map}")`,
+        backgroundImage: `linear-gradient(rgba(26, 33, 43, 0.6), rgba(26, 33, 43, 0.6)), url("${IMAGES.settings.pageBackground}")`,
       }}
     >
-      <div className={styles.overlay} aria-hidden="true" />
-
       <div className={styles.layout}>
         <header className={styles.header}>
           <Button

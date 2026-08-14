@@ -54,6 +54,7 @@ export const DroneVideoScreen = ({
     errorMessage: defaultTexts.errorMessage,
     retry: defaultTexts.retry,
   };
+  const isYouTubeVideo = content?.provider === 'youtube';
 
   const stopMedia = () => {
     narrationService.stop();
@@ -79,11 +80,16 @@ export const DroneVideoScreen = ({
   return (
     <main
       className={styles.screen}
+      data-youtube={isYouTubeVideo || undefined}
       style={{
-        backgroundImage: `url("${IMAGES.interactive.map}")`,
+        backgroundImage: isYouTubeVideo
+          ? `linear-gradient(rgba(26, 33, 43, 0.6), rgba(26, 33, 43, 0.6)), url("${IMAGES.settings.pageBackground}")`
+          : `url("${IMAGES.interactive.map}")`,
       }}
     >
-      <div className={styles.overlay} aria-hidden="true" />
+      {!isYouTubeVideo && (
+        <div className={styles.overlay} aria-hidden="true" />
+      )}
 
       <div className={styles.layout}>
         <header className={styles.header}>

@@ -4,6 +4,31 @@ import PhotoCarouselSlide from '../PhotoCarouselSlide';
 import type { PhotoCarouselProps } from './PhotoCarousel.types';
 import styles from './PhotoCarousel.module.css';
 
+const getRelativePosition = (
+  index: number,
+  activeIndex: number,
+  total: number
+) => {
+  let position = index - activeIndex;
+  const midpoint = total / 2;
+
+  if (position > midpoint) {
+    position -= total;
+  } else if (position < -midpoint) {
+    position += total;
+  }
+
+  if (position < -2) {
+    return 'hidden-left' as const;
+  }
+
+  if (position > 2) {
+    return 'hidden-right' as const;
+  }
+
+  return position as -2 | -1 | 0 | 1 | 2;
+};
+
 export const PhotoCarousel = ({
   photos,
   carouselLabel,
@@ -18,15 +43,15 @@ export const PhotoCarousel = ({
   const {
     activeIndex,
     isDragging,
-    trackRef,
+    isTransitioning,
     goTo,
     goToPrevious,
     goToNext,
-    handleScroll,
     handleKeyDown,
     handlePointerDown,
     handlePointerMove,
     handlePointerUp,
+    handleClickCapture,
     handleWheel,
   } = usePhotoCarousel(photos.length);
 
@@ -36,33 +61,43 @@ export const PhotoCarousel = ({
       aria-label={carouselLabel}
       aria-roledescription="carrusel"
     >
-      <div className={styles.viewport}>
+      <div className={styles.slidesBox}>
         <div
-          ref={trackRef}
-          className={styles.track}
+          className={styles.slideList}
           data-dragging={isDragging}
           tabIndex={0}
-          onScroll={handleScroll}
           onKeyDown={handleKeyDown}
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
           onPointerCancel={handlePointerUp}
+          onClickCapture={handleClickCapture}
           onWheel={handleWheel}
         >
-          {photos.map((photo, index) => (
-            <PhotoCarouselSlide
-              key={photo.id}
-              photo={photo}
-              index={index}
-              total={photos.length}
-              distanceFromActive={Math.abs(index - activeIndex)}
-              photoOfLabel={photoOfLabel}
-              loadingLabel={loadingLabel}
-              loadErrorLabel={loadErrorLabel}
-              retryLabel={retryLabel}
-            />
-          ))}
+          {photos.map((photo, index) => {
+            const relativePosition = getRelativePosition(
+              index,
+              activeIndex,
+              photos.length
+            );
+
+            return (
+              <PhotoCarouselSlide
+                key={photo.id}
+                photo={photo}
+                index={index}
+                total={photos.length}
+                relativePosition={relativePosition}
+                isActive={index === activeIndex}
+                isTransitioning={isTransitioning}
+                photoOfLabel={photoOfLabel}
+                loadingLabel={loadingLabel}
+                loadErrorLabel={loadErrorLabel}
+                retryLabel={retryLabel}
+                onSelect={() => goTo(index)}
+              />
+            );
+          })}
         </div>
       </div>
 
@@ -72,6 +107,7 @@ export const PhotoCarousel = ({
         previousLabel={previousLabel}
         nextLabel={nextLabel}
         goToLabel={goToLabel}
+        isTransitioning={isTransitioning}
         onPrevious={goToPrevious}
         onNext={goToNext}
         onGoTo={goTo}

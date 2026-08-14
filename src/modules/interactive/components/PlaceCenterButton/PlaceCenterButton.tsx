@@ -5,15 +5,13 @@ import styles from './PlaceCenterButton.module.css';
 export const PlaceCenterButton: React.FC<
   PlaceCenterButtonProps
 > = ({ icon, label }) => (
-  <button
-    type="button"
+  <div
     className={styles.button}
+    role="img"
     aria-label={label}
-    aria-current="location"
   >
-    <span className={styles.gloss} aria-hidden="true" />
     <img className={styles.icon} src={icon} alt="" draggable={false} />
-  </button>
+  </div>
 );
 
 export default PlaceCenterButton;

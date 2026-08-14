@@ -37,25 +37,32 @@
 }
 
 .title {
-  width: 100%;
+  width: 844px;
+  height: 72px;
   margin: 0;
-  color: #f6f8fb;
-  font-family: 'Figma Hand', 'Caveat', 'Comic Sans MS', cursive;
-  font-size: 32px;
+  color: #F6F8FB;
+  font-family: 'Gochi Hand';
   font-style: normal;
-  font-weight: 700;
-  line-height: 36px;
+  font-weight: 400;
+  font-size: 64px;
+  line-height: 72px;
   text-align: center;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
 }
 
-.church {
+.logo {
   display: block;
   width: 140px;
   height: 140px;
+  animation: logoBreathing 2.4s ease-in-out infinite;
   object-fit: contain;
   filter: drop-shadow(
     0 9.33px 18.67px rgba(0, 0, 0, 0.16)
   );
+  transform-origin: center;
   user-select: none;
   -webkit-user-drag: none;
 }
@@ -108,7 +115,22 @@
   }
 }
 
+@keyframes logoBreathing {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+
+  50% {
+    transform: translateY(-3px) scale(1.025);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .logo {
+    animation: none;
+  }
+
   .dots > span {
     animation-duration: 2.4s;
   }

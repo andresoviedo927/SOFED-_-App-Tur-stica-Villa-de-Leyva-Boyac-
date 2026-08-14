@@ -7,93 +7,280 @@
     linear-gradient(rgba(166, 142, 98, 0.54), rgba(166, 142, 98, 0.54)),
     url('../../../../assets/images/reading-paper-texture.svg') center / cover;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.16);
+  box-sizing: border-box;
 }
 
-.map {
+.mapPane {
   position: relative;
   width: 524px;
   height: 274px;
   overflow: hidden;
   border-radius: 10px;
-  background: #edf1f5;
-  cursor: grab;
-  touch-action: none;
+  background: #e8edf1;
 }
 
-.map:active {
-  cursor: grabbing;
+.map {
+  width: 100%;
+  height: 100%;
+  background: #e8edf1;
+  font-family: 'Lexend', sans-serif;
 }
 
-.map:focus-visible {
+.map :global(.leaflet-control-attribution) {
+  padding: 1px 3px;
+  font-size: 6px;
+}
+
+.markerHost {
+  position: relative;
+  width: 28px !important;
+  height: 34px !important;
+  margin-top: -34px !important;
+  margin-left: -14px !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.markerPin {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 27px;
+  height: 27px;
+  border: 2px solid #fff;
+  border-radius: 50% 50% 50% 10%;
+  box-shadow: 0 3px 7px rgba(26, 33, 43, 0.36);
+  transform: rotate(-45deg);
+  transition: transform 140ms ease, filter 140ms ease;
+}
+
+.markerPin i {
+  position: absolute;
+  inset: 6px;
+  display: block;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: inset 0 1px 2px rgba(26, 33, 43, 0.18);
+}
+
+.markerCafes { background: #b86a2a; }
+.markerChurches { background: #76549b; }
+.markerAtms { background: #2777d8; }
+.markerThingsToDo { background: #e67f07; }
+.markerGasStations { background: #dfb123; }
+.markerRestaurants { background: #d9483b; }
+.markerHealth { background: #3d9d68; }
+.markerPublicTransport { background: #387a9d; }
+
+.serviceTooltip:global(.leaflet-tooltip) {
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: #1a212b;
+  box-shadow: 0 8px 18px rgba(26, 33, 43, 0.28);
+  color: #fff;
+  pointer-events: auto;
+}
+
+.serviceTooltip:global(.leaflet-tooltip-top)::before {
+  bottom: -7px;
+  margin-left: -7px;
+  border-width: 7px 7px 0;
+  border-top-color: #1a212b;
+}
+
+.serviceTooltip button {
+  display: block;
+  max-width: 240px;
+  min-height: 40px;
+  padding: 9px 18px;
+  overflow: hidden;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #fff;
+  font: 600 14px/20px 'Lexend', sans-serif;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.serviceTooltip button:focus-visible {
   outline: 2px solid #f2930d;
   outline-offset: -3px;
 }
 
-.canvas {
+.mapControls {
   position: absolute;
-  inset: 0;
-  transform-origin: center;
-  transition: transform 160ms ease-out;
-  will-change: transform;
+  z-index: 1000;
+  right: 12px;
+  bottom: 12px;
+  display: flex;
+  width: 32px;
+  height: 96px;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: auto;
 }
 
-.base {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  pointer-events: none;
-  user-select: none;
-  -webkit-user-drag: none;
+.locateControl,
+.zoomControls {
+  width: 32px;
+  border: 1px solid rgba(154, 168, 188, 0.2);
+  background: #fff;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.16);
+  box-sizing: border-box;
 }
 
-.filterChip {
-  position: absolute;
-  z-index: 8;
-  top: 8px;
-  left: 8px;
-  max-width: 205px;
+.locateControl {
+  position: relative;
+  height: 32px;
+  min-width: 32px;
   min-height: 32px;
-  padding: 5px 10px;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.75);
-  border-radius: 9999px;
-  background: rgba(219, 112, 0, 0.94);
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.18);
-  color: #fff;
-  font: 600 10px/14px 'Lexend', sans-serif;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  flex: 0 0 32px;
+  padding: 0;
+  border-radius: 16px;
   cursor: pointer;
+  touch-action: manipulation;
 }
 
-.empty {
+.locateControl span,
+.locateControl span::before,
+.locateControl span::after {
   position: absolute;
-  z-index: 6;
+  box-sizing: border-box;
+}
+
+.locateControl span {
   top: 50%;
   left: 50%;
-  display: grid;
-  width: 250px;
-  gap: 4px;
-  padding: 14px;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #1a212b;
+  border-radius: 50%;
   transform: translate(-50%, -50%);
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.94);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.14);
+}
+
+.locateControl span::before {
+  content: '';
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #1a212b;
+  transform: translate(-50%, -50%);
+}
+
+.locateControl span::after {
+  content: '';
+  top: -4px;
+  left: 5px;
+  width: 2px;
+  height: 20px;
+  background:
+    linear-gradient(
+      to bottom,
+      #1a212b 0 3px,
+      transparent 3px 17px,
+      #1a212b 17px 20px
+    );
+  box-shadow:
+    -7px 9px 0 -0.5px #1a212b,
+    7px 9px 0 -0.5px #1a212b;
+}
+
+.locateControl:disabled {
+  opacity: 0.68;
+  cursor: wait;
+}
+
+.zoomControls {
+  display: flex;
+  height: 56px;
+  flex: 0 0 56px;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+.zoomControls button {
+  display: grid;
+  width: 30px;
+  height: 27px;
+  min-width: 30px;
+  min-height: 27px;
+  flex: 0 0 27px;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: #fff;
   color: #1a212b;
+  font: 400 16px/16px Arial, sans-serif;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.zoomControls button + button {
+  border-top: 1px solid rgba(26, 33, 43, 0.14);
+}
+
+.zoomControls button:disabled {
+  color: #a9adb2;
+  cursor: default;
+}
+
+.locateControl:focus-visible,
+.zoomControls button:focus-visible {
+  outline: 3px solid #f2930d;
+  outline-offset: 2px;
+}
+
+.locationStatus {
+  position: absolute;
+  z-index: 900;
+  right: 68px;
+  bottom: 12px;
+  max-width: 170px;
+  margin: 0;
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: rgba(26, 33, 43, 0.92);
+  color: #fff;
+  font: 500 8px/12px 'Lexend', sans-serif;
+}
+
+.mapEmpty {
+  position: absolute;
+  z-index: 700;
+  top: 50%;
+  left: 50%;
+  width: 210px;
+  margin: 0;
+  padding: 12px;
+  transform: translate(-50%, -50%);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.95);
+  color: #1a212b;
+  font: 600 10px/15px 'Lexend', sans-serif;
   text-align: center;
 }
 
-.empty strong {
-  font-size: 12px;
-}
+@media (max-width: 760px) {
+  .frame {
+    width: 100%;
+  }
 
-.empty span {
-  font-size: 10px;
+  .mapPane {
+    width: 100%;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .canvas {
+  .markerPin {
     transition: none;
   }
 }

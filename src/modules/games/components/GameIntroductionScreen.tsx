@@ -1,15 +1,8 @@
-import { useMemo } from 'react';
-import type { IconName } from '@/assets/icons';
 import IMAGES from '@/assets/images';
 import TEXTS from '@/constants/texts';
 import secretPlazaRouteMock from '../data/secretPlazaRoute.mock';
 import GameIdentity from './GameIdentity';
 import GameIntroductionHeader from './GameIntroductionHeader';
-import GameSummary from './GameSummary';
-import HowItWorks from './HowItWorks';
-import RewardPreview from './RewardPreview';
-import RoutePointsPreview from './RoutePointsPreview';
-import SafetyNotice from './SafetyNotice';
 import StartRouteButton from './StartRouteButton';
 import styles from './GameIntroductionScreen.module.css';
 
@@ -26,100 +19,55 @@ export const GameIntroductionScreen = ({
 }: GameIntroductionScreenProps) => {
   const texts = TEXTS.games.secretPlazaRoute;
 
-  const summaryItems = useMemo<
-    ReadonlyArray<{ icon: IconName; label: string }>
-  >(
-    () => [
-      { icon: 'fi-rr-map-pin', label: texts.summary.points },
-      { icon: 'fi-rr-clock', label: texts.summary.duration },
-      { icon: 'fi-rr-touch', label: texts.summary.mode },
-      { icon: 'fi-rr-gauge', label: texts.summary.difficulty },
-      { icon: 'fi-rr-map-pin', label: texts.summary.requirement },
-    ],
-    [texts.summary]
-  );
-
-  const steps = useMemo<
-    ReadonlyArray<{
-      icon: IconName;
-      title: string;
-      description: string;
-    }>
-  >(
-    () => [
-      { icon: 'fi-rr-map-pin', ...texts.steps.location },
-      { icon: 'fi-rr-touch', ...texts.steps.visit },
-      { icon: 'fi-rr-trophy', ...texts.steps.reward },
-    ],
-    [texts.steps]
-  );
-
   return (
     <main
       className={styles.screen}
       style={{
-        backgroundImage: `url("${IMAGES.games.introductionBackground}")`,
+        backgroundImage: `linear-gradient(rgba(26, 33, 43, 0.6), rgba(26, 33, 43, 0.6)), url("${IMAGES.settings.pageBackground}")`,
       }}
     >
-      <div className={styles.overlay} aria-hidden="true" />
+      <GameIntroductionHeader
+        backLabel={TEXTS.common.back}
+        screenTitle={texts.screenTitle}
+        settingsLabel={texts.settingsLabel}
+        onBack={onBack}
+        onOpenSettings={onOpenSettings}
+        showSettings={false}
+      />
 
-      <div className={styles.layout}>
-        <GameIntroductionHeader
-          backLabel={TEXTS.common.back}
-          screenTitle={texts.screenTitle}
-          settingsLabel={texts.settingsLabel}
-          onBack={onBack}
-          onOpenSettings={onOpenSettings}
+      <section
+        className={styles.gameContent}
+        aria-label={texts.contentAreaLabel}
+      >
+        <GameIdentity
+          title={secretPlazaRouteMock.title}
+          subtitle={secretPlazaRouteMock.subtitle}
         />
 
         <div
-          className={styles.contentScroller}
-          tabIndex={0}
-          role="region"
-          aria-label={texts.contentAreaLabel}
+          className={styles.routeStepper}
+          aria-label={texts.stepperLabel}
         >
-          <GameIdentity
-            title={secretPlazaRouteMock.title}
-            subtitle={secretPlazaRouteMock.subtitle}
-          />
-
-          <GameSummary
-            items={summaryItems}
-            ariaLabel={texts.summaryAriaLabel}
-          />
-
-          <section className={styles.introduction}>
-            {texts.introduction.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
+          <p className={styles.stepperPrompt}>{texts.stepperPrompt}</p>
+          <ol className={styles.stepperList}>
+            {texts.stepperPoints.map((point, index) => (
+              <li className={styles.stepperItem} key={point}>
+                <span className={styles.stepperNumber} aria-hidden="true">
+                  {index + 1}
+                </span>
+                <span className={styles.stepperLabel}>{point}</span>
+              </li>
             ))}
-          </section>
-
-          <HowItWorks title={texts.howItWorksTitle} steps={steps} />
-
-          <div className={styles.previewGrid}>
-            <RoutePointsPreview
-              title={texts.pointsTitle}
-              points={secretPlazaRouteMock.points}
-              validationNote={texts.pointsValidationNote}
-            />
-            <div className={styles.secondaryColumn}>
-              <RewardPreview
-                title={texts.rewardTitle}
-                description={texts.rewardDescription}
-                disclaimer={texts.rewardDisclaimer}
-              />
-              <SafetyNotice message={texts.safetyMessage} />
-            </div>
-          </div>
+          </ol>
         </div>
 
-        <footer className={styles.ctaFooter}>
-          <StartRouteButton
-            label={texts.startButton}
-            onClick={onStartRoute}
-          />
-        </footer>
-      </div>
+        <p className={styles.rewardMessage}>{texts.rewardMessage}</p>
+
+        <StartRouteButton
+          label={texts.startButton}
+          onClick={onStartRoute}
+        />
+      </section>
     </main>
   );
 };

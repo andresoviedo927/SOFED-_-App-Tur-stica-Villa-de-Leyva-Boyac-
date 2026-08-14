@@ -14,6 +14,8 @@ interface MapCategoryButtonProps<
   deactivateLabel: string;
   labelFontSize?: number;
   iconPadding?: number;
+  allowDisabledSelection?: boolean;
+  visualVariant?: 'default' | 'services';
   onSelect: (category: TCategory) => void;
 }
 
@@ -25,10 +27,13 @@ export const MapCategoryButton = <
   deactivateLabel,
   labelFontSize = 10,
   iconPadding = 8,
+  allowDisabledSelection = false,
+  visualVariant = 'default',
   onSelect,
 }: MapCategoryButtonProps<TCategory>) => {
   const isSelected = state === 'selected';
   const isDisabled = state === 'disabled';
+  const isNativeDisabled = isDisabled && !allowDisabledSelection;
   const ariaLabel = isSelected
     ? deactivateLabel.replace('{category}', category.label)
     : category.accessibilityLabel;
@@ -38,8 +43,10 @@ export const MapCategoryButton = <
       type="button"
       className={styles.button}
       data-state={state}
-      disabled={isDisabled}
-      aria-disabled={isDisabled}
+      data-toggleable={isDisabled && allowDisabledSelection}
+      data-visual={visualVariant}
+      disabled={isNativeDisabled}
+      aria-disabled={isNativeDisabled}
       aria-pressed={isSelected}
       aria-label={ariaLabel}
       title={category.label}
@@ -51,8 +58,13 @@ export const MapCategoryButton = <
       }
       onClick={() => onSelect(category)}
     >
+      {visualVariant === 'services' && (
+        <span className={styles.gloss} aria-hidden="true" />
+      )}
       <img src={category.icon} alt="" draggable={false} />
-      <span>{category.shortLabel ?? category.label}</span>
+      <span className={styles.label}>
+        {category.shortLabel ?? category.label}
+      </span>
     </button>
   );
 };

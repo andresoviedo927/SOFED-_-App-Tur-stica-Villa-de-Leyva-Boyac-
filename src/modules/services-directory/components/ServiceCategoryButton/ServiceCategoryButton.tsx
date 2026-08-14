@@ -3,6 +3,12 @@ import type { ServiceCategoryButtonProps } from './ServiceCategoryButton.types';
 
 export const ServiceCategoryButton = (
   props: ServiceCategoryButtonProps
-) => <MapCategoryButton {...props} />;
+) => (
+  <MapCategoryButton
+    {...props}
+    allowDisabledSelection
+    visualVariant="services"
+  />
+);
 
 export default ServiceCategoryButton;

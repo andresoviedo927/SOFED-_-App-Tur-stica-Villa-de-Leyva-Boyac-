@@ -35,21 +35,183 @@
   overflow: hidden;
   border-radius: 11px;
   background: #f7f8fa;
+  cursor: grab;
+  touch-action: none;
+}
+
+.inner[data-dragging='true'] {
+  cursor: grabbing;
+}
+
+.inner[data-dragging='true'] .canvas {
+  transition: none;
+}
+
+.canvas {
+  position: relative;
+  width: calc(100% + 76px);
+  max-width: none;
+  height: calc(100% + 36px);
+  flex: 0 0 auto;
+  transform: translate(
+      var(--map-offset-x, 0),
+      var(--map-offset-y, 0)
+    )
+    scale(var(--route-map-scale, 1));
+  transform-origin: center;
+  transition: transform 180ms ease-out;
 }
 
 .image {
+  position: absolute;
   display: block;
+  inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: fill;
   object-position: center;
   opacity: 0;
   user-select: none;
   pointer-events: none;
-  transform: scale(var(--route-map-scale, 1));
-  transform-origin: center;
   animation: route-map-fade 380ms ease-out forwards;
-  transition: transform 180ms ease-out;
+}
+
+.gameLayer {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+}
+
+.character {
+  position: absolute;
+  z-index: 4;
+  width: clamp(42px, 6.4%, 52px);
+  pointer-events: none;
+  transform: translate(-50%, -87%);
+  transition:
+    left 780ms cubic-bezier(0.42, 0, 0.58, 1),
+    top 780ms cubic-bezier(0.42, 0, 0.58, 1);
+  will-change: left, top;
+}
+
+.character img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 4px 3px rgba(26, 33, 43, 0.3));
+  transform-origin: center bottom;
+}
+
+.character[data-moving='true'] img {
+  animation: character-walk 220ms ease-in-out infinite alternate;
+}
+
+.routeProgress {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.completedSegment {
+  fill: none;
+  stroke: #f2930d;
+  stroke-width: 22;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  opacity: 0.96;
+  transition: stroke-dashoffset 780ms cubic-bezier(0.42, 0, 0.58, 1);
+}
+
+.completedSegment[data-visible='true'] {
+  stroke-dashoffset: 0;
+}
+
+.pointButton {
+  position: absolute;
+  display: grid;
+  z-index: 5;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.pointButton:hover,
+.pointButton:active {
+  background: transparent;
+  filter: none;
+  transform: translate(-50%, -50%) !important;
+}
+
+.pointButton:disabled {
+  opacity: 1;
+  cursor: wait;
+}
+
+.pointMarker {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: grid;
+  width: 31px;
+  height: 31px;
+  place-items: center;
+  border: 2px solid rgba(255, 255, 255, 0.96);
+  border-radius: 50% 50% 50% 0;
+  background: linear-gradient(145deg, #737982 0%, #353b45 100%);
+  box-shadow:
+    0 2px 4px rgba(26, 33, 43, 0.34),
+    inset 0 1px 1px rgba(255, 255, 255, 0.38);
+  transform: translate(-50%, -50%) rotate(-45deg);
+  transition:
+    background 260ms ease,
+    box-shadow 260ms ease;
+}
+
+.pointNumber {
+  color: #fff;
+  font-family: var(--font-family-primary, "Lexend", sans-serif);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+  text-shadow: 0 1px 1px rgba(26, 33, 43, 0.38);
+  transform: rotate(45deg);
+}
+
+.pointButton[data-state='completed'] .pointMarker {
+  background: linear-gradient(145deg, #ffae1a 0%, #d96b00 100%);
+  box-shadow:
+    0 2px 5px rgba(186, 89, 0, 0.38),
+    inset 0 1px 1px rgba(255, 255, 255, 0.5);
+}
+
+.pointButton:focus-visible {
+  outline: 3px solid #1a212b;
+  outline-offset: 2px;
+}
+
+@keyframes character-walk {
+  from {
+    transform: translateY(0) rotate(-1.5deg);
+  }
+
+  to {
+    transform: translateY(-4px) rotate(1.5deg);
+  }
 }
 
 .loader,
@@ -96,14 +258,27 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .image {
+  .image,
+  .completedSegment,
+  .canvas {
     opacity: 1;
     animation: none;
     transition: none;
+  }
+
+  .completedSegment[data-visible='true'] {
+    stroke-dashoffset: 0;
+  }
+
+  .character {
+    transition: none;
+  }
+
+  .character[data-moving='true'] img {
+    animation: none;
   }
 
   .spinner {
     animation-duration: 1400ms;
   }
 }
-

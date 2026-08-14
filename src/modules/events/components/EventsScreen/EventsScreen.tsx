@@ -16,7 +16,6 @@ interface EventsScreenProps {
 
 export const EventsScreen = ({
   onBack,
-  onOpenSettings,
   onOpenEventDetail,
 }: EventsScreenProps) => {
   const { events, isLoading } = useEvents();
@@ -32,25 +31,23 @@ export const EventsScreen = ({
   return (
     <main
       className={styles.screen}
-      style={{ backgroundImage: `url(${IMAGES.interactive.map})` }}
+      style={{
+        backgroundImage: `linear-gradient(rgba(26, 33, 43, 0.6), rgba(26, 33, 43, 0.6)), url("${IMAGES.settings.pageBackground}")`,
+      }}
     >
-      <div className={styles.overlay} />
-      <div className={styles.layout}>
-        <EventsHeader
-          title={TEXTS.events.screenTitle}
-          onBack={onBack}
-          onOpenSettings={onOpenSettings}
+      <EventsHeader
+        title={TEXTS.events.screenTitle}
+        onBack={onBack}
+      />
+      {!isLoading && events.length === 0 ? (
+        <EventsEmptyState />
+      ) : (
+        <EventsCarousel
+          events={events}
+          isLoading={isLoading}
+          onSelectEvent={openEvent}
         />
-        {!isLoading && events.length === 0 ? (
-          <EventsEmptyState />
-        ) : (
-          <EventsCarousel
-            events={events}
-            isLoading={isLoading}
-            onSelectEvent={openEvent}
-          />
-        )}
-      </div>
+      )}
     </main>
   );
 };

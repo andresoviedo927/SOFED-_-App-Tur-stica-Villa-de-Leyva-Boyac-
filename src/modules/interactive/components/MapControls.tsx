@@ -1,6 +1,10 @@
 import React from 'react';
 import LocateButton from './LocateButton';
 import MapZoomControl from './MapZoomControl';
+import {
+  MAP_MAX_ZOOM,
+  MAP_MIN_ZOOM,
+} from '../constants/map';
 import styles from './InteractiveMapScreen.module.css';
 
 interface MapControlsProps {
@@ -20,8 +24,8 @@ export const MapControls: React.FC<MapControlsProps> = ({
     <LocateButton onLocate={onLocate} />
     <MapZoomControl
       zoomScale={zoomScale}
-      minZoom={0.8}
-      maxZoom={1.6}
+      minZoom={MAP_MIN_ZOOM}
+      maxZoom={MAP_MAX_ZOOM}
       onZoomIn={onZoomIn}
       onZoomOut={onZoomOut}
     />

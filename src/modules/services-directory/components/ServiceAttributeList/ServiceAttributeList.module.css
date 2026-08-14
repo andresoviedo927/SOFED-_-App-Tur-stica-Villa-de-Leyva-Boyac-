@@ -5,6 +5,7 @@
   align-content: flex-start;
   gap: 8px;
   padding: 2px 4px 4px 0;
+  overflow-x: hidden;
   overflow-y: auto;
   scrollbar-color: rgba(222, 228, 237, 0.7) transparent;
   scrollbar-width: thin;

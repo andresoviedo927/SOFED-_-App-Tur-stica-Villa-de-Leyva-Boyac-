@@ -8,7 +8,6 @@ import MapBackground from './MapBackground';
 import MapBanner from './MapBanner';
 import MapControls from './MapControls';
 import useInteractive from '../hooks/useInteractive';
-import type { MapPinPOI } from '../types';
 import styles from './InteractiveMapScreen.module.css';
 
 interface InteractiveMapScreenProps {
@@ -22,8 +21,6 @@ export const InteractiveMapScreen: React.FC<
 > = ({ onBack, onOpenSettings, onOpenPlazaPrincipal }) => {
   const {
     pins,
-    selectedPin,
-    setSelectedPin,
     zoomScale,
     panOffset,
     isDragging,
@@ -34,14 +31,6 @@ export const InteractiveMapScreen: React.FC<
     handlePointerMove,
     handlePointerUp,
   } = useInteractive();
-
-  const handleSelectPin = (pin: MapPinPOI) => {
-    setSelectedPin(pin);
-
-    if (pin.destination && onOpenPlazaPrincipal) {
-      onOpenPlazaPrincipal();
-    }
-  };
 
   return (
     <section className={styles.screen}>
@@ -79,11 +68,10 @@ export const InteractiveMapScreen: React.FC<
 
       <IllustratedMap
         pins={pins}
-        selectedPin={selectedPin}
         zoomScale={zoomScale}
         panOffset={panOffset}
         isDragging={isDragging}
-        onSelectPin={handleSelectPin}
+        onOpenPlazaPrincipal={onOpenPlazaPrincipal}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}

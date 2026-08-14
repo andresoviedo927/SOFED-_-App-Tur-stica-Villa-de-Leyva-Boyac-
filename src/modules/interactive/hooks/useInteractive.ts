@@ -1,37 +1,74 @@
-import { useState, useCallback, PointerEvent } from 'react';
+import {
+  useState,
+  useCallback,
+  useEffect,
+  PointerEvent,
+} from 'react';
 import { getInteractiveItems, getMapPins } from '../services/interactiveService';
 import { InteractiveItem, MapPinPOI } from '../types';
+import { MAP_ZOOM_LEVELS } from '../constants/map';
+
+const getPanBounds = (zoomScale: number) => ({
+  x: 180 * (zoomScale - 1),
+  y: 90 * (zoomScale - 1),
+});
 
 export const useInteractive = () => {
   const [items] = useState<InteractiveItem[]>(getInteractiveItems());
   const [pins] = useState<MapPinPOI[]>(getMapPins());
-  const [selectedPin, setSelectedPin] = useState<MapPinPOI | null>(null);
 
   // Zoom and Pan states
-  const [zoomScale, setZoomScale] = useState<number>(1.0);
+  const [zoomLevel, setZoomLevel] = useState(0);
+  const zoomScale = MAP_ZOOM_LEVELS[zoomLevel];
   const [panOffset, setPanOffset] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [dragStart, setDragStart] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
 
   const handleZoomIn = useCallback(() => {
-    setZoomScale((prev) => Math.min(1.6, Math.round((prev + 0.1) * 10) / 10));
+    setZoomLevel((currentLevel) =>
+      Math.min(MAP_ZOOM_LEVELS.length - 1, currentLevel + 1)
+    );
   }, []);
 
   const handleZoomOut = useCallback(() => {
-    setZoomScale((prev) => Math.max(0.8, Math.round((prev - 0.1) * 10) / 10));
+    setZoomLevel((currentLevel) =>
+      Math.max(0, currentLevel - 1)
+    );
   }, []);
 
   const handleResetMap = useCallback(() => {
-    setZoomScale(1.0);
+    setZoomLevel(0);
     setPanOffset({ x: 0, y: 0 });
   }, []);
 
+  useEffect(() => {
+    const bounds = getPanBounds(zoomScale);
+
+    setPanOffset((currentOffset) => {
+      const nextOffset = {
+        x: Math.max(-bounds.x, Math.min(bounds.x, currentOffset.x)),
+        y: Math.max(-bounds.y, Math.min(bounds.y, currentOffset.y)),
+      };
+
+      return nextOffset.x === currentOffset.x &&
+        nextOffset.y === currentOffset.y
+        ? currentOffset
+        : nextOffset;
+    });
+  }, [zoomScale]);
+
   const handlePointerDown = (e: PointerEvent) => {
+    const target = e.target as HTMLElement;
+
+    if (target.closest('button, a, [data-map-pin]')) {
+      return;
+    }
+
     // Only left click or touch drag
     if (e.button !== 0 && e.pointerType === 'mouse') return;
     setIsDragging(true);
     setDragStart({ x: e.clientX - panOffset.x, y: e.clientY - panOffset.y });
-    (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
+    target.setPointerCapture?.(e.pointerId);
   };
 
   const handlePointerMove = (e: PointerEvent) => {
@@ -39,10 +76,10 @@ export const useInteractive = () => {
     const newX = e.clientX - dragStart.x;
     const newY = e.clientY - dragStart.y;
     // Bound pan range so map doesn't completely disappear
-    const maxPan = 180 * zoomScale;
+    const bounds = getPanBounds(zoomScale);
     setPanOffset({
-      x: Math.max(-maxPan, Math.min(maxPan, newX)),
-      y: Math.max(-maxPan, Math.min(maxPan, newY)),
+      x: Math.max(-bounds.x, Math.min(bounds.x, newX)),
+      y: Math.max(-bounds.y, Math.min(bounds.y, newY)),
     });
   };
 
@@ -56,8 +93,6 @@ export const useInteractive = () => {
   return {
     items,
     pins,
-    selectedPin,
-    setSelectedPin,
     zoomScale,
     panOffset,
     isDragging,
@@ -71,4 +106,3 @@ export const useInteractive = () => {
 };
 
 export default useInteractive;
-

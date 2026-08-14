@@ -5,13 +5,27 @@ export const ARCharacterOverlay = ({
   src,
   alt,
   isPlacing,
+  videoRef,
 }: ARCharacterOverlayProps) => (
   <div
     className={styles.character}
     data-placing={isPlacing || undefined}
   >
     <span aria-hidden="true" />
-    <img src={src} alt={alt} draggable={false} />
+    <video
+      ref={videoRef}
+      src={src}
+      aria-label={alt}
+      autoPlay
+      muted
+      playsInline
+      preload="auto"
+      controls={false}
+      disablePictureInPicture
+      controlsList="nodownload noplaybackrate nofullscreen"
+      tabIndex={-1}
+      onContextMenu={(event) => event.preventDefault()}
+    />
   </div>
 );
 

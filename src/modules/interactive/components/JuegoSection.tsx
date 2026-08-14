@@ -3,6 +3,7 @@ import AppIcon from '@/components/ui/AppIcon';
 import { Button } from '@/components/ui/Button';
 import IMAGES from '@/assets/images';
 import TEXTS from '@/constants/texts';
+import { playSoundEffect } from '@/services/SoundEffectsService';
 import GameIntroductionHeader from '@/modules/games/components/GameIntroductionHeader';
 import RouteMapImage from '@/modules/games/components/RouteMapImage';
 import {
@@ -14,43 +15,38 @@ import styles from './JuegoSection.module.css';
 
 interface JuegoSectionProps {
   onBack: () => void;
+  onGoHome?: () => void;
   onOpenSettings?: () => void;
   startImmediately?: boolean;
 }
 
 type ExperienceView = 'route' | 'completion' | 'reward';
 
-const COMPLETED_MAP_HOLD_MS = 1000;
-const POINT_COMPLETED_HOLD_MS = 650;
-const MIN_MAP_SCALE = 0.86;
+const COMPLETION_DELAY_MS = 920;
+const PAPER_TEXTURE_BACKGROUND = `linear-gradient(0deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), url("${IMAGES.interactive.reading.paperTexture}")`;
+const REWARD_ESTABLISHMENT_MAP_URL = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('Amora Café y Canela, centro histórico, Villa de Leyva, Boyacá')}`;
 
 export const JuegoSection = ({
   onBack,
+  onGoHome,
   onOpenSettings,
 }: JuegoSectionProps) => {
   const texts = TEXTS.games.secretPlazaRoute.routeExperience;
   const [routeStatus, setRouteStatus] =
     useState<SecretRouteStatus>('pointActive');
-  const [completedPoints, setCompletedPoints] = useState(0);
-  const [activePoint, setActivePoint] = useState(1);
-  const [mapScale, setMapScale] = useState(1);
+  const [completedPoints, setCompletedPoints] = useState(1);
+  const [activePoint, setActivePoint] = useState(2);
   const [view, setView] = useState<ExperienceView>('route');
-  const [isPointCardOpen, setIsPointCardOpen] = useState(false);
-  const [isReferenceMapOpen, setIsReferenceMapOpen] =
-    useState(false);
   const [announcement, setAnnouncement] = useState(
-    `${texts.currentPoint}: 1 de ${SECRET_ROUTE_TOTAL_POINTS}`
+    `${texts.currentPoint}: 2 de ${SECRET_ROUTE_TOTAL_POINTS}`
   );
-  const [toastMessage, setToastMessage] = useState<string | null>(
-    null
-  );
-  const transitioningRef = useRef(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
   const timersRef = useRef<number[]>([]);
 
   const currentPoint = useMemo(
     () =>
       SECRET_ROUTE_POINTS.find((point) => point.id === activePoint) ??
-      SECRET_ROUTE_POINTS[0],
+      SECRET_ROUTE_POINTS[SECRET_ROUTE_TOTAL_POINTS - 1],
     [activePoint]
   );
   const progressPercentage = Math.round(
@@ -62,117 +58,100 @@ export const JuegoSection = ({
     timersRef.current = [];
   }, []);
 
-  const queueAction = useCallback(
-    (action: () => void, delay: number) => {
-      const timer = window.setTimeout(action, delay);
-      timersRef.current.push(timer);
-    },
-    []
-  );
+  const queueAction = useCallback((action: () => void, delay: number) => {
+    const timer = window.setTimeout(action, delay);
+    timersRef.current.push(timer);
+  }, []);
 
   const showToast = useCallback(
     (message: string) => {
       setToastMessage(message);
-      queueAction(() => setToastMessage(null), 2400);
+      queueAction(() => setToastMessage(null), 2200);
     },
     [queueAction]
   );
 
-  useEffect(
-    () => () => {
-      clearTimers();
-    },
-    [clearTimers]
-  );
+  const handleDownloadVoucher = useCallback(() => {
+    playSoundEffect('success');
+    const downloadLink = document.createElement('a');
+    downloadLink.href = IMAGES.games.secretRoute.voucherQr;
+    downloadLink.download = 'bono-ruta-secreta.svg';
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    downloadLink.remove();
+    showToast('Bono descargado.');
+  }, [showToast]);
 
-  const handleVisitPoint = () => {
-    if (
-      transitioningRef.current ||
-      routeStatus === 'paused' ||
-      routeStatus === 'routeCompleted'
-    ) {
+  const handleOpenEstablishment = useCallback(() => {
+    playSoundEffect('open');
+    window.open(
+      REWARD_ESTABLISHMENT_MAP_URL,
+      '_blank',
+      'noopener,noreferrer'
+    );
+  }, []);
+
+  useEffect(() => clearTimers, [clearTimers]);
+
+  const handlePointSelect = (pointId: number) => {
+    if (routeStatus === 'routeCompleted') {
       return;
     }
 
-    setIsPointCardOpen(true);
-    setAnnouncement(
-      `${texts.pointCardTitle} ${activePoint}: ${currentPoint.name}`
-    );
-  };
-
-  const handleCompletePoint = () => {
-    if (transitioningRef.current) {
+    if (pointId !== activePoint) {
+      playSoundEffect('unselect');
+      showToast(
+        pointId <= completedPoints
+          ? `El punto ${pointId} ya está completado. Continúa con el punto ${activePoint}.`
+          : `Sigue el orden: selecciona primero el punto ${activePoint}.`
+      );
+      setAnnouncement(`El punto ${pointId} aún no está disponible.`);
       return;
     }
 
-    transitioningRef.current = true;
-    setIsPointCardOpen(false);
-    setCompletedPoints(currentPoint.id);
-    setRouteStatus('pointCompleted');
-    setAnnouncement(
-      `${texts.pointCompleted} ${currentPoint.id}. ${texts.continueNext}`
-    );
+    const isLastPoint = pointId === SECRET_ROUTE_TOTAL_POINTS;
+    playSoundEffect(isLastPoint ? 'success' : 'select');
+    setCompletedPoints(pointId);
 
-    if (currentPoint.id === SECRET_ROUTE_TOTAL_POINTS) {
-      setRouteStatus('routeCompleted');
+    if (isLastPoint) {
+      setRouteStatus('pointCompleted');
       setAnnouncement(texts.routeCompletedAnnouncement);
       queueAction(() => {
-        transitioningRef.current = false;
+        setRouteStatus('routeCompleted');
         setView('completion');
-      }, COMPLETED_MAP_HOLD_MS);
+      }, COMPLETION_DELAY_MS);
       return;
     }
 
-    showToast(
-      currentPoint.id === SECRET_ROUTE_TOTAL_POINTS - 1
-        ? texts.lastStopUnlocked
-        : `${texts.pointCompleted} ${currentPoint.id}. ${texts.continueNext}`
-    );
-
-    queueAction(() => {
-      const nextPoint = currentPoint.id + 1;
-      setActivePoint(nextPoint);
-      setRouteStatus('pointActive');
-      setAnnouncement(
-        `${texts.currentPoint}: ${nextPoint} de ${SECRET_ROUTE_TOTAL_POINTS}`
-      );
-      transitioningRef.current = false;
-    }, POINT_COMPLETED_HOLD_MS);
-  };
-
-  const handleOpenSettings = () => {
-    setRouteStatus('paused');
-    setAnnouncement(texts.resumeRoute);
-    onOpenSettings?.();
-  };
-
-  const handleResume = () => {
-    setRouteStatus('pointActive');
+    const nextPoint = pointId + 1;
+    setActivePoint(nextPoint);
     setAnnouncement(
-      `${texts.currentPoint}: ${activePoint} de ${SECRET_ROUTE_TOTAL_POINTS}`
+      `${texts.pointCompleted} ${pointId}. ${texts.currentPoint}: ${nextPoint}.`
     );
-  };
-
-  const handleResetMap = () => {
-    setMapScale(1);
-    setAnnouncement(texts.routeReset);
-    showToast(texts.routeReset);
+    showToast(
+      `${texts.pointCompleted} ${pointId}. Ahora selecciona el punto ${nextPoint}.`
+    );
   };
 
   const mapAlt =
     routeStatus === 'routeCompleted'
       ? texts.completedMapAlt
       : texts.activeMapAlt;
-  const statusMessage =
+  const characterPoint =
     routeStatus === 'pointCompleted'
-      ? `${texts.pointCompleted} ${completedPoints}. ${texts.continueNext}`
-      : null;
+      ? completedPoints
+      : Math.max(1, activePoint - 1);
 
   return (
     <main
       className={styles.screen}
+      data-view={view}
       style={{
-        backgroundImage: `url("${IMAGES.games.introductionBackground}")`,
+        backgroundImage: `url("${
+          view === 'reward'
+            ? IMAGES.plazaPrincipal.background
+            : IMAGES.games.introductionBackground
+        }")`,
       }}
     >
       <div className={styles.overlay} aria-hidden="true" />
@@ -183,27 +162,26 @@ export const JuegoSection = ({
           screenTitle={texts.screenTitle}
           settingsLabel={texts.settingsLabel}
           onBack={onBack}
-          onOpenSettings={handleOpenSettings}
+          onOpenSettings={() => onOpenSettings?.()}
         />
 
-        {view === 'route' && (
-          <section
-            className={styles.mapArea}
-            aria-label={texts.screenTitle}
-          >
+        {view !== 'reward' && (
+          <section className={styles.mapArea} aria-label={texts.screenTitle}>
             <RouteMapImage
               status={routeStatus}
               completedPoints={completedPoints}
               activePoint={activePoint}
+              characterPoint={characterPoint}
               alt={mapAlt}
-              scale={mapScale}
+              onPointSelect={handlePointSelect}
             />
 
             <aside className={styles.progressPanel}>
               <div className={styles.progressHeading}>
                 <span>
-                  {texts.currentPoint}: {activePoint} de{' '}
-                  {SECRET_ROUTE_TOTAL_POINTS}
+                  {routeStatus === 'routeCompleted'
+                    ? texts.completedPoints
+                    : `${texts.currentPoint}: ${activePoint} de ${SECRET_ROUTE_TOTAL_POINTS}`}
                 </span>
                 <strong>{progressPercentage} %</strong>
               </div>
@@ -216,115 +194,111 @@ export const JuegoSection = ({
                 aria-valuemax={100}
                 aria-valuenow={progressPercentage}
               >
-                <span
-                  style={{ width: `${progressPercentage}%` }}
-                />
+                <span style={{ width: `${progressPercentage}%` }} />
               </div>
 
               <dl className={styles.progressDetails}>
                 <div>
                   <dt>{texts.nextDestination}</dt>
-                  <dd>{currentPoint.name}</dd>
-                </div>
-                <div>
-                  <dt>{texts.experienceMode}</dt>
-                  <dd>{texts.simulatedMode}</dd>
+                  <dd>
+                    {routeStatus === 'routeCompleted'
+                      ? texts.routeCompletedAnnouncement
+                      : currentPoint.name}
+                  </dd>
                 </div>
               </dl>
+
+              <p className={styles.progressInstruction}>
+                {routeStatus === 'routeCompleted'
+                  ? 'Recorrido completado.'
+                  : `Toca el punto ${activePoint} en el mapa.`}
+              </p>
+            </aside>
+          </section>
+        )}
+
+        {view === 'reward' && (
+          <section
+            className={styles.rewardCard}
+            style={{ backgroundImage: PAPER_TEXTURE_BACKGROUND }}
+            role="dialog"
+            aria-labelledby="route-reward-title"
+          >
+            <div className={styles.rewardTop}>
+              <div className={styles.rewardQrColumn}>
+                <div className={styles.voucherVisual}>
+                  <img
+                    className={styles.voucherQr}
+                    src={IMAGES.games.secretRoute.voucherQr}
+                    alt="Código QR de ejemplo del bono de La Ruta Secreta"
+                    draggable={false}
+                  />
+                </div>
+
+                <button
+                  type="button"
+                  className={styles.qrDownloadButton}
+                  onClick={handleDownloadVoucher}
+                >
+                  <span>{texts.downloadShort}</span>
+                  <AppIcon
+                    name="fi-rr-download"
+                    size={16}
+                    color="currentColor"
+                  />
+                </button>
+              </div>
+
+              <div className={styles.rewardCopy}>
+                <h2 id="route-reward-title">{texts.rewardTitle}</h2>
+                <p>{texts.rewardPartnerPending}</p>
+                <p>{texts.rewardInstructions}</p>
+              </div>
+            </div>
+
+            <footer className={styles.rewardActions}>
+              <Button
+                kind="transparent"
+                size="small"
+                className={styles.directionsButton}
+                onClick={handleOpenEstablishment}
+                rightIcon={
+                  <AppIcon
+                    name="fi-rr-arrow-small-right"
+                    size={20}
+                    color="currentColor"
+                  />
+                }
+              >
+                {texts.directions}
+              </Button>
 
               <Button
                 kind="solid"
                 size="small"
-                className={styles.validateButton}
-                disabled={
-                  routeStatus === 'pointCompleted' ||
-                  routeStatus === 'routeCompleted'
-                }
-                ariaLabel={`${texts.visitPoint} ${activePoint}: ${currentPoint.name}`}
-                onClick={
-                  routeStatus === 'paused'
-                    ? handleResume
-                    : handleVisitPoint
-                }
+                className={styles.homeButton}
+                onClick={() => onGoHome?.()}
               >
-                {routeStatus === 'paused'
-                  ? texts.resumeRoute
-                  : `${texts.visitPoint} ${activePoint}`}
+                {texts.goHome}
               </Button>
-            </aside>
-
-            <div className={styles.mapControls}>
-              <button
-                type="button"
-                className={styles.locateButton}
-                aria-label={texts.locate}
-                title={texts.locate}
-                onClick={handleResetMap}
-              >
-                <AppIcon
-                  name="fi-rr-target"
-                  size={16}
-                  color="#1A212B"
-                />
-              </button>
-
-              <div className={styles.zoomControls}>
-                <button
-                  type="button"
-                  aria-label={texts.zoomIn}
-                  title={texts.zoomIn}
-                  disabled={mapScale >= 1}
-                  onClick={() =>
-                    setMapScale((current) =>
-                      Math.min(1, current + 0.07)
-                    )
-                  }
-                >
-                  <AppIcon
-                    name="fi-rr-plus-small"
-                    size={16}
-                    color="#1A212B"
-                  />
-                </button>
-                <span aria-hidden="true" />
-                <button
-                  type="button"
-                  aria-label={texts.zoomOut}
-                  title={texts.zoomOut}
-                  disabled={mapScale <= MIN_MAP_SCALE}
-                  onClick={() =>
-                    setMapScale((current) =>
-                      Math.max(MIN_MAP_SCALE, current - 0.07)
-                    )
-                  }
-                >
-                  <AppIcon
-                    name="fi-rr-minus-small"
-                    size={16}
-                    color="#1A212B"
-                  />
-                </button>
-              </div>
-            </div>
-
-            {statusMessage && (
-              <div className={styles.statusMessage} role="status">
-                {statusMessage}
-              </div>
-            )}
+            </footer>
           </section>
         )}
+      </div>
 
-        {view === 'completion' && (
-          <section className={styles.completionCard}>
+      {view === 'completion' && (
+        <div className={styles.dialogBackdrop}>
+          <section
+            className={styles.completionCard}
+            style={{ backgroundImage: PAPER_TEXTURE_BACKGROUND }}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="route-completion-title"
+          >
             <div className={styles.successIcon} aria-hidden="true">
-              <AppIcon
-                name="fi-rr-check"
-                size={30}
-                color="#17BF33"
-              />
+              <AppIcon name="fi-rr-check" size={40} color="#17BF33" />
             </div>
-            <h2>{texts.completionTitle}</h2>
+            <h2 id="route-completion-title">{texts.completionTitle}</h2>
             <p>{texts.completionMessage}</p>
             <p>{texts.completionReward}</p>
             <Button
@@ -341,130 +315,6 @@ export const JuegoSection = ({
             >
               {texts.viewReward}
             </Button>
-          </section>
-        )}
-
-        {view === 'reward' && (
-          <section className={styles.rewardCard}>
-            <div className={styles.voucherVisual} aria-hidden="true">
-              <span className={styles.qrPattern} />
-              <small>{texts.digitalVoucher}</small>
-            </div>
-
-            <div className={styles.rewardCopy}>
-              <h2>{texts.rewardTitle}</h2>
-              <p>{texts.rewardPartnerPending}</p>
-              <p>{texts.rewardInstructions}</p>
-            </div>
-
-            <footer className={styles.rewardActions}>
-              <button
-                type="button"
-                className={styles.directionsButton}
-                onClick={() => setIsReferenceMapOpen(true)}
-              >
-                <span>{texts.directions}</span>
-                <AppIcon
-                  name="fi-rr-arrow-small-right"
-                  size={20}
-                  color="currentColor"
-                />
-              </button>
-
-              <Button
-                kind="solid"
-                size="small"
-                onClick={() => showToast(texts.qrUnavailable)}
-              >
-                {texts.downloadQr}
-              </Button>
-            </footer>
-          </section>
-        )}
-      </div>
-
-      {isPointCardOpen && (
-        <div
-          className={styles.dialogBackdrop}
-          role="presentation"
-          onMouseDown={(event) => {
-            if (event.currentTarget === event.target) {
-              setIsPointCardOpen(false);
-            }
-          }}
-        >
-          <section
-            className={styles.pointDialog}
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="route-point-title"
-          >
-            <span className={styles.pointNumber} aria-hidden="true">
-              {currentPoint.order}
-            </span>
-            <div>
-              <p className={styles.dialogEyebrow}>
-                {texts.pointCardTitle} {currentPoint.order}
-              </p>
-              <h2 id="route-point-title">{currentPoint.name}</h2>
-              <p>{currentPoint.description}</p>
-            </div>
-            <div className={styles.dialogActions}>
-              <Button
-                kind="transparent"
-                size="small"
-                onClick={() => setIsPointCardOpen(false)}
-              >
-                {TEXTS.common.cancelLabel}
-              </Button>
-              <Button
-                kind="solid"
-                size="small"
-                ariaLabel={`${texts.completePoint} ${currentPoint.order}: ${currentPoint.name}`}
-                onClick={handleCompletePoint}
-              >
-                {texts.completePoint}
-              </Button>
-            </div>
-          </section>
-        </div>
-      )}
-
-      {isReferenceMapOpen && (
-        <div className={styles.dialogBackdrop}>
-          <section
-            className={styles.referenceDialog}
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="reference-map-title"
-          >
-            <div className={styles.referenceMapHeader}>
-              <div>
-                <p className={styles.dialogEyebrow}>
-                  {texts.visualGuide}
-                </p>
-                <h2 id="reference-map-title">
-                  {texts.referenceMapTitle}
-                </h2>
-              </div>
-              <button
-                type="button"
-                aria-label={TEXTS.common.closeLabel}
-                onClick={() => setIsReferenceMapOpen(false)}
-              >
-                <AppIcon
-                  name="fi-rr-close"
-                  size={20}
-                  color="#1A212B"
-                />
-              </button>
-            </div>
-            <img
-              src={IMAGES.games.secretRoute.activeMap}
-              alt={texts.referenceMapAlt}
-              draggable={false}
-            />
-            <p>{texts.referenceMapDescription}</p>
           </section>
         </div>
       )}

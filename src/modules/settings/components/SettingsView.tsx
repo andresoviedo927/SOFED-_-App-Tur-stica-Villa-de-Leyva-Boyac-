@@ -3,6 +3,8 @@ import IMAGES from '@/assets/images';
 import AppIcon from '@/components/ui/AppIcon';
 import Button from '@/components/ui/Button';
 import TEXTS from '@/constants/texts';
+import { stopAllNarrations } from '@/modules/interactive/services/BrowserNarrationService';
+import { previewSoundEffectsVolume } from '@/services/SoundEffectsService';
 import useSettings from '../hooks/useSettings';
 import styles from './SettingsView.module.css';
 
@@ -150,7 +152,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       className={styles.settingsPage}
       aria-busy={isSaving}
       style={{
-        backgroundImage: `linear-gradient(0deg, rgba(26, 33, 43, 0.6), rgba(26, 33, 43, 0.6)), url(${IMAGES.settings.background})`,
+        backgroundImage: `linear-gradient(rgba(26, 33, 43, 0.6), rgba(26, 33, 43, 0.6)), url(${IMAGES.settings.pageBackground})`,
       }}
     >
       <header className={styles.settingsHeader}>
@@ -180,9 +182,12 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             label={TEXTS.settings.automaticNarration}
             checked={currentValues.automaticNarration}
             disabled={isInteractionLocked}
-            onChange={(checked) =>
-              updateSetting('automaticNarration', checked)
-            }
+            onChange={(checked) => {
+              if (!checked) {
+                stopAllNarrations();
+              }
+              updateSetting('automaticNarration', checked);
+            }}
           />
 
           <SettingsSwitch
@@ -199,7 +204,10 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             label={TEXTS.settings.narrationVolume}
             value={currentValues.narrationVolume}
             disabled={isInteractionLocked}
-            onChange={(value) => updateSetting('narrationVolume', value)}
+            onChange={(value) => {
+              stopAllNarrations();
+              updateSetting('narrationVolume', value);
+            }}
           />
 
           <SettingsSlider
@@ -207,14 +215,16 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             label={TEXTS.settings.soundEffectsVolume}
             value={currentValues.soundEffectsVolume}
             disabled={isInteractionLocked}
-            onChange={(value) => updateSetting('soundEffectsVolume', value)}
+            onChange={(value) => {
+              updateSetting('soundEffectsVolume', value);
+              previewSoundEffectsVolume(value);
+            }}
           />
         </div>
 
         <Button
           kind="solid"
           size="small"
-          className={styles.saveButton}
           onClick={handleSave}
           disabled={isSaveDisabled}
           loading={isSaving}

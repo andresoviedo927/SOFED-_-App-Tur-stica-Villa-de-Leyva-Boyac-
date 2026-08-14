@@ -1,19 +1,16 @@
 import AppIcon from '@/components/ui/AppIcon';
 import { Button } from '@/components/ui/Button';
 import TEXTS from '@/constants/texts';
-import { SettingsButton } from '@/modules/home/components/SettingsButton';
 import styles from './EventsHeader.module.css';
 
 interface EventsHeaderProps {
   title: string;
   onBack: () => void;
-  onOpenSettings: () => void;
 }
 
 export const EventsHeader = ({
   title,
   onBack,
-  onOpenSettings,
 }: EventsHeaderProps) => (
   <header className={styles.header}>
     <Button
@@ -33,11 +30,7 @@ export const EventsHeader = ({
       {TEXTS.common.back}
     </Button>
     <h1>{title}</h1>
-    <SettingsButton
-      className={styles.settings}
-      onClick={onOpenSettings}
-      ariaLabel={TEXTS.common.settingsLabel}
-    />
+    <span className={styles.reservedSpace} aria-hidden="true" />
   </header>
 );
 

@@ -1,48 +1,92 @@
-import React from 'react';
+import React, { useId, useState } from 'react';
 import IMAGES from '@/assets/images';
 import type { MapPinPOI } from '../types';
 import styles from './InteractiveMapScreen.module.css';
 
 interface MapPinProps {
   pin: MapPinPOI;
-  isSelected: boolean;
-  onSelect: (pin: MapPinPOI) => void;
+  onOpenDestination?: () => void;
 }
 
 export const MapPin: React.FC<MapPinProps> = ({
   pin,
-  isSelected,
-  onSelect,
+  onOpenDestination,
 }) => {
-  const lastDirectActivationRef = React.useRef(
-    Number.NEGATIVE_INFINITY
+  const tooltipId = useId();
+  const [isTouchTooltipOpen, setIsTouchTooltipOpen] =
+    useState(false);
+  const className = `${styles.mapPin} ${
+    pin.destination ? styles.mapPinDirect : styles.mapPinStatic
+  } ${
+    isTouchTooltipOpen ? styles.touchTooltipOpen : ''
+  }`;
+  const position = {
+    left: `${pin.xPercent}%`,
+    top: `${pin.yPercent}%`,
+  };
+  const content = (
+    <>
+      <span className={styles.pinVisual} aria-hidden="true">
+        <img
+          className={styles.pinImage}
+          src={IMAGES.interactive.pins[pin.color]}
+          alt=""
+          draggable={false}
+        />
+      </span>
+      <span
+        id={tooltipId}
+        className={styles.pinTooltip}
+        role="tooltip"
+      >
+        {pin.title}
+      </span>
+    </>
   );
 
   const handlePointerUp = (
-    event: React.PointerEvent<HTMLButtonElement>
+    event: React.PointerEvent<HTMLElement>
   ) => {
-    event.stopPropagation();
-
-    if (event.pointerType === 'mouse') {
+    if (event.pointerType === 'mouse' && event.button !== 0) {
       return;
     }
 
-    lastDirectActivationRef.current = performance.now();
-    onSelect(pin);
-  };
-
-  const handleClick = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
+    event.preventDefault();
     event.stopPropagation();
 
-    const wasJustActivatedByTouch =
-      performance.now() - lastDirectActivationRef.current < 500;
+    if (event.pointerType === 'touch') {
+      if (!isTouchTooltipOpen) {
+        setIsTouchTooltipOpen(true);
+        return;
+      }
 
-    if (!wasJustActivatedByTouch) {
-      onSelect(pin);
+      if (!pin.destination) {
+        return;
+      }
+    }
+
+    if (pin.destination) {
+      setIsTouchTooltipOpen(false);
+      onOpenDestination?.();
     }
   };
+
+  if (!pin.destination) {
+    return (
+      <span
+        className={className}
+        style={position}
+        tabIndex={0}
+        aria-describedby={tooltipId}
+        data-map-pin
+        onPointerUp={handlePointerUp}
+        onPointerCancel={(event) => event.stopPropagation()}
+        onBlur={() => setIsTouchTooltipOpen(false)}
+      >
+        {content}
+      </span>
+    );
+  }
 
   const handleKeyDown = (
     event: React.KeyboardEvent<HTMLButtonElement>
@@ -53,33 +97,41 @@ export const MapPin: React.FC<MapPinProps> = ({
 
     event.preventDefault();
     event.stopPropagation();
-    lastDirectActivationRef.current = performance.now();
-    onSelect(pin);
+    onOpenDestination?.();
+  };
+
+  const handleDestinationPointerDown = (
+    event: React.PointerEvent<HTMLButtonElement>
+  ) => {
+    if (event.pointerType === 'mouse' && event.button !== 0) {
+      return;
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+    setIsTouchTooltipOpen(false);
+    onOpenDestination?.();
   };
 
   return (
     <button
       type="button"
-      className={styles.mapPin}
-      style={{ left: `${pin.xPercent}%`, top: `${pin.yPercent}%` }}
-      aria-label={`${pin.title}. ${pin.category}`}
-      aria-pressed={isSelected}
-      disabled={pin.disabled}
-      onPointerDown={(event) => event.stopPropagation()}
-      onPointerUp={handlePointerUp}
+      className={className}
+      style={position}
+      aria-label="Abrir Plaza Mayor"
+      aria-describedby={tooltipId}
+      data-map-pin
+      onPointerDownCapture={handleDestinationPointerDown}
+      onPointerUp={(event) => event.stopPropagation()}
       onPointerCancel={(event) => event.stopPropagation()}
-      onClick={handleClick}
+      onClick={(event) => {
+        event.preventDefault();
+        event.stopPropagation();
+      }}
       onKeyDown={handleKeyDown}
+      onBlur={() => setIsTouchTooltipOpen(false)}
     >
-      <img
-        className={styles.pinImage}
-        src={IMAGES.interactive.pins[pin.color]}
-        alt=""
-        draggable={false}
-      />
-      <span className={styles.pinTooltip} role="status">
-        {pin.title}
-      </span>
+      {content}
     </button>
   );
 };

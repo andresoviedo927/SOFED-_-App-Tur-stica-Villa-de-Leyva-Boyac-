@@ -13,6 +13,8 @@ export const EventDetailCard = ({
   activeSentenceId,
   completedSentenceIds,
   isAutoFollowEnabled,
+  characterVideoRef,
+  isCharacterMuted,
   onManualScroll,
   onOpenPhotos,
   onOpenDrone,
@@ -24,7 +26,7 @@ export const EventDetailCard = ({
       className={styles.card}
       data-character-visible={isCharacterVisible || undefined}
       style={{
-        backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), url("${IMAGES.servicesMap.paperTexture}")`,
+        backgroundImage: `url("${IMAGES.events.readingTexture}")`,
       }}
       aria-label={event.name}
     >
@@ -47,11 +49,16 @@ export const EventDetailCard = ({
         />
       </div>
 
-      {isCharacterVisible && event.narratorCharacter && (
+      {(event.narratorVideo ||
+        (isCharacterVisible && event.narratorCharacter)) && (
         <EventNarratorCharacter
-          src={event.narratorCharacter}
+          src={event.narratorVideo ?? event.narratorCharacter ?? ''}
           alt={texts.characterAlt.replace('{event}', event.name)}
           isExiting={narrationStatus === 'stopping'}
+          isVideo={Boolean(event.narratorVideo)}
+          isMuted={isCharacterMuted}
+          isHidden={Boolean(event.narratorVideo) && !isCharacterVisible}
+          videoRef={characterVideoRef}
         />
       )}
     </article>

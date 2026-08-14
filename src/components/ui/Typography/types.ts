@@ -4,7 +4,7 @@ import React from 'react';
  * Scale Tokens for Typography Hierarchy
  */
 export type TypographyVariant =
-  | 'display' // Figma Hand - Exclusively for "Villa de Leyva" branding
+  | 'display' // Gochi Hand - Exclusively for "Villa de Leyva" branding
   | 'headlineLarge' // Lexend - Large section titles
   | 'headlineMedium' // Lexend - Subsection headers
   | 'headlineSmall' // Lexend - Card titles

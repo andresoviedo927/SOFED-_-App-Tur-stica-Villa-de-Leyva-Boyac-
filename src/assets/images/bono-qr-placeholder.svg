@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="174" height="174" viewBox="0 0 174 174" role="img" aria-labelledby="title description">
+  <title id="title">Código QR de ejemplo</title>
+  <desc id="description">Representación visual local en blanco y negro para el bono de La Ruta Secreta.</desc>
+  <rect width="174" height="174" fill="#fff"/>
+  <g fill="#000" shape-rendering="crispEdges">
+    <path d="M18 18h42v42H18zm6 6v30h30V24zm6 6h18v18H30zM114 18h42v42h-42zm6 6v30h30V24zm6 6h18v18h-18zM18 114h42v42H18zm6 6v30h30v-30zm6 6h18v18H30z" fill-rule="evenodd"/>
+    <path d="M72 18h6v6h-6zm12 0h12v6H84zm18 0h6v12h-6zM66 30h12v6H66zm18 0h6v12h-6zm12 6h12v6H96zM66 48h6v12h-6zm12 0h12v6H78zm18 0h6v12h-6zM18 72h12v6H18zm18-6h6v12h-6zm12 6h12v6H48zm18-6h6v12h-6zm12 6h18v6H78zm24-6h6v12h-6zm12 6h18v6h-18zm24-6h6v12h-6zm12 6h6v12h-6zM66 84h12v12H66zm18 0h6v6h-6zm12 0h12v6H96zm18 0h6v12h-6zm12 6h12v6h-12zm18-6h12v6h-12zM72 102h6v12h-6zm12-6h12v6H84zm18 6h6v6h-6zm12-6h18v6h-18zm24 6h18v6h-18zM66 120h12v6H66zm18-12h6v18h-6zm12 6h6v12h-6zm12 6h12v6h-12zm18-6h6v12h-6zm12 6h18v6h-18zM66 132h6v18h-6zm12 0h12v6H78zm18 0h6v12h-6zm12 6h12v6h-12zm18-6h6v18h-6zm12 6h6v12h-6zm12-6h6v6h-6zM78 150h18v6H78zm24-6h6v12h-6zm12 6h6v6h-6zm18 0h24v6h-24z"/>
+    <path d="M102 102h24v24h-24zm6 6v12h12v-12z" fill-rule="evenodd"/>
+  </g>
+</svg>

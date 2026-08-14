@@ -1,13 +1,15 @@
 .chip {
   display: inline-flex;
+  width: fit-content;
   min-width: 0;
   min-height: 26px;
+  max-width: 100%;
   flex: none;
   align-items: center;
   gap: 4px;
-  padding: 4px 12px;
+  padding: 4px 10px;
   border: 0;
-  border-radius: 13px;
+  border-radius: 9999px;
   background: #dee4ed;
   color: #1a212b;
   font-family: 'Lexend', sans-serif;
@@ -15,6 +17,26 @@
   font-weight: 500;
   line-height: 18px;
   text-decoration: none;
+  white-space: normal;
+}
+
+.chip[data-compact='true'] {
+  min-height: 26px;
+  padding: 4px 10px;
+}
+
+.chip > span:first-child:not(.value) {
+  flex: 0 0 auto;
+}
+
+.value {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.chip svg {
+  flex: 0 0 auto;
 }
 
 button.chip,
@@ -22,7 +44,16 @@ a.chip {
   cursor: pointer;
 }
 
+a.chip[data-location='true'],
+a.chip[data-location='true']:link,
+a.chip[data-location='true']:visited,
+a.chip[data-location='true']:hover,
+a.chip[data-location='true']:active {
+  color: #1a212b;
+}
+
 .chip strong {
+  flex: 0 0 auto;
   font-weight: 600;
 }
 

@@ -1,12 +1,13 @@
 import {StrictMode, useEffect, useState} from 'react';
 import {createRoot} from 'react-dom/client';
 import App from './App.tsx';
+import ScreenTransition from './components/layout/ScreenTransition';
 import OnboardingFlow from './components/onboarding/OnboardingFlow';
 import FinalLoader from './components/feedback/FinalLoader';
 import SplashScreen from './components/feedback/SplashScreen';
 import './index.css';
 
-const SPLASH_DURATION_MS = 8000;
+const SPLASH_DURATION_MS = 4000;
 const FINAL_LOADER_DURATION_MS = 1000;
 
 type StartupStage =
@@ -38,16 +39,30 @@ const AppEntry = () => {
     return () => window.clearTimeout(loaderTimer);
   }, [stage]);
 
-  if (stage === 'splash') return <SplashScreen />;
-  if (stage === 'onboarding') {
+  if (stage === 'splash') {
     return (
-      <OnboardingFlow
-        onSkip={() => setStage('finalLoader')}
-        onFinish={() => setStage('finalLoader')}
-      />
+      <ScreenTransition transitionKey={stage}>
+        <SplashScreen />
+      </ScreenTransition>
     );
   }
-  if (stage === 'finalLoader') return <FinalLoader />;
+  if (stage === 'onboarding') {
+    return (
+      <ScreenTransition transitionKey={stage}>
+        <OnboardingFlow
+          onSkip={() => setStage('finalLoader')}
+          onFinish={() => setStage('finalLoader')}
+        />
+      </ScreenTransition>
+    );
+  }
+  if (stage === 'finalLoader') {
+    return (
+      <ScreenTransition transitionKey={stage}>
+        <FinalLoader />
+      </ScreenTransition>
+    );
+  }
   return <App />;
 };
 

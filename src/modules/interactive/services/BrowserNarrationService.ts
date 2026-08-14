@@ -327,4 +327,23 @@ export class BrowserNarrationService implements NarrationService {
 export const browserNarrationService =
   new BrowserNarrationService();
 
+type NarrationStopListener = () => void;
+
+const narrationStopListeners = new Set<NarrationStopListener>();
+
+export const subscribeToNarrationStopRequests = (
+  listener: NarrationStopListener
+) => {
+  narrationStopListeners.add(listener);
+
+  return () => {
+    narrationStopListeners.delete(listener);
+  };
+};
+
+export const stopAllNarrations = () => {
+  narrationStopListeners.forEach((listener) => listener());
+  browserNarrationService.stop();
+};
+
 export default browserNarrationService;

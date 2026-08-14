@@ -29,7 +29,6 @@ export const EventDroneVideoScreen = ({
 
   return (
     <DroneVideoScreen
-      title={texts.droneScreenTitle}
       content={event?.droneVideo ?? null}
       backAriaLabel={
         isNotFound ? texts.backToEvents : texts.backToDetail

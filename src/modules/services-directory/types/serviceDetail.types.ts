@@ -1,5 +1,11 @@
 export interface ServiceContact {
-  type: 'whatsapp' | 'phone' | 'instagram' | 'website' | 'email';
+  type:
+    | 'whatsapp'
+    | 'phone'
+    | 'instagram'
+    | 'facebook'
+    | 'website'
+    | 'email';
   label: string;
   value: string;
   url?: string;
@@ -12,6 +18,7 @@ export interface ServiceAttribute {
   icon?: string;
   action?: 'showOnMap' | 'openLink';
   url?: string;
+  fullValue?: string;
 }
 
 export interface ServiceGalleryImage {

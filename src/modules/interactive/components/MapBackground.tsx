@@ -5,13 +5,15 @@ import styles from './InteractiveMapScreen.module.css';
 
 export const MapBackground: React.FC = () => (
   <div className={styles.background} aria-hidden="true">
-    <img
-      className={styles.sun}
-      src={IMAGES.interactive.sun}
-      alt=""
-      draggable={false}
-    />
-    <MapCloudLayer />
+    <div className={styles.backgroundContent}>
+      <img
+        className={styles.sun}
+        src={IMAGES.interactive.sun}
+        alt=""
+        draggable={false}
+      />
+      <MapCloudLayer />
+    </div>
   </div>
 );
 

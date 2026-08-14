@@ -55,3 +55,34 @@ export interface ServicesMapState {
     y: number;
   };
 }
+
+export interface ServiceLocation {
+  id: string;
+  categoryId: ServiceCategoryId;
+  categoryLabel: string;
+  name: string;
+  description?: string;
+  phone?: string;
+  phoneHref?: string;
+  whatsapp?: string;
+  instagram?: string;
+  facebook?: string;
+  email?: string;
+  websiteLinks?: Array<{
+    label: string;
+    url: string;
+  }>;
+  address?: string;
+  schedule?: string;
+  petFriendly?: boolean;
+  averagePrice?: string;
+  referenceRating?: string;
+  images?: string[];
+  lat?: number;
+  lng?: number;
+}
+
+export interface ServicesDirectoryMetadata {
+  updatedAt?: string;
+  totalPlaces: number;
+}

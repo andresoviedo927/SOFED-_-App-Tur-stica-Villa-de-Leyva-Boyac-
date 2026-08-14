@@ -27,8 +27,11 @@ export interface EventGalleryPhoto {
 export interface EventDroneVideo {
   id: string;
   src: string;
-  poster: string;
+  provider?: 'youtube';
+  watchUrl?: string;
+  poster?: string;
   title: string;
+  description?: string;
   accessibilityLabel: string;
   captions?: string;
   objectPosition?: string;

@@ -1,44 +1,33 @@
 .screen {
   position: relative;
-  width: 100%;
-  height: 100%;
-  min-height: 0;
+  display: flex;
+  width: 844px;
+  min-width: 844px;
+  max-width: 844px;
+  height: 390px;
+  min-height: 390px;
+  max-height: 390px;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px;
   overflow: hidden;
   isolation: isolate;
-  background: #1a0e01;
+  background-color: #1a0e01;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   animation: place-screen-enter 220ms ease-out both;
 }
 
-.background,
-.overlay {
+.screen::before {
+  content: '';
   position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.background {
   z-index: 0;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-}
-
-.overlay {
-  z-index: 1;
-  background:
-    linear-gradient(180deg, rgba(26, 14, 1, 0.6), rgba(26, 14, 1, 0.78)),
-    rgba(26, 14, 1, 0.28);
-}
-
-.glow {
-  position: absolute;
-  z-index: 2;
-  top: 52%;
+  top: 50%;
   left: 50%;
-  width: min(76vw, 640px);
-  height: min(82vh, 320px);
-  border-radius: 50%;
-  background: rgba(146, 79, 4, 0.66);
+  width: 640px;
+  height: 320px;
+  background: #924f04;
   filter: blur(80px);
   transform: translate(-50%, -50%);
   pointer-events: none;
@@ -46,15 +35,10 @@
 
 .content {
   position: relative;
-  z-index: 3;
+  z-index: 1;
   width: 100%;
   height: 100%;
   min-height: 0;
-  padding:
-    max(20px, env(safe-area-inset-top))
-    max(24px, env(safe-area-inset-right))
-    max(18px, env(safe-area-inset-bottom))
-    max(24px, env(safe-area-inset-left));
   display: flex;
   flex-direction: column;
 }
@@ -62,15 +46,15 @@
 .main {
   position: relative;
   width: 100%;
-  max-width: 680px;
+  max-width: 620px;
   min-height: 0;
   margin: 0 auto;
   flex: 1;
   display: grid;
-  grid-template-columns: minmax(220px, 240px) minmax(240px, 302px);
+  grid-template-columns: 240px 302px;
   align-items: center;
   justify-content: center;
-  gap: clamp(10px, 2vw, 18px);
+  gap: 34px;
 }
 
 @keyframes place-screen-enter {
@@ -82,30 +66,6 @@
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@media (max-width: 700px) {
-  .content {
-    padding-inline:
-      max(14px, env(safe-area-inset-left))
-      max(14px, env(safe-area-inset-right));
-  }
-
-  .main {
-    grid-template-columns: minmax(216px, 230px) minmax(220px, 270px);
-    gap: 14px;
-  }
-}
-
-@media (max-height: 350px) {
-  .content {
-    padding-top: max(10px, env(safe-area-inset-top));
-    padding-bottom: max(8px, env(safe-area-inset-bottom));
-  }
-
-  .main {
-    align-items: center;
   }
 }
 

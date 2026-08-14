@@ -1,9 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import AppIcon from '@/components/ui/AppIcon';
 import { Button } from '@/components/ui/Button';
 import IMAGES from '@/assets/images';
 import TEXTS from '@/constants/texts';
 import NarrationButton from '@/modules/interactive/components/NarrationButton';
+import useSavedSettings from '@/modules/settings/hooks/useSavedSettings';
 import useEventDetail from '../../hooks/useEventDetail';
 import useEventMediaNavigation from '../../hooks/useEventMediaNavigation';
 import useEventNarration from '../../hooks/useEventNarration';
@@ -16,6 +17,10 @@ interface EventDetailScreenProps {
   onNavigate: (route: string) => void;
 }
 
+const EMPTY_SENTENCE_IDS: readonly string[] = [];
+const EMPTY_NARRATION = [];
+const ignoreManualScroll = () => undefined;
+
 export const EventDetailScreen = ({
   eventSlug,
   onBack,
@@ -23,7 +28,15 @@ export const EventDetailScreen = ({
 }: EventDetailScreenProps) => {
   const { event } = useEventDetail(eventSlug);
   const texts = TEXTS.events.detail;
-  const narration = useEventNarration(event?.narration ?? []);
+  const settings = useSavedSettings();
+  const characterVideoRef = useRef<HTMLVideoElement>(null);
+  const hasCharacterVideo = Boolean(event?.narratorVideo);
+  const [isCharacterMuted, setIsCharacterMuted] = useState(
+    () => !settings.automaticNarration
+  );
+  const narration = useEventNarration(
+    hasCharacterVideo ? EMPTY_NARRATION : event?.narration ?? []
+  );
   const mediaNavigation = useEventMediaNavigation({
     event,
     navigate: onNavigate,
@@ -34,8 +47,138 @@ export const EventDetailScreen = ({
     window.speechSynthesis?.cancel();
   }, []);
 
+  useEffect(() => {
+    setIsCharacterMuted(!settings.automaticNarration);
+  }, [event?.narratorVideo, settings.automaticNarration]);
+
+  useEffect(() => {
+    const video = characterVideoRef.current;
+    if (!video) {
+      return;
+    }
+
+    video.volume = Math.min(
+      1,
+      Math.max(0, settings.narrationVolume / 100)
+    );
+  }, [event?.narratorVideo, settings.narrationVolume]);
+
+  useEffect(() => {
+    const video = characterVideoRef.current;
+    if (!video || !event?.narratorVideo) {
+      return undefined;
+    }
+
+    let disposed = false;
+
+    const detachAutoplayUnlock = () => {
+      window.removeEventListener(
+        'pointerdown',
+        enableAudioOnInteraction,
+        true
+      );
+      window.removeEventListener(
+        'keydown',
+        enableAudioOnInteraction,
+        true
+      );
+    };
+
+    const enableAudioOnInteraction = (interaction: Event) => {
+      if (disposed) {
+        return;
+      }
+
+      if (
+        interaction.target instanceof Element &&
+        interaction.target.closest('[data-character-audio-control]')
+      ) {
+        return;
+      }
+
+      video.muted = false;
+      setIsCharacterMuted(false);
+      void video.play().catch(() => {
+        if (!disposed) {
+          video.muted = true;
+          setIsCharacterMuted(true);
+        }
+      });
+      detachAutoplayUnlock();
+    };
+
+    const startPlayback = async () => {
+      if (!settings.automaticNarration) {
+        video.muted = true;
+        setIsCharacterMuted(true);
+        await video.play().catch(() => undefined);
+        return;
+      }
+
+      video.muted = false;
+
+      try {
+        await video.play();
+        if (!disposed) {
+          setIsCharacterMuted(false);
+        }
+      } catch {
+        if (disposed) {
+          return;
+        }
+
+        video.muted = true;
+        setIsCharacterMuted(true);
+        await video.play().catch(() => undefined);
+        window.addEventListener(
+          'pointerdown',
+          enableAudioOnInteraction,
+          true
+        );
+        window.addEventListener(
+          'keydown',
+          enableAudioOnInteraction,
+          true
+        );
+      }
+    };
+
+    void startPlayback();
+
+    return () => {
+      disposed = true;
+      detachAutoplayUnlock();
+      video.pause();
+    };
+  }, [event?.narratorVideo, settings.automaticNarration]);
+
+  const handleToggleCharacterAudio = () => {
+    const video = characterVideoRef.current;
+
+    setIsCharacterMuted((current) => {
+      const next = !current;
+
+      if (video) {
+        video.muted = next;
+
+        if (!next) {
+          if (video.ended) {
+            video.currentTime = 0;
+          }
+          void video.play().catch(() => {
+            video.muted = true;
+            setIsCharacterMuted(true);
+          });
+        }
+      }
+
+      return next;
+    });
+  };
+
   const handleBack = () => {
     narration.stop();
+    characterVideoRef.current?.pause();
     onBack();
   };
 
@@ -54,9 +197,12 @@ export const EventDetailScreen = ({
     <main
       className={styles.screen}
       style={{
-        backgroundImage: `url("${IMAGES.interactive.map}")`,
+        backgroundImage: `url("${IMAGES.interactive.reading.background}")`,
       }}
-      aria-busy={narration.narrationStatus === 'loading'}
+      aria-busy={
+        !hasCharacterVideo &&
+        narration.narrationStatus === 'loading'
+      }
     >
       <div className={styles.overlay} aria-hidden="true" />
       <div className={styles.layout}>
@@ -78,7 +224,35 @@ export const EventDetailScreen = ({
             {TEXTS.common.back}
           </Button>
           <h1>{texts.screenTitle}</h1>
-          {event ? (
+          {event?.narratorVideo ? (
+            <button
+              type="button"
+              className={styles.audioButton}
+              data-character-audio-control
+              onClick={handleToggleCharacterAudio}
+              aria-pressed={!isCharacterMuted}
+              aria-label={
+                isCharacterMuted
+                  ? texts.unmuteCharacterVideo
+                  : texts.muteCharacterVideo
+              }
+              title={
+                isCharacterMuted
+                  ? texts.unmuteCharacterVideo
+                  : texts.muteCharacterVideo
+              }
+            >
+              <AppIcon
+                name={
+                  isCharacterMuted
+                    ? 'fi-rr-volume-mute'
+                    : 'fi-rr-audio'
+                }
+                size={24}
+                color="#1A212B"
+              />
+            </button>
+          ) : event ? (
             <NarrationButton
               status={narration.narrationStatus}
               isActive={narration.isNarrationActive}
@@ -100,12 +274,34 @@ export const EventDetailScreen = ({
           {event ? (
             <EventDetailCard
               event={event}
-              narrationStatus={narration.narrationStatus}
-              isCharacterVisible={narration.isCharacterVisible}
-              activeSentenceId={narration.activeSentenceId}
-              completedSentenceIds={narration.completedSentenceIds}
-              isAutoFollowEnabled={narration.isAutoFollowEnabled}
-              onManualScroll={narration.pauseAutoFollow}
+              narrationStatus={
+                hasCharacterVideo ? 'idle' : narration.narrationStatus
+              }
+              isCharacterVisible={
+                hasCharacterVideo
+                  ? !isCharacterMuted
+                  : narration.isCharacterVisible
+              }
+              activeSentenceId={
+                hasCharacterVideo ? null : narration.activeSentenceId
+              }
+              completedSentenceIds={
+                hasCharacterVideo
+                  ? EMPTY_SENTENCE_IDS
+                  : narration.completedSentenceIds
+              }
+              isAutoFollowEnabled={
+                hasCharacterVideo
+                  ? false
+                  : narration.isAutoFollowEnabled
+              }
+              characterVideoRef={characterVideoRef}
+              isCharacterMuted={isCharacterMuted}
+              onManualScroll={
+                hasCharacterVideo
+                  ? ignoreManualScroll
+                  : narration.pauseAutoFollow
+              }
               onOpenPhotos={mediaNavigation.openPhotos}
               onOpenDrone={mediaNavigation.openDrone}
             />
@@ -121,11 +317,13 @@ export const EventDetailScreen = ({
         </div>
 
         <p className={styles.liveRegion} aria-live="polite">
-          {narration.narrationStatus === 'error'
+          {!hasCharacterVideo &&
+          narration.narrationStatus === 'error'
             ? texts.narrationError
             : liveMessage}
         </p>
-        {narration.narrationStatus === 'error' && (
+        {!hasCharacterVideo &&
+          narration.narrationStatus === 'error' && (
           <div className={styles.error} role="status">
             {texts.narrationError}
           </div>

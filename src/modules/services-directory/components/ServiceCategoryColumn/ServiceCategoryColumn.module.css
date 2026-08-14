@@ -13,3 +13,18 @@
     height: 266px;
   }
 }
+
+@media (max-width: 760px) {
+  .column {
+    width: 100%;
+    height: auto;
+    min-height: 70px;
+    padding: 4px 0;
+    overflow-x: auto;
+    flex: none;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 12px;
+    scrollbar-width: thin;
+  }
+}

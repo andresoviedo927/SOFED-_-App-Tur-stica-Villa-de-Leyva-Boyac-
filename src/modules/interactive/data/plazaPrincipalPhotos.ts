@@ -1,14 +1,6 @@
 import IMAGES from '@/assets/images';
 import type { GalleryPhoto } from '../types/gallery.types';
 
-/**
- * Temporary mock collection.
- *
- * Contenido currently has no definitive Plaza Principal photo set. The only
- * real Plaza Mayor photograph already in the project is reused here until five
- * final assets are supplied. Replace the centralized photo1…photo5 aliases;
- * the carousel and this data contract require no component changes.
- */
 export const plazaPrincipalPhotos: GalleryPhoto[] = [
   {
     id: 'plaza-photo-1',
@@ -34,6 +26,21 @@ export const plazaPrincipalPhotos: GalleryPhoto[] = [
     id: 'plaza-photo-5',
     src: IMAGES.gallery.plazaPrincipal.photo5,
     alt: 'Vista amplia de la Plaza Mayor y sus edificios coloniales.',
+  },
+  {
+    id: 'plaza-photo-6',
+    src: IMAGES.gallery.plazaPrincipal.photo6,
+    alt: 'Arquitectura colonial y calles empedradas de la Plaza Mayor.',
+  },
+  {
+    id: 'plaza-photo-7',
+    src: IMAGES.gallery.plazaPrincipal.photo7,
+    alt: 'Perspectiva de la iglesia y el entorno histórico de la Plaza Mayor.',
+  },
+  {
+    id: 'plaza-photo-8',
+    src: IMAGES.gallery.plazaPrincipal.photo8,
+    alt: 'Panorámica de la Plaza Mayor de Villa de Leyva.',
   },
 ];
 

@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import narrationService from '../services/BrowserNarrationService';
+import narrationService, {
+  subscribeToNarrationStopRequests,
+} from '../services/BrowserNarrationService';
 import {
   GUIDE_VOICE_CONFIG,
   GUIDE_VOICE_TIMING,
@@ -16,6 +18,8 @@ interface UseNarrationOptions {
   content: readonly NarrationParagraph[];
   language?: 'es-CO';
   volume: number;
+  autoStart?: boolean;
+  leadInMs?: number;
   onError?: (error: NarrationError) => void;
 }
 
@@ -58,6 +62,8 @@ export const useNarration = ({
   content,
   language = 'es-CO',
   volume,
+  autoStart = false,
+  leadInMs = GUIDE_VOICE_TIMING.characterLeadInMs,
   onError,
 }: UseNarrationOptions): UseNarrationResult => {
   const [tracking, setTracking] =
@@ -78,11 +84,19 @@ export const useNarration = ({
       ),
     [content]
   );
+  const contentKey = useMemo(
+    () =>
+      segments
+        .map((segment) => `${segment.sentenceId}:${segment.text}`)
+        .join('|'),
+    [segments]
+  );
   const mountedRef = useRef(true);
   const narrationStatusRef = useRef<NarrationStatus>('idle');
   const sequenceRef = useRef(0);
   const timersRef = useRef<number[]>([]);
   const autoFollowTimerRef = useRef<number | null>(null);
+  const autoStartContentRef = useRef<string | null>(null);
 
   const updateTracking = useCallback(
     (
@@ -203,7 +217,7 @@ export const useNarration = ({
             rate: GUIDE_VOICE_CONFIG.rate,
             leadInMs:
               index === 0
-                ? GUIDE_VOICE_TIMING.characterLeadInMs
+                ? leadInMs
                 : 0,
             onStart: () => {
               if (
@@ -284,6 +298,7 @@ export const useNarration = ({
     clearTimers,
     handleError,
     language,
+    leadInMs,
     queueAction,
     resetTracking,
     segments,
@@ -304,6 +319,36 @@ export const useNarration = ({
     resetTracking('stopping');
     queueAction(() => resetTracking('idle'), CHARACTER_EXIT_DURATION);
   }, [clearTimers, queueAction, resetTracking]);
+
+  useEffect(
+    () => subscribeToNarrationStopRequests(stop),
+    [stop]
+  );
+
+  useEffect(() => {
+    if (
+      !contentKey ||
+      autoStartContentRef.current === contentKey
+    ) {
+      return;
+    }
+
+    const autoStartTimer = window.setTimeout(() => {
+      if (autoStartContentRef.current === contentKey) {
+        return;
+      }
+
+      autoStartContentRef.current = contentKey;
+
+      if (autoStart) {
+        void start();
+      }
+    }, 0);
+
+    return () => {
+      window.clearTimeout(autoStartTimer);
+    };
+  }, [autoStart, contentKey, start]);
 
   const toggle = useCallback(() => {
     if (narrationStatusRef.current === 'idle') {

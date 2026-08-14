@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import VIDEOS from '@/assets/videos';
 import type { ActiveExperienceSubmenu } from '../../types';
 import type { GalleryOption } from '../../data/plazaPrincipalGallery';
 import CharacterGuide from '../CharacterGuide';
@@ -12,7 +13,7 @@ let restoreGallerySubmenuOnMount = false;
 
 export const PlaceExperienceScreen: React.FC<
   PlaceExperienceScreenProps
-> = ({ place, onBack, onNavigate }) => {
+> = ({ place, onBack, onNavigate, onOpenSettings }) => {
   const [activeSubmenu, setActiveSubmenu] =
     useState<ActiveExperienceSubmenu>(() => {
       const initialSubmenu = restoreGallerySubmenuOnMount
@@ -21,7 +22,6 @@ export const PlaceExperienceScreen: React.FC<
       restoreGallerySubmenuOnMount = false;
       return initialSubmenu;
     });
-
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
@@ -45,17 +45,17 @@ export const PlaceExperienceScreen: React.FC<
   };
 
   return (
-    <section className={styles.screen}>
-      <div
-        className={styles.background}
-        style={{ backgroundImage: `url("${place.backgroundImage}")` }}
-        aria-hidden="true"
-      />
-      <div className={styles.overlay} aria-hidden="true" />
-      <div className={styles.glow} aria-hidden="true" />
-
+    <section
+      className={styles.screen}
+      style={{ backgroundImage: `url("${place.backgroundImage}")` }}
+    >
       <div className={styles.content}>
-        <PlaceExperienceHeader title={place.title} onBack={handleBack} />
+        <PlaceExperienceHeader
+          title={place.title}
+          onBack={handleBack}
+          hideAudio
+          onOpenSettings={onOpenSettings}
+        />
 
         <main className={styles.main}>
           <ExperienceWheel
@@ -75,8 +75,8 @@ export const PlaceExperienceScreen: React.FC<
             <GallerySubmenu onSelect={handleGallerySelect} />
           )}
           <CharacterGuide
-            image={place.characterImage}
-            name="Don Pedro, guía de Villa de Leyva"
+            video={VIDEOS.plazaPrincipal.welcomeCharacter}
+            name="Don José, guía de Villa de Leyva"
           />
         </main>
       </div>

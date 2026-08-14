@@ -15,6 +15,7 @@ import ROUTES, {
 } from '@/constants/routes';
 import TEXTS from '@/constants/texts';
 import LandscapeLayout from '@/components/layout/LandscapeLayout';
+import ScreenTransition from '@/components/layout/ScreenTransition';
 import HomeContainer from '@/modules/home/components/HomeContainer';
 import InteractiveView from '@/modules/interactive/components/InteractiveView';
 import PlazaPrincipalSection from '@/modules/interactive/components/PlazaPrincipalSection';
@@ -39,6 +40,8 @@ import GameIntroductionScreen from '@/modules/games/components/GameIntroductionS
 import ARView from '@/modules/augmented-reality/components/ARView';
 import AugmentedRealityCameraScreen from '@/modules/augmented-reality/components/AugmentedRealityCameraScreen';
 import Sidebar from '@/components/layout/Sidebar';
+import BackButtonHomeShortcut from '@/components/navigation/BackButtonHomeShortcut/BackButtonHomeShortcut';
+import SoundEffectsController from '@/components/system/SoundEffectsController';
 
 interface AppHistoryState {
   villaDeLeyvaApp: true;
@@ -302,6 +305,13 @@ export default function App() {
 
   return (
     <LandscapeLayout>
+      <SoundEffectsController />
+      <BackButtonHomeShortcut onGoHome={handleBackToHome} />
+
+      <ScreenTransition
+        transitionKey={currentRoute}
+        enabled={!isSettingsOpen}
+      >
       {currentRoute === ROUTES.HOME && (
         <HomeContainer
           onNavigate={handleNavigate}
@@ -332,6 +342,7 @@ export default function App() {
         <PlazaPrincipalSection
           onBack={handleBackToInteractive}
           onNavigate={handleNavigate}
+          onOpenSettings={handleOpenSettings}
         />
       )}
 
@@ -348,6 +359,7 @@ export default function App() {
       {currentRoute === ROUTES.PLAZA_PRINCIPAL_GAME_ROUTE && (
         <JuegoSection
           onBack={handleBackToGameIntroduction}
+          onGoHome={handleBackToHome}
           onOpenSettings={handleOpenSettings}
           startImmediately
         />
@@ -473,12 +485,15 @@ export default function App() {
       {currentRoute === ROUTES.AUGMENTED_REALITY && (
         <ARView onBack={handleBackToHome} />
       )}
+      </ScreenTransition>
 
       {isSettingsOpen && (
-        <SettingsView
-          onBack={handleSettingsBack}
-          onSavingChange={handleSettingsSavingChange}
-        />
+        <ScreenTransition transitionKey={ROUTES.SETTINGS} overlay>
+          <SettingsView
+            onBack={handleSettingsBack}
+            onSavingChange={handleSettingsSavingChange}
+          />
+        </ScreenTransition>
       )}
 
       <Sidebar

@@ -10,11 +10,12 @@ interface PlazaPrincipalSectionProps {
 
 export const PlazaPrincipalSection: React.FC<
   PlazaPrincipalSectionProps
-> = ({ onBack, onNavigate }) => (
+> = ({ onBack, onNavigate, onOpenSettings }) => (
   <PlaceExperienceScreen
     place={PLAZA_PRINCIPAL_PLACE}
     onBack={onBack}
     onNavigate={onNavigate}
+    onOpenSettings={onOpenSettings}
   />
 );
 

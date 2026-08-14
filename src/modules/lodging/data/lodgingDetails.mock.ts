@@ -68,7 +68,7 @@ export const lodgingDetailsMock: ServiceDetail[] =
     gallery: [
       {
         id: `${point.id}-photo-1`,
-        src: IMAGES.VILLA_DE_LEYVA_NIGHT,
+        src: IMAGES.TOURISM_FALLBACK_NIGHT,
         alt: TEXTS.lodging.detail.galleryPhotoAlt.replace(
           '{lodging}',
           point.name
@@ -76,7 +76,7 @@ export const lodgingDetailsMock: ServiceDetail[] =
       },
       {
         id: `${point.id}-photo-2`,
-        src: IMAGES.HOME_BACKGROUND,
+        src: IMAGES.TOURISM_FALLBACK_BACKGROUND,
         alt: TEXTS.lodging.detail.galleryPhotoAlt.replace(
           '{lodging}',
           point.name

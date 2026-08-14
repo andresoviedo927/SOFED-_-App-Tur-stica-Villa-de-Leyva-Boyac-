@@ -1,23 +1,39 @@
 import type { Key } from 'react';
-import type { GalleryOption } from '../data/plazaPrincipalGallery';
 import styles from './GallerySubmenu.module.css';
 
-interface GallerySubmenuButtonProps {
-  key?: Key;
-  option: GalleryOption;
-  onSelect: (option: GalleryOption) => void;
+export interface GallerySubmenuButtonOption {
+  icon: string;
+  label: string;
+  accessibilityLabel: string;
+  position: 'top' | 'middle' | 'bottom';
 }
 
-export const GallerySubmenuButton = ({
+interface GallerySubmenuButtonProps<
+  TOption extends GallerySubmenuButtonOption,
+> {
+  key?: Key;
+  option: TOption;
+  disabled?: boolean;
+  unavailableMessage?: string;
+  onSelect: (option: TOption) => void;
+}
+
+export const GallerySubmenuButton = <
+  TOption extends GallerySubmenuButtonOption,
+>({
   option,
+  disabled = false,
+  unavailableMessage,
   onSelect,
-}: GallerySubmenuButtonProps) => (
+}: GallerySubmenuButtonProps<TOption>) => (
   <button
     type="button"
     className={styles.button}
     data-position={option.position}
     aria-label={option.accessibilityLabel}
-    title={option.label}
+    aria-disabled={disabled}
+    title={disabled ? unavailableMessage : option.label}
+    disabled={disabled}
     onClick={() => onSelect(option)}
   >
     <span className={styles.gloss} aria-hidden="true" />

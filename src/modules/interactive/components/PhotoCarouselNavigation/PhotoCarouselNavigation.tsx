@@ -8,6 +8,7 @@ export const PhotoCarouselNavigation = ({
   previousLabel,
   nextLabel,
   goToLabel,
+  isTransitioning,
   onPrevious,
   onNext,
   onGoTo,
@@ -15,9 +16,10 @@ export const PhotoCarouselNavigation = ({
   <div className={styles.navigation}>
     <button
       type="button"
+      data-sound-effect="none"
       className={styles.arrow}
       aria-label={previousLabel}
-      disabled={activeIndex === 0}
+      disabled={isTransitioning}
       onClick={onPrevious}
     >
       <AppIcon
@@ -32,11 +34,13 @@ export const PhotoCarouselNavigation = ({
         <button
           key={index}
           type="button"
+          data-sound-effect="none"
           className={styles.indicator}
-          aria-label={`${goToLabel} ${index + 1}`}
+          aria-label={`${goToLabel} ${index + 1} de ${total}`}
           aria-current={
             index === activeIndex ? 'true' : undefined
           }
+          disabled={isTransitioning}
           onClick={() => onGoTo(index)}
         >
           <span aria-hidden="true" />
@@ -46,9 +50,10 @@ export const PhotoCarouselNavigation = ({
 
     <button
       type="button"
+      data-sound-effect="none"
       className={styles.arrow}
       aria-label={nextLabel}
-      disabled={activeIndex === total - 1}
+      disabled={isTransitioning}
       onClick={onNext}
     >
       <AppIcon

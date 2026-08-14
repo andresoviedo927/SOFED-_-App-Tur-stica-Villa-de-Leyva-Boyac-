@@ -7,7 +7,7 @@ export const TEXTS = {
   splash: {
     title: 'Villa de Leyva',
     loading: 'Cargando contenido',
-    churchAlt: 'Iglesia de Villa de Leyva',
+    logoAlt: 'Logo de la aplicación Villa de Leyva',
   },
   onboarding: {
     steps: [
@@ -45,6 +45,7 @@ export const TEXTS = {
     appSubtitle: 'Guía Turística Oficial',
     backLabel: 'Volver',
     back: 'Volver',
+    goHomeLongPress: 'Ir al HOME',
     continueLabel: 'Continuar',
     settingsLabel: 'Ajustes',
     closeLabel: 'Cerrar',
@@ -114,7 +115,7 @@ export const TEXTS = {
       comingSoon: 'Experiencia en preparación',
       reading: {
         screenTitle: 'Lectura',
-        articleTitle: 'Plaza principal',
+        articleTitle: 'Plaza Mayor',
         startNarration: 'Iniciar narración',
         preparingNarration: 'Preparando narración',
         stopNarration: 'Detener narración',
@@ -159,7 +160,7 @@ export const TEXTS = {
           label: 'Panorámica',
           accessibilityLabel:
             'Ver panorámica de la Plaza Principal',
-          screenTitle: 'Fotografías panorámicas',
+          screenTitle: 'Fotografía 360º',
           viewerLabel:
             'Vista panorámica de la Plaza Principal',
           interactionHint:
@@ -178,7 +179,7 @@ export const TEXTS = {
           label: 'Drone',
           accessibilityLabel:
             'Ver recorrido aéreo de la Plaza Principal',
-          screenTitle: 'Vuelos de drone',
+          screenTitle: 'Video Drone',
           videoLabel:
             'Video aéreo de la Plaza Principal de Villa de Leyva',
           play: 'Reproducir vuelo de drone',
@@ -342,10 +343,12 @@ export const TEXTS = {
     emptyMessage:
       'Todavía no se han configurado eventos y festividades.',
     detail: {
-      screenTitle: 'Detalle',
+      screenTitle: 'Lectura',
       descriptionLabel: 'Información del evento',
       startNarration: 'Iniciar narración del evento',
       stopNarration: 'Detener narración del evento',
+      muteCharacterVideo: 'Silenciar audio del personaje',
+      unmuteCharacterVideo: 'Activar audio del personaje',
       preparingNarration: 'Preparando narración',
       narrationError: 'No fue posible reproducir la narración.',
       narrationStarted: 'Narración iniciada',
@@ -438,11 +441,22 @@ export const TEXTS = {
         'Información de La Ruta Secreta de la Plaza Mayor',
       title: 'La Ruta Secreta de la Plaza Mayor',
       subtitle:
-        'Explora los cinco puntos en un recorrido guiado y desbloquea tu recompensa.',
+        'Camina, encuentra 5 lugares y desbloquea una recompensa.',
+      stepperLabel: 'Los cinco puntos del recorrido',
+      stepperPrompt: 'Busca los 5 alrededor de la Plaza Mayor.',
+      stepperPoints: [
+        'Iglesia Nuestra Sra. del Rosario',
+        'Pila de piedra de la Plaza Mayor',
+        'Casa Museo Luis Alberto Acuña',
+        'Alcaldia Municipal',
+        'Portal de la plaza',
+      ],
+      rewardMessage:
+        '¡Completa los 5 puntos y desbloquea un bono digital con 15 % de descuento en una cafetería cercana a la Plaza Mayor!',
       introduction: [
-        'Explora la Plaza Mayor de Villa de Leyva mediante un recorrido demostrativo por cinco lugares representativos.',
-        'Sigue el punto activo del mapa y abre cada parada en el orden indicado. Confirma la visita para avanzar al siguiente lugar.',
-        'Al completar los cinco puntos desbloquearás un bono digital con una recompensa local.',
+        'Busca cinco lugares alrededor de la Plaza Mayor: la iglesia, la pila de piedra, la Casa Museo Luis Alberto Acuña, la Alcaldía y el Portal de la Plaza.',
+        'Sigue el mapa y visita los puntos en orden. Camina hasta cada marcador para confirmar la parada y desbloquear la siguiente.',
+        'Cuando completes los cinco puntos, desbloquearás un bono digital con 15 % de descuento en una cafetería de Villa de Leyva.',
       ],
       summaryAriaLabel: 'Resumen del recorrido',
       summary: {
@@ -535,20 +549,22 @@ export const TEXTS = {
         completionReward:
           'Como recompensa, desbloqueaste un bono especial.',
         viewReward: 'Ver recompensa',
-        rewardTitle: '15 % en un establecimiento aliado',
+        rewardTitle: '15 % en Amora Café y Canela',
         rewardPartnerPending:
-          'El establecimiento participante se confirmará antes del lanzamiento oficial del recorrido.',
+          'Amora Café y Canela es una cafetería ubicada en el centro histórico de Villa de Leyva, a pocos pasos de la Plaza Mayor.',
         rewardInstructions:
-          'Cuando el convenio esté confirmado, presenta este código QR antes de realizar tu pedido para verificar el bono.',
+          'Presenta este código QR en Amora Café y Canela antes de realizar tu pedido. El personal escaneará el código para verificar el bono y aplicar el descuento.',
         digitalVoucher: 'Bono digital',
-        directions: 'Guía visual de llegada',
+        directions: 'Cómo llegar',
         visualGuide: 'Ruta de referencia',
         referenceMapTitle: 'Referencia desde la Plaza Mayor',
         referenceMapAlt:
           'Mapa de referencia centrado en la Plaza Mayor de Villa de Leyva.',
         referenceMapDescription:
           'Esta vista es una guía visual fija. No utiliza navegación en tiempo real.',
-        downloadQr: 'Descargar QR',
+        downloadQr: 'Descargar bono',
+        downloadShort: 'Descargar',
+        goHome: 'Ir al Inicio',
         qrUnavailable:
           'El código QR estará disponible cuando se confirme el convenio.',
       },
@@ -591,14 +607,13 @@ export const TEXTS = {
     },
     camera: {
       back: 'Volver',
-      capture: 'Tomar fotografía con el personaje',
+      capture: 'Tomar fotografía',
       retry: 'Intentar nuevamente',
     },
     preview: {
       retake: 'Repetir',
       save: 'Guardar foto',
-      capturedAlt:
-        'Fotografía tomada con el personaje de Villa de Leyva',
+      capturedAlt: 'Fotografía tomada con la cámara',
     },
     errors: {
       title: 'No pudimos acceder a la cámara',

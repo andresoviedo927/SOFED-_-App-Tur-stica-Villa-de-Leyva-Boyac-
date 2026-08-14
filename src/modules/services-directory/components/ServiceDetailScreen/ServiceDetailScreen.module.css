@@ -1,14 +1,17 @@
 .screen {
   position: relative;
+  display: grid;
   width: 100vw;
   min-width: 568px;
   height: 100dvh;
   min-height: 320px;
+  place-items: center;
   overflow: hidden;
   background-color: #1f1b19;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  font-family: 'Lexend', sans-serif;
 }
 
 .overlay {
@@ -21,22 +24,115 @@
 .layout {
   position: relative;
   z-index: 1;
-  display: grid;
+  display: flex;
   width: min(100%, 844px);
-  height: 100%;
-  margin: 0 auto;
-  padding: 24px;
-  grid-template-rows: 40px minmax(0, 290px);
+  height: min(100%, 390px);
+  min-height: 320px;
+  max-height: 390px;
+  flex-direction: column;
+  align-items: center;
   gap: 12px;
+  padding: 24px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.header {
+  display: grid;
+  width: 796px;
+  height: 40px;
+  flex: 0 0 40px;
+  grid-template-columns: 102px minmax(0, 1fr) 102px;
+  align-items: center;
+}
+
+.back {
+  min-width: 0;
+  min-height: 40px;
+  justify-self: start;
+  padding-inline: 8px;
+  color: #f6f8fb;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.header h1 {
+  margin: 0;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 18px;
+  text-align: center;
+}
+
+.settings {
+  justify-self: end;
 }
 
 .content {
   display: grid;
-  width: 100%;
+  width: 796px;
   height: 290px;
   min-height: 0;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: 390px 390px;
   gap: 16px;
+}
+
+.information {
+  width: 390px;
+  height: 290px;
+  padding-top: 0;
+  overflow: hidden;
+}
+
+.information h2 {
+  color: #fff;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.information p,
+.information a {
+  color: #fff;
+}
+
+.information > div:last-child > div {
+  width: 100%;
+  padding-right: 0;
+  overflow: hidden;
+}
+
+.information > div:last-child > div > button,
+.information > div:last-child > div > span,
+.information > div:last-child > div > a {
+  max-width: 100%;
+}
+
+.information > div:last-child > div > button > span:last-of-type,
+.information > div:last-child > div > span > span:last-of-type,
+.information > div:last-child > div > a > span:last-of-type {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.gallery {
+  width: 390px !important;
+  height: 290px !important;
+  padding: 0 !important;
+  border-radius: 16px !important;
+  background: rgba(222, 228, 237, 0.14);
+}
+
+.gallery > img {
+  border-radius: 16px !important;
+}
+
+.gallery > div[role='status'],
+.gallery > div[role='alert'] {
+  inset: 0;
+  border-radius: 16px;
 }
 
 .notFound {
@@ -65,12 +161,28 @@
   line-height: 18px;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 843px) {
   .layout {
-    padding-inline: 14px;
+    width: 100%;
+  }
+
+  .header,
+  .content {
+    width: 100%;
   }
 
   .content {
-    gap: 10px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .information,
+  .gallery {
+    width: 100% !important;
+  }
+}
+
+@media (max-height: 389px) {
+  .layout {
+    padding-block: 14px;
   }
 }

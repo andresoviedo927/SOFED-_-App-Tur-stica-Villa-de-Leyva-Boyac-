@@ -9,6 +9,7 @@ interface GameIntroductionHeaderProps {
   settingsLabel: string;
   onBack: () => void;
   onOpenSettings: () => void;
+  showSettings?: boolean;
 }
 
 export const GameIntroductionHeader = ({
@@ -17,6 +18,7 @@ export const GameIntroductionHeader = ({
   settingsLabel,
   onBack,
   onOpenSettings,
+  showSettings = true,
 }: GameIntroductionHeaderProps) => (
   <header className={styles.header}>
     <Button
@@ -38,11 +40,15 @@ export const GameIntroductionHeader = ({
 
     <h1 className={styles.screenTitle}>{screenTitle}</h1>
 
-    <SettingsButton
-      className={styles.settingsButton}
-      ariaLabel={settingsLabel}
-      onClick={onOpenSettings}
-    />
+    {showSettings ? (
+      <SettingsButton
+        className={styles.settingsButton}
+        ariaLabel={settingsLabel}
+        onClick={onOpenSettings}
+      />
+    ) : (
+      <span className={styles.headerReservedSpace} aria-hidden="true" />
+    )}
   </header>
 );
 

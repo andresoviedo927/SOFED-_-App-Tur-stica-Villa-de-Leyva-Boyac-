@@ -1,4 +1,4 @@
-import styles from './EventMediaActionButton.module.css';
+import GallerySubmenuButton from '@/modules/interactive/components/GallerySubmenuButton';
 import type { EventMediaActionButtonProps } from './EventMediaActionButton.types';
 
 export const EventMediaActionButton = ({
@@ -9,18 +9,17 @@ export const EventMediaActionButton = ({
   unavailableMessage,
   onClick,
 }: EventMediaActionButtonProps) => (
-  <button
-    type="button"
-    className={styles.button}
-    data-media-type={type}
-    aria-label={label}
-    aria-disabled={disabled}
-    title={disabled ? unavailableMessage : label}
+  <GallerySubmenuButton
+    option={{
+      icon,
+      label,
+      accessibilityLabel: label,
+      position: type === 'photos' ? 'top' : 'bottom',
+    }}
     disabled={disabled}
-    onClick={onClick}
-  >
-    <img src={icon} alt="" draggable={false} aria-hidden="true" />
-  </button>
+    unavailableMessage={unavailableMessage}
+    onSelect={onClick}
+  />
 );
 
 export default EventMediaActionButton;
